@@ -31,7 +31,7 @@ async function listarLivros(req, res) {
 
     res.json(livros);
   } catch (error) {
-    console.error("Erro ao listar os livros:", error.message);
+    console.error("Erro ao listar os livros:", error);
     res.status(500).json({ error: "Erro interno do servidor" });
   }
 }
