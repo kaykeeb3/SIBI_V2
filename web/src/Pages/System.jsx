@@ -1,90 +1,126 @@
-import Logo from "../public/logo.png";
+import React from "react";
+import Header from "../components/Header";
+
+import ButtonReturn from "../components/ButtonReturn";
 
 const System = () => {
   return (
-    <div className="flex items-center justify-center">
-      <div className="h-full grid grid-cols-3 gap-x-10 gap-y-10 pt-5">
-        <div className="w-full rounded-lg">
-          <div className="flex flex-col items-center justify-center h-full w-full">
-            <img
-              className="w-[100%] h-[300px] max-w-80 max-h-80 rounded-full mt-2 border-[3px] border-green-500  p-[0.12rem]"
-              src={Logo}
-              alt="Foto do colaborador"
-              width={0}
-              height={0}
-              sizes="100vw"
-            />
-            <h2 className="font-bold text-2xl text-gray-800 p-2 uppercase">
-              Kayke Barbosa
-            </h2>
+    <>
+      <Header />
+      <div className="container  bg-white">
+        {/* Descrição do Projeto */}
+        <div className="my-8 p-8">
+          <div className="bg-orange-200 rounded-lg p-6 shadow-md">
+            <h1 className="text-2xl font-bold text-gray-800 mb-4">
+              Bem-vindo ao Sistema de Biblioteca Gerardo José (SIBI)
+            </h1>
+            <p className="text-base text-gray-700 leading-relaxed">
+              O SIBI é um sistema administrativo desenvolvido para o
+              gerenciamento completo de uma biblioteca de forma virtual.
+              Atualmente, na sua versão 2.0 inicial, o SIBI foi concebido para
+              solucionar problemas enfrentados e desenvolvido como trabalho
+              voluntário em benefício da escola. Seu objetivo principal é
+              proporcionar facilidade, segurança e praticidade no gerenciamento
+              de bibliotecas.
+            </p>
           </div>
         </div>
 
-        <div className="w-full rounded-lg">
-          <div className="flex flex-col items-center justify-center h-full">
+        {/* Colaboradores */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-8 p-8">
+          {/* Colaborador 1 */}
+          <div className="rounded-lg border border-gray-300 shadow-md overflow-hidden">
             <img
-              className="w-[100%] h-[300px] max-w-80 max-h-80 rounded-full mt-2 border-[3px] border-green-500  p-[0.12rem]"
-              src={Logo}
-              alt="Foto do colaborador"
-              width={0}
-              height={0}
-              sizes="100vw"
+              className="w-full h-a object-cover object-center"
+              src="https://sibigerardojose.000webhostapp.com/View/Sobre/img/kb.jpg"
+              alt="Foto de Kayke Barbosa"
             />
-            <h2 className="font-bold text-2xl text-gray-800 p-2 uppercase">
-              João Alison
-            </h2>
+            <div className="p-4">
+              <h2 className="text-lg font-bold text-gray-800 mb-2">
+                Kayke Barbosa
+              </h2>
+              <p className="text-sm text-gray-700">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
+                dapibus velit id enim blandit suscipit.
+              </p>
+            </div>
           </div>
-        </div>
 
-        <div className="w-full rounded-lg">
-          <div className="flex flex-col items-center justify-center h-full">
+          {/* Colaborador 2 */}
+          <div className="rounded-lg border border-gray-300 shadow-md overflow-hidden">
             <img
-              className="w-[100%] h-[300px] max-w-80 max-h-80 rounded-full mt-2 border-[3px] border-green-500  p-[0.12rem]"
-              src={Logo}
-              alt="Foto do colaborador"
-              width={0}
-              height={0}
-              sizes="100vw"
+              className="w-full h-auto object-cover object-center"
+              src="https://sibigerardojose.000webhostapp.com/View/Sobre/img/ja.jpg"
+              alt="Foto de João Alison"
             />
-            <h2 className="font-bold text-2xl text-gray-800 p-2 uppercase">
-              Romário Henrique
-            </h2>
+            <div className="p-4">
+              <h2 className="text-lg font-bold text-gray-800 mb-2">
+                João Alison
+              </h2>
+              <p className="text-sm text-gray-700">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
+                dapibus velit id enim blandit suscipit.
+              </p>
+            </div>
           </div>
-        </div>
 
-        <div className="w-full rounded-lg">
-          <div className="flex flex-col items-center justify-center h-full">
+          {/* Colaborador 3 */}
+          <div className="rounded-lg border border-gray-300 shadow-md overflow-hidden">
             <img
-              className="w-[100%] h-[300px] max-w-80 max-h-80 rounded-full mt-2 border-[3px] border-green-500  p-[0.12rem]"
-              src={Logo}
-              alt="Foto do colaborador"
-              width={0}
-              height={0}
-              sizes="100vw"
+              className="w-full h-auto object-cover object-center"
+              src="https://sibigerardojose.000webhostapp.com/View/Sobre/img/rh.jpg"
+              alt="Foto de Romário Henrique"
             />
-            <h2 className="font-bold text-2xl text-gray-800 p-2 uppercase">
-              Marcos Vinicius
-            </h2>
+            <div className="p-4">
+              <h2 className="text-lg font-bold text-gray-800 mb-2">
+                Romário Henrique
+              </h2>
+              <p className="text-sm text-gray-700">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
+                dapibus velit id enim blandit suscipit.
+              </p>
+            </div>
           </div>
-        </div>
 
-        <div className="w-full rounded-lg">
-          <div className="flex flex-col items-center justify-center h-full">
+          {/* Colaborador 4 */}
+          <div className="rounded-lg border border-gray-300 shadow-md overflow-hidden">
             <img
-              className="w-[100%] h-[300px] max-w-80 max-h-80 rounded-full mt-2 border-[3px] border-green-500  p-[0.12rem]"
-              src={Logo}
-              alt="Foto do colaborador"
-              width={0}
-              height={0}
-              sizes="100vw"
+              className="w-full h-auto object-cover object-center"
+              src="https://sibigerardojose.000webhostapp.com/View/Sobre/img/mv.jpg"
+              alt="Foto de Marcos Vinicius"
             />
-            <h2 className="font-bold text-2xl text-gray-800 p-2 uppercase">
-              Bruno Rodrigues
-            </h2>
+            <div className="p-4">
+              <h2 className="text-lg font-bold text-gray-800 mb-2">
+                Marcos Vinicius
+              </h2>
+              <p className="text-sm text-gray-700">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
+                dapibus velit id enim blandit suscipit.
+              </p>
+            </div>
+          </div>
+
+          {/* Colaborador 5 */}
+          <div className="rounded-lg border border-gray-300 shadow-md overflow-hidden">
+            <img
+              className="w-full h-auto object-cover object-center"
+              src="https://sibigerardojose.000webhostapp.com/View/Sobre/img/br.jpg"
+              alt="Foto de Bruno Rodrigues"
+            />
+            <div className="p-4">
+              <h2 className="text-lg font-bold text-gray-800 mb-2">
+                Bruno Rodrigues
+              </h2>
+              <p className="text-sm text-gray-700">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
+                dapibus velit id enim blandit suscipit.
+              </p>
+            </div>
           </div>
         </div>
+        <ButtonReturn />
       </div>
-    </div>
+    </>
   );
 };
 

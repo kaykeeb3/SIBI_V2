@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Header from "../components/Header";
 import ButtonReturn from "../components/ButtonReturn";
 import axios from "axios";
@@ -6,6 +6,8 @@ import Search from "../public/search.svg";
 import { HiPencilAlt } from "react-icons/hi";
 import { RiDeleteBin5Fill } from "react-icons/ri";
 import { GiConfirmed } from "react-icons/gi";
+import { motion } from "framer-motion";
+import { format, addDays } from "date-fns";
 
 const Request = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -96,10 +98,14 @@ const Request = () => {
 
   const handleUpdateRequest = async (updatedRequest) => {
     try {
+      // Convertendo as datas para o formato esperado pela API usando date-fns
       const formattedRequest = {
         ...updatedRequest,
-        dataInicio: new Date(updatedRequest.dataInicio).toISOString(),
-        dataDevolucao: new Date(updatedRequest.dataDevolucao).toISOString(),
+        dataInicio: format(new Date(updatedRequest.dataInicio), "yyyy-MM-dd"),
+        dataDevolucao: format(
+          new Date(updatedRequest.dataDevolucao),
+          "yyyy-MM-dd"
+        ),
       };
 
       await axios.put(
@@ -120,6 +126,7 @@ const Request = () => {
   const isOverdue = (dateString) => {
     const today = new Date();
     const dueDate = new Date(dateString);
+
     return dueDate < today;
   };
 
@@ -178,8 +185,12 @@ const Request = () => {
                 return null; // Ignora os empréstimos devolvidos
               }
               return (
-                <div
+                <motion.div
                   key={request.id}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.5 }}
                   className={`bg-white p-6 rounded-lg shadow-md mb-6 border border-gray-300 ${
                     isOverdue(request.dataDevolucao) ? "border-red-500" : ""
                   }`}
@@ -191,9 +202,13 @@ const Request = () => {
                     SÉRIE/CURSO: {request.serieCurso}
                   </p>
                   <p className="text-gray-600">
-                    DATA: {new Date(request.dataInicio).toLocaleDateString()} -{" "}
-                    {new Date(request.dataDevolucao).toLocaleDateString()}
+                    DATA:{" "}
+                    {new Date(request.dataInicio).toLocaleDateString("pt-BR")} -{" "}
+                    {new Date(request.dataDevolucao).toLocaleDateString(
+                      "pt-BR"
+                    )}
                   </p>
+
                   <div className="flex items-center justify-end mt-4 space-x-4">
                     <button onClick={() => handleEdit(request)}>
                       <HiPencilAlt
@@ -216,7 +231,7 @@ const Request = () => {
                       </button>
                     )}
                   </div>
-                </div>
+                </motion.div>
               );
             })
           )}
@@ -224,7 +239,13 @@ const Request = () => {
         <ButtonReturn />
       </div>
       {modalVisible && (
-        <div className="fixed inset-0 z-50 overflow-y-auto">
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.5 }}
+          className="fixed inset-0 z-50 overflow-y-auto"
+        >
           <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
             <div
               className="fixed inset-0 transition-opacity"
@@ -336,7 +357,7 @@ const Request = () => {
               </div>
             </div>
           </div>
-        </div>
+        </motion.div>
       )}
     </>
   );

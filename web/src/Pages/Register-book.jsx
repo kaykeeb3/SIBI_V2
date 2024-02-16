@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { motion } from "framer-motion"; // Importação da biblioteca de animação
 import Header from "../components/Header";
 import ButtonReturn from "../components/ButtonReturn";
 import axios from "axios";
@@ -51,7 +52,14 @@ const Registerbook = () => {
       <Header />
       <div className="container mx-auto px-4 mt-8 pb-11 flex items-center justify-center h-screen">
         <ButtonReturn />
-        <div className="bg-white p-6 rounded-lg shadow-md w-96">
+        {/* Adicionando animação ao formulário */}
+        <motion.div
+          initial={{ opacity: 0, y: 50 }} // Configuração de entrada
+          animate={{ opacity: 1, y: 0 }} // Configuração de animação
+          exit={{ opacity: 0, y: 50 }} // Configuração de saída
+          transition={{ duration: 0.5 }} // Duração da transição
+          className="bg-white p-6 rounded-lg shadow-md w-96"
+        >
           <h2 className="text-xl font-bold mb-4">Cadastrar Novo Livro</h2>
           {mensagem && (
             <div className="text-center mb-4">
@@ -127,7 +135,7 @@ const Registerbook = () => {
               </button>
             </div>
           </form>
-        </div>
+        </motion.div>
       </div>
     </>
   );

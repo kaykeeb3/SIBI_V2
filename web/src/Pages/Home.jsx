@@ -1,3 +1,4 @@
+import React from "react";
 import Header from "../components/Header";
 import Request from "../public/request.svg";
 import Sytem from "../public/sytem.svg";
@@ -7,6 +8,7 @@ import Book from "../public/Book.svg";
 import RegisterBook from "../public/register-book.svg";
 import User from "../public/user.svg";
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 
 const Home = () => {
   return (
@@ -15,84 +17,98 @@ const Home = () => {
       <div className="h-full mt-16">
         <div className="max-[100%] flex items-center justify-center">
           <div className="h-full grid grid-cols-4 gap-x-32 gap-y-12 pt-5 max-sm:flex max-sm:flex-col max-sm:items-center max-sm:justify-center">
-            <div className="w-[255px] h-[255px] bg-green-500 border border-zinc-950 rounded-lg hover:bg-green-600">
+            {/* Livros */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.5 }}
+              className="w-[255px] h-[255px] bg-green-500 border border-zinc-950 rounded-lg hover:bg-green-600"
+            >
               <Link to="/books">
                 <div className="flex flex-col items-center justify-center h-full">
                   <img src={Book} className="w-[140px] h-[130px] mb-4" />
-                  <h2 className="text-center font-semibold text-zinc-800 text-2xl">
+                  <h2 className="text-center font-bold text-zinc-800 uppercase text-xl md:text-2xl lg:text-3xl xl:text-2xl">
                     Livros
                   </h2>
                 </div>
               </Link>
-            </div>
+            </motion.div>
 
-            <Link to="/request">
-              <div className="w-[255px] h-[255px] bg-green-500 border border-zinc-950 rounded-lg hover:bg-green-600">
+            {/* Requisições */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+              className="w-[255px] h-[255px] bg-green-500 border border-zinc-950 rounded-lg hover:bg-green-600"
+            >
+              <Link to="/request">
                 <div className="flex flex-col items-center justify-center h-full">
                   <img src={Request} className="w-[140px] h-[130px] mb-4" />
-                  <h2 className="text-center font-semibold text-zinc-800 text-2xl">
+                  <h2 className="text-center font-bold text-zinc-800 uppercase text-xl md:text-2xl lg:text-3xl xl:text-2xl">
                     Requisições
                   </h2>
                 </div>
-              </div>
-            </Link>
+              </Link>
+            </motion.div>
 
-            <Link to="/system">
-              <div className="w-[255px] h-[255px] bg-green-500 border border-zinc-950 rounded-lg hover:bg-green-600">
+            {/* Sistema */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              className="w-[255px] h-[255px] bg-green-500 border border-zinc-950 rounded-lg hover:bg-green-600"
+            >
+              <Link to="/system">
                 <div className="flex flex-col items-center justify-center h-full">
                   <img src={Sytem} className="w-[140px] h-[130px] mb-4" />
-                  <h2 className="text-center font-semibold text-zinc-800 text-2xl">
+                  <h2 className="text-center font-bold text-zinc-800 uppercase text-xl md:text-2xl lg:text-3xl xl:text-2xl">
                     Sistema
                   </h2>
                 </div>
-              </div>
-            </Link>
+              </Link>
+            </motion.div>
 
-            {/*<Link to="/multimeans">
-              <div className="w-[255px] h-[255px] bg-green-500 border border-zinc-950 rounded-lg hover:bg-green-600">
-                <div className="flex flex-col items-center justify-center h-full">
-                  <img src={Records} className="w-[140px] h-[130px] mb-4" />
-                  <h2 className="text-center font-semibold text-zinc-800 text-2xl">
-                    Multimeios
-                  </h2>
-                </div>
-              </div>
-  </Link>*/}
-
-            {/*<Link to="/monitors">
-              <div className="w-[255px] h-[255px] bg-green-500 border border-zinc-950 rounded-lg hover:bg-green-600">
-                <div className="flex flex-col items-center justify-center h-full">
-                  <img src={Monitors} className="w-[140px] h-[130px] mb-4" />
-                  <h2 className="text-center font-semibold text-zinc-800 text-2xl">
-                    Monitores
-                  </h2>
-                </div>
-              </div>
-  </Link>*/}
-
-            <Link to="/register-book">
-              <div className="w-[255px] h-[255px] bg-green-500 border border-zinc-950 rounded-lg hover:bg-green-600">
+            {/* Cadastro de Livro */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+              className="w-[255px] h-[255px] bg-green-500 border border-zinc-950 rounded-lg hover:bg-green-600"
+            >
+              <Link to="/register-book">
                 <div className="flex flex-col items-center justify-center h-full">
                   <img
                     src={RegisterBook}
                     className="w-[140px] h-[130px] mb-4"
                   />
-                  <h2 className="text-center font-semibold text-zinc-800 text-2xl">
+                  <h2 className="text-center font-bold text-zinc-800 uppercase text-xl md:text-2xl lg:text-3xl xl:text-2xl">
                     Cadastrar Livro
                   </h2>
                 </div>
-              </div>
-            </Link>
-            <Link to="/register-user">
-              <div className="w-[255px] h-[255px] bg-green-500 border border-zinc-950 rounded-lg hover:bg-green-600">
+              </Link>
+            </motion.div>
+
+            {/* Cadastro de Requisição */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.5, delay: 0.4 }}
+              className="w-[255px] h-[255px] bg-green-500 border border-zinc-950 rounded-lg hover:bg-green-600"
+            >
+              <Link to="/register-user">
                 <div className="flex flex-col items-center justify-center h-full">
                   <img src={User} className="w-[140px] h-[130px] mb-4" />
-                  <h2 className="text-center font-semibold text-zinc-800 text-2xl">
+                  <h2 className="text-center font-bold text-zinc-800 uppercase text-xl md:text-2xl lg:text-3xl xl:text-2xl">
                     Cadastrar Requisição
                   </h2>
                 </div>
-              </div>
-            </Link>
+              </Link>
+            </motion.div>
           </div>
         </div>
       </div>

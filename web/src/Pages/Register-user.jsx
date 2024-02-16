@@ -1,14 +1,28 @@
 import { useState } from "react";
+import { motion } from "framer-motion"; // Importação da biblioteca de animação
 import Header from "../components/Header";
 import ButtonReturn from "../components/ButtonReturn";
 import axios from "axios";
 
 const Registerbook = () => {
+  const getCurrentDate = () => {
+    const today = new Date();
+    const year = today.getFullYear();
+    let month = today.getMonth() + 1;
+    let day = today.getDate();
+
+    // Adiciona um zero na frente se o mês ou o dia for menor que 10
+    month = month < 10 ? `0${month}` : month;
+    day = day < 10 ? `0${day}` : day;
+
+    return `${year}-${month}-${day}`;
+  };
+
   const [novaRequisicao, setNovaRequisicao] = useState({
     nome: "",
     serieCurso: "",
-    dataInicio: "",
-    dataDevolucao: "",
+    dataInicio: getCurrentDate(), // Inicializa com a data atual
+    dataDevolucao: getCurrentDate(), // Inicializa com a data atual
     livroId: 0,
   });
 
@@ -33,8 +47,8 @@ const Registerbook = () => {
       setNovaRequisicao({
         nome: "",
         serieCurso: "",
-        dataInicio: "",
-        dataDevolucao: "",
+        dataInicio: getCurrentDate(), // Reinicializa com a data atual
+        dataDevolucao: getCurrentDate(), // Reinicializa com a data atual
         livroId: 0,
       });
     } catch (error) {
@@ -54,7 +68,14 @@ const Registerbook = () => {
       <Header />
       <div className="container mx-auto px-4 mt-8 pb-11 flex items-center justify-center h-screen">
         <ButtonReturn />
-        <div className="bg-white p-6 rounded-lg shadow-md w-96">
+        {/* Adicionando animação ao formulário */}
+        <motion.div
+          initial={{ opacity: 0, y: 50 }} // Configuração de entrada
+          animate={{ opacity: 1, y: 0 }} // Configuração de animação
+          exit={{ opacity: 0, y: 50 }} // Configuração de saída
+          transition={{ duration: 0.5 }} // Duração da transição
+          className="bg-white p-6 rounded-lg shadow-md w-96"
+        >
           <h2 className="text-xl font-bold mb-4">Cadastrar Nova Requisição</h2>
           {mensagem && (
             <div className="text-center mb-4">
@@ -129,7 +150,7 @@ const Registerbook = () => {
               </button>
             </div>
           </form>
-        </div>
+        </motion.div>
       </div>
     </>
   );

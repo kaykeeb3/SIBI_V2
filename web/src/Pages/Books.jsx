@@ -1,9 +1,10 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Header from "../components/Header";
 import { RiEdit2Line, RiDeleteBin6Line } from "react-icons/ri";
 import Search from "../public/search.svg";
 import ButtonReturn from "../components/ButtonReturn";
 import axios from "axios";
+import { motion } from "framer-motion";
 
 export default function Book() {
   const [livros, setLivros] = useState([]);
@@ -148,9 +149,19 @@ export default function Book() {
             <div className="animate-pulse bg-gray-200 p-6 rounded-lg shadow-md mb-6 h-40"></div>
           ) : (
             livros.map((livro) => (
-              <div
+              <motion.div
                 key={livro.id}
-                className="bg-white p-6 rounded-lg shadow-md mb-6 relative border border-gray-300"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.5 }}
+                className={`bg-white p-6 rounded-lg shadow-md mb-6 relative border border-gray-300 ${
+                  livro.quantidade === 1
+                    ? "border-red-500"
+                    : livro.quantidade < 3
+                    ? "border-yellow-500"
+                    : "border-green-500"
+                }`}
               >
                 <p className="font-bold text-lg mb-2">{livro.nome}</p>
                 <p className="text-gray-600 mb-1">ID: {livro.id}</p>
@@ -171,12 +182,18 @@ export default function Book() {
                     <RiDeleteBin6Line className="w-5 h-5" />
                   </button>
                 </div>
-              </div>
+              </motion.div>
             ))
           )}
         </div>
-        {mensagem && (
-          <div className="text-center mt-4">
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.5 }}
+          className="text-center mt-4"
+        >
+          {mensagem && (
             <p
               className={
                 mensagem.type === "success" ? "text-green-500" : "text-red-500"
@@ -184,11 +201,17 @@ export default function Book() {
             >
               {mensagem.text}
             </p>
-          </div>
-        )}
+          )}
+        </motion.div>
       </div>
       {livroSelecionado && (
-        <div className="fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center z-10">
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.5 }}
+          className="fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center z-10"
+        >
           <div className="bg-white p-6 rounded-lg shadow-md w-96">
             <h2 className="text-xl font-bold mb-4">Editar Livro</h2>
             <div className="mb-4">
@@ -262,7 +285,7 @@ export default function Book() {
               </button>
             </div>
           </div>
-        </div>
+        </motion.div>
       )}
     </>
   );
