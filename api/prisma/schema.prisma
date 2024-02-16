@@ -1,0 +1,39 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+// LOGIN
+model User {
+  id    Int    @id @default(autoincrement())
+  nome  String @unique
+  senha String
+}
+
+// LIVROS
+model Book {
+  id         Int    @id @default(autoincrement())
+  nome       String
+  numero     Int
+  autor      String
+  genero     String
+  quantidade Int
+  Loan       Loan[]
+}
+
+// models/Loan.model.prisma
+// REQUISIÇÃO
+model Loan {
+  id            Int      @id @default(autoincrement())
+  nome          String
+  serieCurso    String
+  dataInicio    DateTime
+  dataDevolucao DateTime
+  devolvido     Boolean  @default(false) // Adicionando o campo devolvido com o valor padrão false (teste)
+  livro         Book     @relation(fields: [livroId], references: [id])
+  livroId       Int
+}
