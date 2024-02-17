@@ -17,7 +17,7 @@ router.post(
 
       res.status(201).json({ livro: livroCadastrado });
     } catch (error) {
-      console.error("Error during livro creation:", error.message);
+      console.log("Error during livro creation:", error.message);
       res.status(500).json({ error: "Internal server error" });
     }
   }

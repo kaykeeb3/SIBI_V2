@@ -1,47 +1,34 @@
-// auth.js
+const axios = require("axios");
 
-import axios from "axios";
-
-// Função para fazer login e retornar o token
 async function login() {
   try {
     const response = await axios.post("http://localhost:3000/login");
     const { token } = response.data;
-    localStorage.setItem("token", token); // Armazenar o token no localStorage
     return token;
   } catch (error) {
-    console.error("Erro durante o login:", error.response.data.error);
-    throw new Error("Falha ao obter o token");
+    console.log("Erro durante o login:", error.message);
+    throw new Error("Unauthorized"); // Corrigido para lançar o erro com a mensagem correta
   }
 }
 
-// Função para fazer solicitações autenticadas com o token armazenado no localStorage
 async function fetchUserProfile() {
   try {
-    const token = localStorage.getItem("token"); // Obter o token do localStorage
+    const token = getTokenFromLocalStorage();
+    if (!token) {
+      throw new Error("Token não encontrado. Por favor, faça login primeiro.");
+    }
     const response = await axios.get("http://localhost:3000/home", {
-      headers: { Authorization: `Bearer ${token}` }, // Incluir o token no cabeçalho Authorization
+      headers: { Authorization: `Bearer ${token}` },
     });
     return response.data;
   } catch (error) {
-    console.error(
-      "Erro ao obter o perfil do usuário:",
-      error.response.data.error
-    );
-    throw new Error("Erro interno do servidor");
+    console.log("Erro ao obter o perfil do usuário:", error.message);
+    throw error; // Lança o erro original em vez de criar um novo com mensagem fixa
   }
 }
 
-// Exemplo de uso
-(async () => {
-  try {
-    const token = await login(); // Realizar o login e obter o token
-    console.log("Token:", token);
-    const userProfile = await fetchUserProfile(); // Obter o perfil do usuário autenticado
-    console.log("Perfil do usuário:", userProfile);
-  } catch (error) {
-    console.error("Erro:", error.message);
-  }
-})();
+function getTokenFromLocalStorage() {
+  return process.env.TOKEN === "null" ? null : process.env.TOKEN; // Verifica se o token é "null" e retorna null, caso contrário, retorna o valor do token
+}
 
-export { login, fetchUserProfile };
+module.exports = { login, fetchUserProfile, getTokenFromLocalStorage };

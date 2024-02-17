@@ -2,13 +2,16 @@
 
 const express = require("express");
 const router = express.Router();
+const loanController = require("../controllers/loanController");
+
+// Destructuring das funções do loanController
 const {
   listarEmprestimos,
   criarEmprestimo,
   atualizarEmprestimo,
   excluirEmprestimo,
   marcarDevolvido,
-} = require("../controllers/loanController");
+} = loanController;
 
 // Listar todos os empréstimos
 router.get("/", listarEmprestimos);

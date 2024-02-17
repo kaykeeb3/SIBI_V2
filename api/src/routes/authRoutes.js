@@ -1,36 +1,44 @@
 // authRoutes.js
 
-const express = require("express");
-const router = express.Router();
-const { PrismaClient } = require("@prisma/client");
-const {
-  authenticateToken,
-  validateUserInput,
-} = require("../middlewares/authMiddleware");
-const { login, getUserProfile } = require("../controllers/authController");
+const { Router } = require("express");
 
-const prisma = new PrismaClient();
+const authRoutes = (router) => {
+  const { PrismaClient } = require("@prisma/client");
+  const {
+    authenticateToken,
+    validateUserInput,
+  } = require("../middlewares/authMiddleware");
+  const { login, getUserProfile } = require("../controllers/authController");
 
-router.post("/login", validateUserInput, async (req, res) => {
-  try {
-    const token = await login(req.body, prisma);
-    res.json({ token });
-  } catch (error) {
-    console.error("Error during login:", error.message);
-    res.status(500).json({ error: "Internal server error during login" });
-  }
-});
+  const prisma = new PrismaClient();
 
-router.get("/home", authenticateToken, async (req, res) => {
-  try {
-    const userProfile = await getUserProfile(req.user.userId, prisma);
-    res.json(userProfile);
-  } catch (error) {
-    console.error("Error fetching user profile:", error.message);
-    res
-      .status(500)
-      .json({ error: "Internal server error fetching user profile" });
-  }
-});
+  router.post("/login", validateUserInput, async (req, res) => {
+    try {
+      const token = await login(req.body, prisma);
+      prisma.$disconnect();
+      res.json({ token });
+    } catch (error) {
+      console.log("Error during login:", error.message);
+      prisma.$disconnect();
+      res.status(500).json({ error: "Internal server error during login" });
+    }
+  });
 
-module.exports = router;
+  router.get("/home", authenticateToken, async (req, res) => {
+    try {
+      const userProfile = await getUserProfile(req.user.userId, prisma);
+      prisma.$disconnect();
+      res.json(userProfile);
+    } catch (error) {
+      console.log("Error fetching user profile:", error.message);
+      prisma.$disconnect();
+      res
+        .status(500)
+        .json({ error: "Internal server error fetching user profile" });
+    }
+  });
+
+  return router;
+};
+
+module.exports = authRoutes;

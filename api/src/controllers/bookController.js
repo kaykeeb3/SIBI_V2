@@ -31,7 +31,7 @@ async function listarLivros(req, res) {
 
     res.json(livros);
   } catch (error) {
-    console.error("Erro ao listar os livros:", error);
+    console.log("Erro ao listar os livros:", error);
     res.status(500).json({ error: "Erro interno do servidor" });
   }
 }
@@ -56,7 +56,7 @@ async function cadastrarLivro(req, res) {
 
     res.status(201).json(livroCriado);
   } catch (error) {
-    console.error("Erro durante o cadastro do livro:", error.message);
+    console.log("Erro durante o cadastro do livro:", error.message);
     res.status(500).json({ error: "Erro interno do servidor" });
   }
 }
@@ -83,7 +83,7 @@ async function editarLivro(req, res) {
 
     res.json(livroAtualizado);
   } catch (error) {
-    console.error("Erro durante a edição do livro:", error.message);
+    console.log("Erro durante a edição do livro:", error.message);
     res.status(500).json({ error: "Erro interno do servidor" });
   }
 }
@@ -111,7 +111,7 @@ async function deletarLivro(req, res) {
 
     res.json({ message: "Livro deletado com sucesso" });
   } catch (error) {
-    console.error("Erro durante a exclusão do livro:", error.message);
+    console.log("Erro durante a exclusão do livro:", error.message);
     res.status(500).json({ error: "Erro interno do servidor" });
   }
 }
