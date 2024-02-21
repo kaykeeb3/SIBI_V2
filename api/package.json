@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon src/index.js",
-    "vercel-build": "npx prisma migrate deploy",
+    "postinstall": "prisma generate",
+    "build": "prisma generate && <actual-build-command>",
     "test": "jest"
   },
   "jest": {
