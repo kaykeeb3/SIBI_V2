@@ -22,7 +22,7 @@ const Login = ({ onLogin }) => {
   const handleLogin = async () => {
     try {
       const response = await axios.post(
-        "http://localhost:3000/login",
+        "https://sibi-api.vercel.app/login",
         credentials, // Envie as credenciais diretamente
         {
           headers: {

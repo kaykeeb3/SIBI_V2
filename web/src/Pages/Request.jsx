@@ -42,9 +42,12 @@ const Request = () => {
       if (onlyReturned) {
         params.devolvido = true;
       }
-      const response = await axios.get("http://localhost:3000/emprestimos", {
-        params,
-      });
+      const response = await axios.get(
+        "https://sibi-api.vercel.app/emprestimos",
+        {
+          params,
+        }
+      );
       setRequests(response.data);
     } catch (error) {
       console.error("Erro ao buscar empréstimos:", error);
@@ -64,7 +67,9 @@ const Request = () => {
 
   const handleDelete = async (request) => {
     try {
-      await axios.delete(`http://localhost:3000/emprestimos/${request.id}`);
+      await axios.delete(
+        `https://sibi-api.vercel.app/emprestimos/${request.id}`
+      );
       setRequests(requests.filter((r) => r.id !== request.id));
       setDevolvidos([...devolvidos, request]);
       localStorage.setItem(
@@ -79,7 +84,7 @@ const Request = () => {
   const handleReturn = async (request) => {
     try {
       await axios.put(
-        `http://localhost:3000/emprestimos/${request.id}/devolver`
+        `https://sibi-api.vercel.app/emprestimos/${request.id}/devolver`
       );
       setRequests((prevRequests) =>
         prevRequests.filter((r) => r.id !== request.id)
@@ -109,7 +114,7 @@ const Request = () => {
       };
 
       await axios.put(
-        `http://localhost:3000/emprestimos/${updatedRequest.id}`,
+        `https://sibi-api.vercel.app/emprestimos/${updatedRequest.id}`,
         formattedRequest
       );
       setRequests((prevRequests) =>

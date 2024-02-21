@@ -36,7 +36,10 @@ const Registerbook = () => {
   const handleNovaRequisicaoSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:3000/emprestimos", novaRequisicao);
+      await axios.post(
+        "https://sibi-api.vercel.app/emprestimos",
+        novaRequisicao
+      );
       setMensagem({
         type: "success",
         text: "Requisição cadastrada com sucesso!",

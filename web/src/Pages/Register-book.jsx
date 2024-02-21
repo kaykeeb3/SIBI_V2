@@ -23,7 +23,7 @@ const Registerbook = () => {
   const handleNovoLivroSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:3000/livros", novoLivro);
+      await axios.post("https://sibi-api.vercel.app/livros", novoLivro);
       setMensagem({ type: "success", text: "Livro cadastrado com sucesso!" });
       setTimeout(() => {
         setMensagem("");
