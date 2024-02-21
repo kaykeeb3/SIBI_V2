@@ -38,7 +38,7 @@ const Login = ({ onLogin }) => {
       // Defina um temporizador para remover o token após uma hora
       setTimeout(() => {
         localStorage.removeItem("token");
-      }, 1800000); // 1 hora em milissegundos
+      }, 3600000); // 1 hora em milissegundos
 
       onLogin(token);
     } catch (error) {
