@@ -25,7 +25,6 @@ model Book {
   Loan       Loan[]
 }
 
-// models/Loan.model.prisma
 // REQUISIÇÃO
 model Loan {
   id            Int      @id @default(autoincrement())
