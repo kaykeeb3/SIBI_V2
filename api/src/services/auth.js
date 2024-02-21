@@ -2,7 +2,7 @@ const axios = require("axios");
 
 async function login() {
   try {
-    const response = await axios.post("http://localhost:3000/login");
+    const response = await axios.post("https://sibi-api.vercel.app/login");
     const { token } = response.data;
     return token;
   } catch (error) {
