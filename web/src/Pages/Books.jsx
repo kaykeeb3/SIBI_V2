@@ -173,13 +173,13 @@ export default function Book() {
                     className="text-blue-500"
                     onClick={() => handleEdit(livro)}
                   >
-                    <RiEdit2Line className="w-5 h-5" />
+                    <RiEdit2Line className="w-8 h-8 p-1" />
                   </button>
                   <button
                     className="text-red-500"
                     onClick={() => handleDelete(livro.id)}
                   >
-                    <RiDeleteBin6Line className="w-5 h-5" />
+                    <RiDeleteBin6Line className="w-8 h-8 p-1" />
                   </button>
                 </div>
               </motion.div>
