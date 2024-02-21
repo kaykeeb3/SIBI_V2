@@ -17,7 +17,7 @@ async function fetchUserProfile() {
     if (!token) {
       throw new Error("Token não encontrado. Por favor, faça login primeiro.");
     }
-    const response = await axios.get("http://localhost:3000/home", {
+    const response = await axios.get("https://sibi-api.vercel.app/home", {
       headers: { Authorization: `Bearer ${token}` },
     });
     return response.data;
