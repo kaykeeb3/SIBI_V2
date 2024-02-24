@@ -70,6 +70,8 @@ const Request = () => {
   const handleDelete = async (request) => {
     try {
       await axios.delete(
+        /*`https://sibi-api.vercel.app/emprestimos/${request.id}`*/
+
         `https://sibi-api.vercel.app/emprestimos/${request.id}`
       );
       setRequests(requests.filter((r) => r.id !== request.id));
@@ -112,10 +114,13 @@ const Request = () => {
       // Convertendo as datas para o formato esperado pela API usando date-fns
       const formattedRequest = {
         ...updatedRequest,
-        dataInicio: format(new Date(updatedRequest.dataInicio), "yyyy-MM-dd"),
+        dataInicio: format(
+          new Date(updatedRequest.dataInicio),
+          "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+        ),
         dataDevolucao: format(
           new Date(updatedRequest.dataDevolucao),
-          "yyyy-MM-dd"
+          "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
         ),
       };
 
