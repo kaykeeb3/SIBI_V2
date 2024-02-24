@@ -116,9 +116,9 @@ export default function Book() {
               placeholder="Pesquisar livro pelo nome..."
               value={filtroNome}
               onChange={handleFiltroNomeChange}
-              className="w-full border border-gray-300 px-4 py-4 rounded-lg focus:outline-none focus:border-blue-500"
+              className="w-full border border-gray-300 px-4 py-4 rounded-full focus:outline-none focus:border-blue-500"
             />
-            <button className="absolute right-0 top-0 bottom-0 px-3 flex items-center justify-center">
+            <button className="absolute right-0 top-0 bottom-0 px-4 flex items-center justify-center">
               <img src={Search} className="w-5 h-5" alt="Search icon" />
             </button>
           </div>

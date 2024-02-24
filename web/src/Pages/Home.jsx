@@ -13,7 +13,7 @@ const Home = () => {
     <>
       <Header />
       <div className="h-full mt-16">
-        <div className="max-[100%] flex items-center justify-center">
+        <div className="w-full flex items-center justify-center">
           <div className="h-full grid grid-cols-4 gap-x-32 gap-y-12 pt-5 max-sm:flex max-sm:flex-col max-sm:items-center max-sm:justify-center">
             {/* Livros */}
             <motion.div
@@ -21,7 +21,7 @@ const Home = () => {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.5 }}
-              className="w-[255px] h-[255px] bg-green-500 border border-zinc-950 rounded-lg hover:bg-green-600"
+              className="w-[235px] h-[235px] bg-green-500 border border-zinc-950 rounded-lg hover:bg-green-600"
             >
               <Link to="/books">
                 <div className="flex flex-col items-center justify-center h-full">
@@ -39,7 +39,7 @@ const Home = () => {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.5, delay: 0.1 }}
-              className="w-[255px] h-[255px] bg-green-500 border border-zinc-950 rounded-lg hover:bg-green-600"
+              className="w-[235px] h-[235px] bg-green-500 border border-zinc-950 rounded-lg hover:bg-green-600"
             >
               <Link to="/request">
                 <div className="flex flex-col items-center justify-center h-full">
@@ -57,7 +57,7 @@ const Home = () => {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
-              className="w-[255px] h-[255px] bg-green-500 border border-zinc-950 rounded-lg hover:bg-green-600"
+              className="w-[235px] h-[235px] bg-green-500 border border-zinc-950 rounded-lg hover:bg-green-600"
             >
               <Link to="/system">
                 <div className="flex flex-col items-center justify-center h-full">
@@ -75,7 +75,7 @@ const Home = () => {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.5, delay: 0.3 }}
-              className="w-[255px] h-[255px] bg-green-500 border border-zinc-950 rounded-lg hover:bg-green-600"
+              className="w-[235px] h-[235px] bg-green-500 border border-zinc-950 rounded-lg hover:bg-green-600"
             >
               <Link to="/register-book">
                 <div className="flex flex-col items-center justify-center h-full">
@@ -96,7 +96,7 @@ const Home = () => {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.5, delay: 0.4 }}
-              className="w-[255px] h-[255px] bg-green-500 border border-zinc-950 rounded-lg hover:bg-green-600"
+              className="w-[235px] h-[235px] bg-green-500 border border-zinc-950 rounded-lg hover:bg-green-600"
             >
               <Link to="/register-user">
                 <div className="flex flex-col items-center justify-center h-full">
