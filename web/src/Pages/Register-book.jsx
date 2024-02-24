@@ -3,6 +3,8 @@ import { motion } from "framer-motion"; // Importação da biblioteca de animaç
 import Header from "../components/Header";
 import ButtonReturn from "../components/ButtonReturn";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify"; // Importação do ToastContainer e toast
+import "react-toastify/dist/ReactToastify.css"; // Importação do CSS da biblioteca react-toastify
 
 const Registerbook = () => {
   const [novoLivro, setNovoLivro] = useState({
@@ -13,8 +15,6 @@ const Registerbook = () => {
     numero: 0, // Adicionando o campo 'numero'
   });
 
-  const [mensagem, setMensagem] = useState("");
-
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setNovoLivro({ ...novoLivro, [name]: value });
@@ -24,10 +24,7 @@ const Registerbook = () => {
     e.preventDefault();
     try {
       await axios.post("https://sibi-api.vercel.app/livros", novoLivro);
-      setMensagem({ type: "success", text: "Livro cadastrado com sucesso!" });
-      setTimeout(() => {
-        setMensagem("");
-      }, 3000);
+      toast.success("Livro cadastrado com sucesso!"); // Utilizando toast.success para exibir mensagem de sucesso
       setNovoLivro({
         nome: "",
         numero: "",
@@ -37,13 +34,7 @@ const Registerbook = () => {
       });
     } catch (error) {
       console.error("Erro ao cadastrar livro:", error);
-      setMensagem({
-        type: "error",
-        text: "Erro ao cadastrar livro. Por favor, tente novamente.",
-      });
-      setTimeout(() => {
-        setMensagem("");
-      }, 3000);
+      toast.error("Erro ao cadastrar livro. Por favor, tente novamente."); // Utilizando toast.error para exibir mensagem de erro
     }
   };
 
@@ -58,84 +49,73 @@ const Registerbook = () => {
           animate={{ opacity: 1, y: 0 }} // Configuração de animação
           exit={{ opacity: 0, y: 50 }} // Configuração de saída
           transition={{ duration: 0.5 }} // Duração da transição
-          className="bg-white p-6 rounded-lg shadow-md w-96"
+          className="bg-white p-8 rounded-lg shadow-md w-96 space-y-4"
         >
-          <h2 className="text-xl font-bold mb-4">Cadastrar Novo Livro</h2>
-          {mensagem && (
-            <div className="text-center mb-4">
-              <p
-                className={
-                  mensagem.type === "success"
-                    ? "text-green-500"
-                    : "text-red-500"
-                }
-              >
-                {mensagem.text}
-              </p>
-            </div>
-          )}
-          <form onSubmit={handleNovoLivroSubmit}>
-            <div className="mb-4">
-              <label className="block mb-1">Nome:</label>
+          <h2 className="text-xl font-bold">Cadastrar Novo Livro</h2>
+          <form onSubmit={handleNovoLivroSubmit} className="space-y-4">
+            <div>
+              <label className="block text-sm mb-1">Nome:</label>
               <input
                 type="text"
                 name="nome"
                 value={novoLivro.nome}
                 onChange={handleInputChange}
-                className="border border-gray-300 rounded-lg px-4 py-2 w-full focus:outline-none focus:border-blue-500"
+                className="border border-gray-300 rounded-lg px-3 py-2 w-full focus:outline-none focus:border-blue-500"
               />
             </div>
-            <div className="mb-4">
-              <label className="block mb-1">Número:</label>{" "}
+            <div>
+              <label className="block text-sm mb-1">Número:</label>{" "}
               {/* Adicionando o campo 'numero' */}
               <input
                 type="number"
                 name="numero"
                 value={novoLivro.numero}
                 onChange={handleInputChange}
-                className="border border-gray-300 rounded-lg px-4 py-2 w-full focus:outline-none focus:border-blue-500"
+                className="border border-gray-300 rounded-lg px-3 py-2 w-full focus:outline-none focus:border-blue-500"
               />
             </div>
-            <div className="mb-4">
-              <label className="block mb-1">Autor:</label>
+            <div>
+              <label className="block text-sm mb-1">Autor:</label>
               <input
                 type="text"
                 name="autor"
                 value={novoLivro.autor}
                 onChange={handleInputChange}
-                className="border border-gray-300 rounded-lg px-4 py-2 w-full focus:outline-none focus:border-blue-500"
+                className="border border-gray-300 rounded-lg px-3 py-2 w-full focus:outline-none focus:border-blue-500"
               />
             </div>
-            <div className="mb-4">
-              <label className="block mb-1">Gênero:</label>
+            <div>
+              <label className="block text-sm mb-1">Gênero:</label>
               <input
                 type="text"
                 name="genero"
                 value={novoLivro.genero}
                 onChange={handleInputChange}
-                className="border border-gray-300 rounded-lg px-4 py-2 w-full focus:outline-none focus:border-blue-500"
+                className="border border-gray-300 rounded-lg px-3 py-2 w-full focus:outline-none focus:border-blue-500"
               />
             </div>
-            <div className="mb-4">
-              <label className="block mb-1">Quantidade:</label>
+            <div>
+              <label className="block text-sm mb-1">Quantidade:</label>
               <input
                 type="number"
                 name="quantidade"
                 value={novoLivro.quantidade}
                 onChange={handleInputChange}
-                className="border border-gray-300 rounded-lg px-4 py-2 w-full focus:outline-none focus:border-blue-500"
+                className="border border-gray-300 rounded-lg px-3 py-2 w-full focus:outline-none focus:border-blue-500"
               />
             </div>
             <div className="flex justify-end">
               <button
                 type="submit"
-                className="bg-green-500 text-white px-4 w-full py-2 rounded-lg hover:bg-green-600"
+                className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 w-full"
               >
                 Cadastrar
               </button>
             </div>
           </form>
         </motion.div>
+        {/* Renderizando o ToastContainer */}
+        <ToastContainer position="bottom-right" />
       </div>
     </>
   );

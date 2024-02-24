@@ -8,6 +8,8 @@ import { RiDeleteBin5Fill } from "react-icons/ri";
 import { GiConfirmed } from "react-icons/gi";
 import { motion } from "framer-motion";
 import { format, addDays } from "date-fns";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Request = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -76,8 +78,10 @@ const Request = () => {
         "devolvidos",
         JSON.stringify([...devolvidos, request])
       );
+      toast.success("Empréstimo excluído com sucesso!");
     } catch (error) {
       console.error("Erro ao excluir empréstimo:", error);
+      toast.error("Erro ao excluir empréstimo.");
     }
   };
 
@@ -91,8 +95,10 @@ const Request = () => {
       ); // Remove o empréstimo da lista após devolução
       setDevolvidos([...devolvidos, request]);
       localStorage.setItem("devolvidos", JSON.stringify(devolvidos));
+      toast.success("Livro devolvido com sucesso!");
     } catch (error) {
       console.error("Erro ao marcar como devolvido:", error);
+      toast.error("Erro ao marcar como devolvido.");
     }
   };
 
@@ -123,8 +129,10 @@ const Request = () => {
         )
       );
       handleCloseModal();
+      toast.success("Empréstimo atualizado com sucesso!");
     } catch (error) {
       console.error("Erro ao atualizar empréstimo:", error);
+      toast.error("Erro ao atualizar empréstimo.");
     }
   };
 
@@ -251,7 +259,7 @@ const Request = () => {
           transition={{ duration: 0.5 }}
           className="fixed inset-0 z-50 overflow-y-auto"
         >
-          <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+          <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0 sm:items-center">
             <div
               className="fixed inset-0 transition-opacity"
               aria-hidden="true"
@@ -267,7 +275,7 @@ const Request = () => {
             <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
               <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                 <div className="sm:flex sm:items-start">
-                  <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                  <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
                     <h3 className="text-lg leading-6 font-medium text-gray-900">
                       Editar Empréstimo
                     </h3>
@@ -364,6 +372,7 @@ const Request = () => {
           </div>
         </motion.div>
       )}
+      <ToastContainer position="bottom-right" />
     </>
   );
 };

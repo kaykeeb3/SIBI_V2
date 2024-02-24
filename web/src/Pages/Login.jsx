@@ -3,6 +3,8 @@ import PropTypes from "prop-types";
 import axios from "axios";
 import Header from "../components/Header";
 import { motion } from "framer-motion";
+import { ToastContainer, toast } from "react-toastify"; // Importação do ToastContainer e toast
+import "react-toastify/dist/ReactToastify.css"; // Importação do CSS da biblioteca react-toastify
 
 const Login = ({ onLogin }) => {
   const [credentials, setCredentials] = useState({ nome: "", senha: "" });
@@ -43,7 +45,7 @@ const Login = ({ onLogin }) => {
       onLogin(token);
     } catch (error) {
       console.error("Error during login:", error);
-      alert("Error during login");
+      toast.error("Erro durante o login. Verifique suas credenciais.");
     }
   };
 
@@ -108,6 +110,8 @@ const Login = ({ onLogin }) => {
           </motion.button>
         </motion.div>
       </motion.div>
+      {/* Renderizando o ToastContainer */}
+      <ToastContainer position="bottom-right" />
     </>
   );
 };

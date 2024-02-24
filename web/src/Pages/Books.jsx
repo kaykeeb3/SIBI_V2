@@ -5,6 +5,8 @@ import Search from "../public/search.svg";
 import ButtonReturn from "../components/ButtonReturn";
 import axios from "axios";
 import { motion } from "framer-motion";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Book() {
   const [livros, setLivros] = useState([]);
@@ -12,7 +14,6 @@ export default function Book() {
   const [filtroCategoria, setFiltroCategoria] = useState("Todos");
   const [livroSelecionado, setLivroSelecionado] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [mensagem, setMensagem] = useState("");
 
   useEffect(() => {
     async function fetchLivros() {
@@ -25,6 +26,7 @@ export default function Book() {
         setLoading(false);
       } catch (error) {
         console.error("Erro ao buscar livros:", error);
+        toast.error("Erro ao buscar livros.");
       }
     }
 
@@ -48,16 +50,10 @@ export default function Book() {
       await axios.delete(`https://sibi-api.vercel.app/livros/${livroId}`);
       const updatedLivros = livros.filter((livro) => livro.id !== livroId);
       setLivros(updatedLivros);
-      setMensagem({ type: "success", text: "Livro deletado com sucesso!" });
-      setTimeout(() => {
-        setMensagem("");
-      }, 3000);
+      toast.success("Livro deletado com sucesso!");
     } catch (error) {
       console.error("Erro ao deletar livro:", error);
-      setMensagem({ type: "error", text: "Erro ao deletar livro." });
-      setTimeout(() => {
-        setMensagem("");
-      }, 3000);
+      toast.error("Erro ao deletar livro.");
     }
   };
 
@@ -80,7 +76,6 @@ export default function Book() {
       );
       setLivroSelecionado(null);
 
-      // Atualiza os livros após editar
       const updatedLivros = livros.map((livro) => {
         if (livro.id === livroSelecionado.id) {
           return livroSelecionado;
@@ -88,16 +83,10 @@ export default function Book() {
         return livro;
       });
       setLivros(updatedLivros);
-      setMensagem({ type: "success", text: "Livro editado com sucesso!" });
-      setTimeout(() => {
-        setMensagem("");
-      }, 3000);
+      toast.success("Livro editado com sucesso!");
     } catch (error) {
       console.error("Erro ao salvar edição do livro:", error);
-      setMensagem({ type: "error", text: "Erro ao editar livro." });
-      setTimeout(() => {
-        setMensagem("");
-      }, 3000);
+      toast.error("Erro ao editar livro.");
     }
   };
 
@@ -186,23 +175,9 @@ export default function Book() {
             ))
           )}
         </div>
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.5 }}
-          className="text-center mt-4"
-        >
-          {mensagem && (
-            <p
-              className={
-                mensagem.type === "success" ? "text-green-500" : "text-red-500"
-              }
-            >
-              {mensagem.text}
-            </p>
-          )}
-        </motion.div>
+        <div className="text-center mt-4">
+          <ToastContainer position="bottom-right" />
+        </div>
       </div>
       {livroSelecionado && (
         <motion.div

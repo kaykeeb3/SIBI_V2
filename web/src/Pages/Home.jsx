@@ -14,7 +14,7 @@ const Home = () => {
       <Header />
       <div className="h-full mt-16">
         <div className="w-full flex items-center justify-center">
-          <div className="h-full grid grid-cols-4 gap-x-32 gap-y-12 pt-5 max-sm:flex max-sm:flex-col max-sm:items-center max-sm:justify-center">
+          <div className="h-full grid grid-cols-4 gap-x-28 gap-y-12 pt-5 max-sm:flex max-sm:flex-col max-sm:items-center max-sm:justify-center">
             {/* Livros */}
             <motion.div
               initial={{ opacity: 0 }}
