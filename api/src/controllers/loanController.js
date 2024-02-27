@@ -1,5 +1,5 @@
 const { PrismaClient } = require("@prisma/client");
-const { isValid, parseISO, isAfter } = require("date-fns");
+const { isValid, parseISO } = require("date-fns");
 
 const prisma = new PrismaClient();
 
