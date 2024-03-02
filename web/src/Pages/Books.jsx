@@ -20,7 +20,7 @@ export default function Book() {
       try {
         setLoading(true);
         const response = await axios.get(
-          `https://sibi-api.vercel.app/livros?nome=${filtroNome}&categoria=${filtroCategoria}`
+          `http://localhost:3000/livros?nome=${filtroNome}&categoria=${filtroCategoria}`
         );
         setLivros(response.data);
         setLoading(false);
@@ -47,7 +47,7 @@ export default function Book() {
 
   const handleDelete = async (livroId) => {
     try {
-      await axios.delete(`https://sibi-api.vercel.app/livros/${livroId}`);
+      await axios.delete(`http://localhost:3000/livros/${livroId}`);
       const updatedLivros = livros.filter((livro) => livro.id !== livroId);
       setLivros(updatedLivros);
       toast.success("Livro deletado com sucesso!");
@@ -66,7 +66,7 @@ export default function Book() {
       }
 
       await axios.put(
-        `https://sibi-api.vercel.app/livros/${livroSelecionado.id}`,
+        `http://localhost:3000/livros/${livroSelecionado.id}`,
         livroSelecionado,
         {
           headers: {
@@ -97,7 +97,7 @@ export default function Book() {
   return (
     <>
       <Header />
-      <div className="container mx-auto px-4 mt-8 pb-11">
+      <div className="container mx-auto px-4 pb-11">
         <div className="flex items-center justify-between mb-6">
           <div className="relative w-[75%] py-6">
             <input
@@ -114,7 +114,7 @@ export default function Book() {
           <select
             value={filtroCategoria}
             onChange={handleFiltroCategoriaChange}
-            className="bg-green-500 rounded-md text-white px-4 py-3"
+            className="bg-blue-500 rounded-md text-white px-4 py-3"
           >
             <option value="Todos">TODOS</option>
             <option value="Romance">Romance</option>
@@ -248,7 +248,7 @@ export default function Book() {
             <div className="flex justify-between">
               <button
                 onClick={handleSaveEdit}
-                className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600"
+                className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
               >
                 Salvar
               </button>

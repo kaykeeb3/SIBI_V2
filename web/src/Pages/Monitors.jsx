@@ -1,5 +1,3 @@
-import LoanChart from "../components/LoanChart";
-
 const Monitors = () => {
   return (
     <div className="flex justify-center items-center h-screen bg-gray-100">

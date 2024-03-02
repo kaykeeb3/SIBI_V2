@@ -1,8 +1,9 @@
-const Header = () => {
+import React, { useState } from "react";
+
+const Header = ({ toggleMenu }) => {
   return (
-    <header className="h-0">
-      <div className="bg-green-500 w-full h-5" />
-      <div className="bg-yellow-400 w-full h-5" />
+    <header className="bg-blue-900 text-white h-16">
+      <div className="container mx-auto flex items-center justify-end py-4 px-6" />
     </header>
   );
 };

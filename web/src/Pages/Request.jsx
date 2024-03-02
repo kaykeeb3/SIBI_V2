@@ -44,12 +44,9 @@ const Request = () => {
       if (onlyReturned) {
         params.devolvido = true;
       }
-      const response = await axios.get(
-        "https://sibi-api.vercel.app/emprestimos",
-        {
-          params,
-        }
-      );
+      const response = await axios.get("http://localhost:3000/emprestimos", {
+        params,
+      });
       setRequests(response.data);
     } catch (error) {
       console.error("Erro ao buscar empréstimos:", error);
@@ -70,9 +67,9 @@ const Request = () => {
   const handleDelete = async (request) => {
     try {
       await axios.delete(
-        /*`https://sibi-api.vercel.app/emprestimos/${request.id}`*/
+        /*`http://localhost:3000/emprestimos/${request.id}`*/
 
-        `https://sibi-api.vercel.app/emprestimos/${request.id}`
+        `http://localhost:3000/emprestimos/${request.id}`
       );
       setRequests(requests.filter((r) => r.id !== request.id));
       setDevolvidos([...devolvidos, request]);
@@ -90,7 +87,7 @@ const Request = () => {
   const handleReturn = async (request) => {
     try {
       await axios.put(
-        `https://sibi-api.vercel.app/emprestimos/${request.id}/devolver`
+        `http://localhost:3000/emprestimos/${request.id}/devolver`
       );
       setRequests((prevRequests) =>
         prevRequests.filter((r) => r.id !== request.id)
@@ -125,7 +122,7 @@ const Request = () => {
       };
 
       await axios.put(
-        `https://sibi-api.vercel.app/emprestimos/${updatedRequest.id}`,
+        `http://localhost:3000/emprestimos/${updatedRequest.id}`,
         formattedRequest
       );
       setRequests((prevRequests) =>
@@ -155,7 +152,7 @@ const Request = () => {
   return (
     <>
       <Header />
-      <div className="container mx-auto px-4 mt-8 pb-11">
+      <div className="container mx-auto px-4 pb-11">
         <div className="flex items-center justify-between mb-6">
           <div className="relative w-[75%] py-6">
             <input
@@ -176,7 +173,7 @@ const Request = () => {
           <select
             value={category}
             onChange={(e) => setCategory(e.target.value)}
-            className="bg-green-500 rounded-md text-white px-6 py-3"
+            className="bg-blue-500 rounded-md text-white px-6 py-3"
           >
             <option value="Todos">TODOS</option>
             <option value="1° ADM">1° ADM</option>
@@ -362,7 +359,7 @@ const Request = () => {
               <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
                 <button
                   onClick={() => handleUpdateRequest(selectedRequest)}
-                  className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-600 text-base font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 sm:ml-3 sm:w-auto sm:text-sm"
+                  className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 sm:ml-3 sm:w-auto sm:text-sm"
                 >
                   Salvar Alterações
                 </button>

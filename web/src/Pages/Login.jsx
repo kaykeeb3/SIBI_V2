@@ -53,14 +53,14 @@ const Login = ({ onLogin }) => {
     <>
       <Header />
       <motion.div
-        className="flex justify-center items-center h-screen"
+        className="flex justify-center items-center mt-20"
         id="background"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1 }}
       >
         <motion.div
-          className="w-96 bg-white/90 p-8 rounded-md shadow-md border border-green-500 h-[350px]"
+          className="w-96 bg-white/90 p-8 rounded-md shadow-md border border-blue-500 h-[350px]"
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
           transition={{ delay: 0.5, duration: 0.5 }}
@@ -80,7 +80,7 @@ const Login = ({ onLogin }) => {
               required
               value={credentials.nome}
               onChange={handleInputChange}
-              className="w-full border rounded-md p-2 focus:outline-none focus:border-green-500"
+              className="w-full border rounded-md p-2 focus:outline-none focus:border-blue-500"
             />
           </div>
           <div className="mb-6">
@@ -97,12 +97,12 @@ const Login = ({ onLogin }) => {
               required
               value={credentials.senha}
               onChange={handleInputChange}
-              className="w-full border rounded-md p-2 focus:outline-none focus:border-green-500"
+              className="w-full border rounded-md p-2 focus:outline-none focus:border-blue-500"
             />
           </div>
           <motion.button
             onClick={handleLogin}
-            className="bg-green-500 text-white p-2 rounded-md w-full hover:bg-green-600 transition duration-300"
+            className="bg-blue-500 text-white p-2 rounded-md w-full hover:bg-blue-600 transition duration-300"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
