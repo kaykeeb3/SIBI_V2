@@ -20,7 +20,7 @@ export default function Book() {
       try {
         setLoading(true);
         const response = await axios.get(
-          `http://localhost:3000/livros?nome=${filtroNome}&categoria=${filtroCategoria}`
+          `https://sibi-api.vercel.app/livros?nome=${filtroNome}&categoria=${filtroCategoria}`
         );
         setLivros(response.data);
         setLoading(false);
@@ -47,7 +47,7 @@ export default function Book() {
 
   const handleDelete = async (livroId) => {
     try {
-      await axios.delete(`http://localhost:3000/livros/${livroId}`);
+      await axios.delete(`https://sibi-api.vercel.app/livros/${livroId}`);
       const updatedLivros = livros.filter((livro) => livro.id !== livroId);
       setLivros(updatedLivros);
       toast.success("Livro deletado com sucesso!");
@@ -66,7 +66,7 @@ export default function Book() {
       }
 
       await axios.put(
-        `http://localhost:3000/livros/${livroSelecionado.id}`,
+        `https://sibi-api.vercel.app/livros/${livroSelecionado.id}`,
         livroSelecionado,
         {
           headers: {

@@ -39,8 +39,8 @@ const Home = () => {
           axios.get("https://sibi-api.vercel.app/livros"),
           axios.get("https://sibi-api.vercel.app/emprestimos"),
           axios.get("https://sibi-api.vercel.app/livros"),
-          axios.get("http://localhost:3000/emprestimos/atrasados"),
-          axios.get("http://localhost:3000/livros/disponiveis"), // Nova chamada para livros disponíveis
+          axios.get("https://sibi-api.vercel.app/emprestimos/atrasados"),
+          axios.get("https://sibi-api.vercel.app/livros/disponiveis"), // Nova chamada para livros disponíveis
         ]);
 
         const livrosExcluindoMaterialAcademico = livrosResponse.data.filter(

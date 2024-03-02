@@ -44,9 +44,12 @@ const Request = () => {
       if (onlyReturned) {
         params.devolvido = true;
       }
-      const response = await axios.get("http://localhost:3000/emprestimos", {
-        params,
-      });
+      const response = await axios.get(
+        "https://sibi-api.vercel.app/emprestimos",
+        {
+          params,
+        }
+      );
       setRequests(response.data);
     } catch (error) {
       console.error("Erro ao buscar empréstimos:", error);
@@ -67,9 +70,9 @@ const Request = () => {
   const handleDelete = async (request) => {
     try {
       await axios.delete(
-        /*`http://localhost:3000/emprestimos/${request.id}`*/
+        /*`https://sibi-api.vercel.app/emprestimos/${request.id}`*/
 
-        `http://localhost:3000/emprestimos/${request.id}`
+        `https://sibi-api.vercel.app/emprestimos/${request.id}`
       );
       setRequests(requests.filter((r) => r.id !== request.id));
       setDevolvidos([...devolvidos, request]);
@@ -87,7 +90,7 @@ const Request = () => {
   const handleReturn = async (request) => {
     try {
       await axios.put(
-        `http://localhost:3000/emprestimos/${request.id}/devolver`
+        `https://sibi-api.vercel.app/emprestimos/${request.id}/devolver`
       );
       setRequests((prevRequests) =>
         prevRequests.filter((r) => r.id !== request.id)
@@ -122,7 +125,7 @@ const Request = () => {
       };
 
       await axios.put(
-        `http://localhost:3000/emprestimos/${updatedRequest.id}`,
+        `https://sibi-api.vercel.app/emprestimos/${updatedRequest.id}`,
         formattedRequest
       );
       setRequests((prevRequests) =>
@@ -359,7 +362,7 @@ const Request = () => {
               <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
                 <button
                   onClick={() => handleUpdateRequest(selectedRequest)}
-                  className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 sm:ml-3 sm:w-auto sm:text-sm"
+                  className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm"
                 >
                   Salvar Alterações
                 </button>
