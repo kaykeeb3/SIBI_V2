@@ -1,3 +1,5 @@
+// controllers/bookController.js
+
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
@@ -116,4 +118,28 @@ async function deletarLivro(req, res) {
   }
 }
 
-module.exports = { cadastrarLivro, editarLivro, deletarLivro, listarLivros };
+async function contarLivrosDisponiveis(req, res) {
+  try {
+    const quantidadeLivrosDisponiveis = await prisma.book.count({
+      where: {
+        quantidade: { gt: 0 }, // Verifica se a quantidade é maior que zero
+        NOT: {
+          genero: "Material Acadêmico",
+        },
+      },
+    });
+
+    res.json({ quantidadeLivrosDisponiveis });
+  } catch (error) {
+    console.error("Erro ao contar os livros disponíveis:", error);
+    res.status(500).json({ error: "Erro interno do servidor" });
+  }
+}
+
+module.exports = {
+  cadastrarLivro,
+  editarLivro,
+  deletarLivro,
+  listarLivros,
+  contarLivrosDisponiveis,
+};

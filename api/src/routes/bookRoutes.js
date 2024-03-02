@@ -1,10 +1,10 @@
-// routes/livroRoutes.js
+// routes/bookRoutes.js
 
 const express = require("express");
 const router = express.Router();
 const { authenticateToken } = require("../middlewares/authMiddleware");
 const { validateLivroInput } = require("../middlewares/bookMiddleware");
-const { cadastrarLivro } = require("../controllers/bookController");
+const bookController = require("../controllers/bookController");
 
 router.post(
   "/livros",
@@ -13,7 +13,7 @@ router.post(
   async (req, res) => {
     try {
       const livroData = req.body;
-      const livroCadastrado = await cadastrarLivro(livroData);
+      const livroCadastrado = await bookController.cadastrarLivro(livroData);
 
       res.status(201).json({ livro: livroCadastrado });
     } catch (error) {

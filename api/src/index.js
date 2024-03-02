@@ -10,6 +10,7 @@ const {
   cadastrarLivro,
   editarLivro,
   deletarLivro,
+  contarLivrosDisponiveis,
 } = require("./controllers/bookController");
 const loanRoutes = require("./routes/loanRoutes"); // Importe as rotas de empréstimos
 
@@ -46,6 +47,7 @@ app.get("/livros", listarLivros);
 app.post("/livros", cadastrarLivro);
 app.put("/livros/:id", editarLivro);
 app.delete("/livros/:id", deletarLivro);
+app.get("/livros/disponiveis", contarLivrosDisponiveis);
 
 // Utilize as rotas de empréstimos
 app.use("/emprestimos", loanRoutes);

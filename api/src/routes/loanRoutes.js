@@ -11,6 +11,7 @@ const {
   atualizarEmprestimo,
   excluirEmprestimo,
   marcarDevolvido,
+  listarEmprestimosAtrasados, // Adicionando a nova função do controller
 } = loanController;
 
 // Listar todos os empréstimos
@@ -27,5 +28,8 @@ router.delete("/:id", excluirEmprestimo);
 
 // Marcar empréstimo como devolvido
 router.put("/:id/devolver", marcarDevolvido);
+
+// Listar empréstimos atrasados
+router.get("/atrasados", listarEmprestimosAtrasados); // Nova rota para listar empréstimos atrasados
 
 module.exports = router;

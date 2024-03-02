@@ -1,12 +1,14 @@
+// loanController.js
+
 const { PrismaClient } = require("@prisma/client");
-const { isValid, parseISO } = require("date-fns");
+const { isValid, parseISO } = require("date-fns"); // Importe a função isValid do date-fns
 
 const prisma = new PrismaClient();
 
-function validarDatas(dataInicio, dataDevolucao) {
+// Função para validar as datas
+async function validarDatas(dataInicio, dataDevolucao) {
   return isValid(new Date(dataInicio)) && isValid(new Date(dataDevolucao));
 }
-
 async function listarEmprestimos(req, res) {
   try {
     const { nome, serieCurso } = req.query;
@@ -48,7 +50,7 @@ async function listarEmprestimos(req, res) {
 
     res.json(emprestimos);
   } catch (error) {
-    console.log("Erro ao listar os empréstimos:", error.message);
+    console.error("Erro ao listar os empréstimos:", error.message);
     res.status(500).json({ error: "Erro interno do servidor" });
   }
 }
@@ -64,7 +66,7 @@ async function marcarDevolvido(req, res) {
 
     res.json(emprestimo);
   } catch (error) {
-    console.log("Erro ao marcar empréstimo como devolvido:", error.message);
+    console.error("Erro ao marcar empréstimo como devolvido:", error.message);
     res.status(500).json({ error: "Erro interno do servidor" });
   }
 }
@@ -73,22 +75,24 @@ async function criarEmprestimo(req, res) {
   const { nome, serieCurso, dataInicio, dataDevolucao, livroId } = req.body;
 
   try {
+    // Verificar se as datas fornecidas são válidas
     if (!validarDatas(dataInicio, dataDevolucao)) {
       return res.status(400).json({ error: "Datas fornecidas são inválidas" });
     }
 
+    // Se as datas forem válidas, criar o empréstimo
     const emprestimo = await prisma.loan.create({
       data: {
         nome: nome,
         serieCurso: serieCurso,
-        dataInicio: new Date(dataInicio),
-        dataDevolucao: new Date(dataDevolucao),
+        dataInicio: parseISO(dataInicio), // Parse das datas para o formato Date
+        dataDevolucao: parseISO(dataDevolucao), // Parse das datas para o formato Date
         livroId: parseInt(livroId), // Converter para inteiro,
       },
     });
     res.json(emprestimo);
   } catch (error) {
-    console.log("Erro ao criar empréstimo:", error.message);
+    console.error("Erro ao criar empréstimo:", error.message);
     res.status(500).json({ error: "Erro interno do servidor" });
   }
 }
@@ -107,7 +111,7 @@ async function obterEmprestimos(req, res) {
 
     res.json(emprestimo);
   } catch (error) {
-    console.log("Erro ao obter empréstimo:", error.message);
+    console.error("Erro ao obter empréstimo:", error.message);
     res.status(500).json({ error: "Erro interno do servidor" });
   }
 }
@@ -142,7 +146,7 @@ async function atualizarEmprestimo(req, res) {
 
     res.json(emprestimoAtualizado);
   } catch (error) {
-    console.log("Erro ao atualizar empréstimo:", error.message);
+    console.error("Erro ao atualizar empréstimo:", error.message);
     res
       .status(500)
       .json({ error: "Erro interno do servidor ao atualizar empréstimo" });
@@ -159,7 +163,25 @@ async function excluirEmprestimo(req, res) {
 
     res.json({ message: "Empréstimo deletado com sucesso" });
   } catch (error) {
-    console.log("Erro ao excluir empréstimo:", error.message);
+    console.error("Erro ao excluir empréstimo:", error.message);
+    res.status(500).json({ error: "Erro interno do servidor" });
+  }
+}
+
+async function listarEmprestimosAtrasados(req, res) {
+  try {
+    const emprestimosAtrasados = await prisma.loan.findMany({
+      where: {
+        devolvido: false, // Apenas empréstimos não devolvidos
+        dataDevolucao: {
+          lt: new Date(), // Data de devolução é anterior à data atual
+        },
+      },
+    });
+
+    res.json(emprestimosAtrasados);
+  } catch (error) {
+    console.error("Erro ao listar empréstimos atrasados:", error.message);
     res.status(500).json({ error: "Erro interno do servidor" });
   }
 }
@@ -171,4 +193,5 @@ module.exports = {
   atualizarEmprestimo,
   excluirEmprestimo,
   marcarDevolvido,
+  listarEmprestimosAtrasados, // Adicionando a nova função ao exports
 };
