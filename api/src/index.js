@@ -8,7 +8,7 @@ const { PrismaClient } = require("@prisma/client");
 const { authenticateToken } = require("./middlewares/authMiddleware");
 const { login, getUserProfile } = require("./controllers/authController");
 
-const loanRoutes = require("./routes/equipmentRoutes"); // Importe as rotas de empréstimos
+const loanRoutes = require("./routes/loanRoutes"); // Importe as rotas de empréstimos
 
 const prisma = new PrismaClient();
 const app = express();

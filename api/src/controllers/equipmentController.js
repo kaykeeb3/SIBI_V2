@@ -37,16 +37,16 @@ async function obterEquipamentoPorId(req, res) {
   try {
     const equipamento = await prisma.equipment.findUnique({
       where: {
-        id: equipamentoId,
+        id: equipamentoId, // Corrigido: utilize o valor de equipamentoId como o ID do equipamento
       },
     });
     if (!equipamento) {
       return res.status(404).json({ error: "Equipamento não encontrado" });
     }
-    res.json(equipamento);
+    return res.status(200).json(equipamento);
   } catch (error) {
-    console.error("Erro ao obter equipamento:", error.message);
-    res.status(500).json({ error: "Erro interno do servidor" });
+    console.error("Erro ao obter equipamento:", error);
+    return res.status(500).json({ error: "Erro interno do servidor" });
   }
 }
 
