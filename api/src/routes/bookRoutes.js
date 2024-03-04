@@ -1,26 +1,21 @@
-// routes/bookRoutes.js
-
 const express = require("express");
 const router = express.Router();
-const { authenticateToken } = require("../middlewares/authMiddleware");
-const { validateLivroInput } = require("../middlewares/bookMiddleware");
 const bookController = require("../controllers/bookController");
+const { validateLivroInput } = require("../middlewares/bookMiddleware");
 
-router.post(
-  "/livros",
-  authenticateToken,
-  validateLivroInput,
-  async (req, res) => {
-    try {
-      const livroData = req.body;
-      const livroCadastrado = await bookController.cadastrarLivro(livroData);
+// Rota para listar todos os livros
+router.get("/", bookController.listarLivros);
 
-      res.status(201).json({ livro: livroCadastrado });
-    } catch (error) {
-      console.log("Error during livro creation:", error.message);
-      res.status(500).json({ error: "Internal server error" });
-    }
-  }
-);
+// Rota para cadastrar um novo livro
+router.post("/", validateLivroInput, bookController.cadastrarLivro);
+
+// Rota para editar um livro pelo ID
+router.put("/:id", validateLivroInput, bookController.editarLivro);
+
+// Rota para deletar um livro pelo ID
+router.delete("/:id", bookController.deletarLivro);
+
+// Rota para contar livros disponíveis
+router.get("/disponiveis", bookController.contarLivrosDisponiveis);
 
 module.exports = router;

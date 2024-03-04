@@ -1,3 +1,5 @@
+const equipmentRoutes = require("./routes/equipmentRoutes");
+const bookRoutes = require("./routes/bookRoutes");
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
@@ -5,14 +7,8 @@ const cookieParser = require("cookie-parser");
 const { PrismaClient } = require("@prisma/client");
 const { authenticateToken } = require("./middlewares/authMiddleware");
 const { login, getUserProfile } = require("./controllers/authController");
-const {
-  listarLivros,
-  cadastrarLivro,
-  editarLivro,
-  deletarLivro,
-  contarLivrosDisponiveis,
-} = require("./controllers/bookController");
-const loanRoutes = require("./routes/loanRoutes"); // Importe as rotas de empréstimos
+
+const loanRoutes = require("./routes/equipmentRoutes"); // Importe as rotas de empréstimos
 
 const prisma = new PrismaClient();
 const app = express();
@@ -43,14 +39,13 @@ app.get("/home", authenticateToken, async (req, res) => {
 });
 
 // Rotas para operações CRUD de livros
-app.get("/livros", listarLivros);
-app.post("/livros", cadastrarLivro);
-app.put("/livros/:id", editarLivro);
-app.delete("/livros/:id", deletarLivro);
-app.get("/livros/disponiveis", contarLivrosDisponiveis);
+app.use("/livros", bookRoutes);
 
 // Utilize as rotas de empréstimos
 app.use("/emprestimos", loanRoutes);
+
+// Rotas para operações CRUD de equipamentos
+app.use("/equipamentos", equipmentRoutes);
 
 app.use((err, req, res, next) => {
   console.error("Erro interno do servidor:", err.message);

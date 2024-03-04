@@ -36,3 +36,11 @@ model Loan {
   livro         Book     @relation(fields: [livroId], references: [id])
   livroId       Int
 }
+
+// EQUIPAMENTOS
+model Equipment {
+  id         Int    @id @default(autoincrement())
+  nome       String
+  tipo       String
+  quantidade Int
+}
