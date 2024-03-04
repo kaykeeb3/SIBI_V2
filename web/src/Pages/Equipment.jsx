@@ -20,7 +20,7 @@ export default function Equipment() {
       try {
         setLoading(true);
         const response = await axios.get(
-          `http://localhost:3000/equipamentos?nome=${filtroNome}&categoria=${filtroCategoria}`
+          `https://sibi-api.vercel.app/equipamentos?nome=${filtroNome}&categoria=${filtroCategoria}`
         );
         setEquipamentos(response.data);
         setLoading(false);
@@ -49,7 +49,9 @@ export default function Equipment() {
 
   const handleDelete = async (equipamentoId) => {
     try {
-      await axios.delete(`http://localhost:3000/equipamentos/${equipamentoId}`);
+      await axios.delete(
+        `https://sibi-api.vercel.app/equipamentos/${equipamentoId}`
+      );
       const updatedEquipamentos = equipamentos.filter(
         (equipamento) => equipamento.id !== equipamentoId
       );
@@ -70,7 +72,7 @@ export default function Equipment() {
       }
 
       await axios.put(
-        `http://localhost:3000/equipamentos/${equipamentoSelecionado.id}`,
+        `https://sibi-api.vercel.app/equipamentos/${equipamentoSelecionado.id}`,
         equipamentoSelecionado,
         {
           headers: {

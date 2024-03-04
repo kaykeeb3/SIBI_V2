@@ -36,7 +36,7 @@ const RegisterEquipment = () => {
     try {
       // Enviar os dados no formato JSON
       await axios.post(
-        "http://localhost:3000/equipamentos",
+        "https://sibi-api.vercel.app/equipamentos",
         {
           nome: newEquipment.nome,
           tipo: newEquipment.tipo,
