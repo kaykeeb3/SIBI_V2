@@ -8,7 +8,8 @@ import {
   RiSettings4Line,
   RiUserSettingsLine,
 } from "react-icons/ri";
-import { FaRegAddressBook } from "react-icons/fa";
+import { FaRegAddressBook, FaDesktop } from "react-icons/fa";
+import { FaComputer } from "react-icons/fa6";
 import axios from "axios";
 import Header from "../components/Header";
 
@@ -23,8 +24,8 @@ const Home = () => {
   const [loading, setLoading] = useState(true);
   const [genresCount, setGenresCount] = useState(0);
   const [requestsDelayedCount, setRequestsDelayedCount] = useState(0);
-  const [isLoadingPassword, setIsLoadingPassword] = useState(false);
-  const [livrosDisponiveisCount, setLivrosDisponiveisCount] = useState(0); // Novo estado para contar livros disponíveis
+  const [livrosDisponiveisCount, setLivrosDisponiveisCount] = useState(0);
+  const [equipamentosCount, setEquipamentosCount] = useState(0);
 
   useEffect(() => {
     async function fetchData() {
@@ -34,13 +35,15 @@ const Home = () => {
           emprestimosResponse,
           genresResponse,
           requestsDelayedResponse,
-          livrosDisponiveisResponse, // Nova resposta para livros disponíveis
+          livrosDisponiveisResponse,
+          equipamentosResponse,
         ] = await Promise.all([
           axios.get("https://sibi-api.vercel.app/livros"),
           axios.get("https://sibi-api.vercel.app/emprestimos"),
           axios.get("https://sibi-api.vercel.app/livros"),
           axios.get("https://sibi-api.vercel.app/emprestimos/atrasados"),
-          axios.get("https://sibi-api.vercel.app/livros/disponiveis"), // Nova chamada para livros disponíveis
+          axios.get("https://sibi-api.vercel.app/livros/disponiveis"),
+          axios.get("http://localhost:3000/equipamentos"),
         ]);
 
         const livrosExcluindoMaterialAcademico = livrosResponse.data.filter(
@@ -77,10 +80,11 @@ const Home = () => {
 
         setGenresCount(genresResponse.data.length);
 
-        // Definindo o estado para a contagem de livros disponíveis
         setLivrosDisponiveisCount(
           livrosDisponiveisResponse.data.quantidadeLivrosDisponiveis
         );
+
+        setEquipamentosCount(equipamentosResponse.data.length);
       } catch (error) {
         console.error("Erro ao buscar dados da API:", error);
       }
@@ -114,9 +118,11 @@ const Home = () => {
   return (
     <>
       <Header toggleMenu={toggleMenu} />
-      <div className="flex w-full">
+      <div className="flex flex-col md:flex-row">
         <motion.div
-          className={`fixed top-0 left-0 h-full w-64 bg-blue-900 text-white flex flex-col z-50`}
+          className={`fixed top-0 left-0 h-full w-64 bg-blue-900 text-white flex flex-col z-50 ${
+            isMenuOpen ? "block" : "hidden"
+          } md:block`}
           initial={{ x: -300 }}
           animate={{ x: isMenuOpen ? 0 : -300 }}
         >
@@ -172,6 +178,28 @@ const Home = () => {
               <div className="flex items-center">
                 <FaRegAddressBook className="w-6 h-6 mr-2" />
                 <span className="text-lg">Cadastrar Livros</span>
+              </div>
+            </Link>
+            <Link
+              to="/register-equipment"
+              className="p-4 hover:bg-blue-800 hover:text-white flex items-center transition duration-300 ease-in-out"
+            >
+              <div className="flex items-center">
+                <FaDesktop className="w-6 h-6 mr-2" />
+                <span className="text-lg">
+                  Cadastrar Equipamento ({equipamentosCount})
+                </span>
+              </div>
+            </Link>
+            <Link
+              to="/equipment"
+              className="p-4 hover:bg-blue-800 hover:text-white flex items-center transition duration-300 ease-in-out"
+            >
+              <div className="flex items-center">
+                <FaComputer className="w-6 h-6 mr-2" />
+                <span className="text-lg">
+                  Equipamentos ({equipamentosCount})
+                </span>
               </div>
             </Link>
           </div>
@@ -344,8 +372,7 @@ const Home = () => {
                   <p className="text-gray-800 font-semibold text-lg">
                     Livros Disponíveis (exceto material acadêmico)
                   </p>
-                  <p className="text-gray-600">{livrosDisponiveisCount}</p>{" "}
-                  {/* Exibindo a contagem de livros disponíveis */}
+                  <p className="text-gray-600">{livrosDisponiveisCount}</p>
                 </motion.div>
                 <motion.div
                   whileHover={{ scale: 1.1 }}

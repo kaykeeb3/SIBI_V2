@@ -7,6 +7,8 @@ import Multimeans from "./Pages/Multimeans";
 import Monitors from "./Pages/Monitors";
 import Registerbook from "./Pages/Register-book";
 import RegisterUser from "./Pages/Register-user";
+import RegisterEquipment from "./Pages/Register-equipment";
+import Equipment from "./Pages/Equipment";
 
 function AppRoutes() {
   return (
@@ -19,8 +21,13 @@ function AppRoutes() {
           <Route path="/system" element={<System />}></Route>
           <Route path="/multimeans" element={<Multimeans />}></Route>
           <Route path="/monitors" element={<Monitors />}></Route>
+          <Route path="/equipment" element={<Equipment />}></Route>
           <Route path="/register-book" element={<Registerbook />}></Route>
           <Route path="/register-user" element={<RegisterUser />}></Route>
+          <Route
+            path="/register-equipment"
+            element={<RegisterEquipment />}
+          ></Route>
           <Route path="/" element={<Monitors />}></Route>
         </Route>
       </Routes>

@@ -70,8 +70,6 @@ const Request = () => {
   const handleDelete = async (request) => {
     try {
       await axios.delete(
-        /*`https://sibi-api.vercel.app/emprestimos/${request.id}`*/
-
         `https://sibi-api.vercel.app/emprestimos/${request.id}`
       );
       setRequests(requests.filter((r) => r.id !== request.id));
