@@ -22,7 +22,7 @@ model Book {
   autor      String
   genero     String
   quantidade Int
-  Loan       Loan[]
+  loans      Loan[]
 }
 
 // REQUISIÇÃO
@@ -32,15 +32,30 @@ model Loan {
   serieCurso    String
   dataInicio    DateTime
   dataDevolucao DateTime
-  devolvido     Boolean  @default(false) // Adicionando o campo devolvido com o valor padrão false (teste)
-  livro         Book     @relation(fields: [livroId], references: [id])
+  devolvido     Boolean  @default(false)
+  book          Book     @relation(fields: [livroId], references: [id])
   livroId       Int
 }
 
 // EQUIPAMENTOS
 model Equipment {
-  id         Int    @id @default(autoincrement())
-  nome       String
-  tipo       String
-  quantidade Int
+  id           Int        @id @default(autoincrement())
+  nome         String
+  tipo         String
+  quantidade   Int
+  agendamentos Schedule[]
+}
+
+// AGENDAMENTOS
+model Schedule {
+  id            Int       @id @default(autoincrement())
+  nome          String
+  quantidade    Int
+  dataInicio    DateTime
+  dataDevolucao DateTime
+  diaSemana     String
+  equipamento   Equipment @relation(fields: [equipamentoId], references: [id])
+  equipamentoId Int
+  tipo          String? // Adicione o campo 'tipo' ao modelo Schedule
+  devolvido     Boolean   @default(false)
 }

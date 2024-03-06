@@ -9,6 +9,7 @@ const { authenticateToken } = require("./middlewares/authMiddleware");
 const { login, getUserProfile } = require("./controllers/authController");
 
 const loanRoutes = require("./routes/loanRoutes"); // Importe as rotas de empréstimos
+const scheduleRoutes = require("./routes/scheduleRoutes");
 
 const prisma = new PrismaClient();
 const app = express();
@@ -46,6 +47,9 @@ app.use("/emprestimos", loanRoutes);
 
 // Rotas para operações CRUD de equipamentos
 app.use("/equipamentos", equipmentRoutes);
+
+// Rotas para agendamento
+app.use("/agendamentos", scheduleRoutes);
 
 app.use((err, req, res, next) => {
   console.error("Erro interno do servidor:", err.message);
