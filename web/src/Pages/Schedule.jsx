@@ -7,7 +7,7 @@ import { HiPencilAlt } from "react-icons/hi";
 import { RiDeleteBin5Fill } from "react-icons/ri";
 import { GiConfirmed } from "react-icons/gi";
 import { motion } from "framer-motion";
-import { format } from "date-fns";
+import { format, isAfter } from "date-fns"; // Adicionando a função isAfter para comparar datas
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -110,6 +110,11 @@ const Schedule = () => {
     }
   };
 
+  // Função para verificar se a data de devolução já passou
+  const isPastDue = (date) => {
+    return isAfter(new Date(), new Date(date));
+  };
+
   return (
     <>
       <Header />
@@ -154,9 +159,11 @@ const Schedule = () => {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.5 }}
-                className={`bg-white p-6 rounded-lg shadow-md mb-6 border border-gray-300 ${
-                  schedule.devolvido ? "hidden" : ""
-                }`} // Adiciona a classe 'hidden' se o agendamento estiver marcado como devolvido
+                className={`bg-white p-6 rounded-lg shadow-md mb-6 border ${
+                  isPastDue(schedule.dataDevolucao)
+                    ? "border-red-500" // Adiciona borda vermelha se a data de devolução já passou
+                    : "border-gray-300"
+                }`}
               >
                 <p className="font-bold text-lg mb-2">{schedule.nome}</p>
                 <p className="text-gray-600 mb-1">
