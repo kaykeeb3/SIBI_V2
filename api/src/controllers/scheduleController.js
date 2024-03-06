@@ -62,7 +62,45 @@ async function criarAgendamento(req, res) {
 
 async function listarAgendamentos(req, res) {
   try {
-    const agendamentos = await prisma.schedule.findMany();
+    const { data, local } = req.query;
+    let agendamentos;
+
+    if (data && local) {
+      agendamentos = await prisma.schedule.findMany({
+        where: {
+          AND: [
+            { data: { contains: data } },
+            { local: { contains: local } },
+            { devolvido: false }, // Apenas agendamentos não devolvidos
+          ],
+        },
+      });
+    } else if (data) {
+      agendamentos = await prisma.schedule.findMany({
+        where: {
+          AND: [
+            { data: { contains: data } },
+            { devolvido: false }, // Apenas agendamentos não devolvidos
+          ],
+        },
+      });
+    } else if (local) {
+      agendamentos = await prisma.schedule.findMany({
+        where: {
+          AND: [
+            { local: { contains: local } },
+            { devolvido: false }, // Apenas agendamentos não devolvidos
+          ],
+        },
+      });
+    } else {
+      agendamentos = await prisma.schedule.findMany({
+        where: {
+          devolvido: false, // Apenas agendamentos não devolvidos
+        },
+      });
+    }
+
     res.json(agendamentos);
   } catch (error) {
     console.error("Erro ao listar agendamentos:", error.message);
