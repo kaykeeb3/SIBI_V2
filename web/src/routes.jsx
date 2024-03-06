@@ -3,12 +3,12 @@ import Home from "../src/Pages/Home";
 import Books from "../src/Pages/Books";
 import Request from "./Pages/Request";
 import System from "./Pages/System";
-import Multimeans from "./Pages/Multimeans";
-import Monitors from "./Pages/Monitors";
 import Registerbook from "./Pages/Register-book";
 import RegisterUser from "./Pages/Register-user";
 import RegisterEquipment from "./Pages/Register-equipment";
 import Equipment from "./Pages/Equipment";
+import RegisterSchedule from "./Pages/Register-schedule";
+import Schedule from "./Pages/Schedule";
 
 function AppRoutes() {
   return (
@@ -19,16 +19,18 @@ function AppRoutes() {
           <Route path="/books" element={<Books />}></Route>
           <Route path="/request" element={<Request />}></Route>
           <Route path="/system" element={<System />}></Route>
-          <Route path="/multimeans" element={<Multimeans />}></Route>
-          <Route path="/monitors" element={<Monitors />}></Route>
           <Route path="/equipment" element={<Equipment />}></Route>
           <Route path="/register-book" element={<Registerbook />}></Route>
           <Route path="/register-user" element={<RegisterUser />}></Route>
+          <Route path="/schedule" element={<Schedule />}></Route>
+          <Route
+            path="/register-schedule"
+            element={<RegisterSchedule />}
+          ></Route>
           <Route
             path="/register-equipment"
             element={<RegisterEquipment />}
           ></Route>
-          <Route path="/" element={<Monitors />}></Route>
         </Route>
       </Routes>
     </BrowserRouter>

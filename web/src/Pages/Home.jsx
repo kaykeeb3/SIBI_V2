@@ -5,11 +5,11 @@ import { IoClose } from "react-icons/io5";
 import {
   RiBookLine,
   RiFileList2Line,
-  RiSettings4Line,
   RiUserSettingsLine,
 } from "react-icons/ri";
 import { FaRegAddressBook, FaDesktop } from "react-icons/fa";
-import { FaComputer } from "react-icons/fa6";
+import { FaComputer, FaHouseLaptop } from "react-icons/fa6";
+import { BiIdCard } from "react-icons/bi";
 import axios from "axios";
 import Header from "../components/Header";
 
@@ -26,6 +26,7 @@ const Home = () => {
   const [requestsDelayedCount, setRequestsDelayedCount] = useState(0);
   const [livrosDisponiveisCount, setLivrosDisponiveisCount] = useState(0);
   const [equipamentosCount, setEquipamentosCount] = useState(0);
+  const [agendamentosCount, setAgendamentosCount] = useState(0);
 
   useEffect(() => {
     async function fetchData() {
@@ -37,6 +38,7 @@ const Home = () => {
           requestsDelayedResponse,
           livrosDisponiveisResponse,
           equipamentosResponse,
+          agendamentosResponse,
         ] = await Promise.all([
           axios.get("https://sibi-api.vercel.app/livros"),
           axios.get("https://sibi-api.vercel.app/emprestimos"),
@@ -44,6 +46,7 @@ const Home = () => {
           axios.get("https://sibi-api.vercel.app/emprestimos/atrasados"),
           axios.get("https://sibi-api.vercel.app/livros/disponiveis"),
           axios.get("https://sibi-api.vercel.app/equipamentos"),
+          axios.get("https://sibi-api.vercel.app/agendamentos"),
         ]);
 
         const livrosExcluindoMaterialAcademico = livrosResponse.data.filter(
@@ -85,6 +88,8 @@ const Home = () => {
         );
 
         setEquipamentosCount(equipamentosResponse.data.length);
+
+        setAgendamentosCount(agendamentosResponse.data.length);
       } catch (error) {
         console.error("Erro ao buscar dados da API:", error);
       }
@@ -115,6 +120,13 @@ const Home = () => {
     return "bg-zinc-200";
   };
 
+  const getDelayedRequestsColor = (count) => {
+    if (count >= 0 && count <= 2) return "bg-green-200";
+    if (count >= 4 && count <= 5) return "bg-yellow-200";
+    if (count >= 6 && count <= 10) return "bg-red-200";
+    return "bg-gray-200";
+  };
+
   return (
     <>
       <Header toggleMenu={toggleMenu} />
@@ -133,75 +145,89 @@ const Home = () => {
             </button>
           </div>
           <div className="divide-y">
-            <Link
-              to="/books"
-              className="p-4 hover:bg-blue-800 hover:text-white flex items-center transition duration-300 ease-in-out"
-            >
-              <div className="flex items-center">
-                <RiBookLine className="w-6 h-6 mr-2" />
-                <span className="text-lg">Livros ({livrosCount})</span>
-              </div>
-            </Link>
-            <Link
-              to="/request"
-              className="p-4 hover:bg-blue-800 hover:text-white flex items-center transition duration-300 ease-in-out"
-            >
-              <div className="flex items-center">
-                <RiFileList2Line className="w-6 h-6 mr-2" />
-                <span className="text-lg">
-                  Requisições ({emprestimosCount})
-                </span>
-              </div>
-            </Link>
-            <Link
-              to="/system"
-              className="p-4 hover:bg-blue-800 hover:text-white flex items-center transition duration-300 ease-in-out"
-            >
-              <div className="flex items-center">
-                <RiSettings4Line className="w-6 h-6 mr-2" />
-                <span className="text-lg">Sistema</span>
-              </div>
-            </Link>
-            <Link
-              to="/register-user"
-              className="p-4 hover:bg-blue-800 hover:text-white flex items-center transition duration-300 ease-in-out"
-            >
-              <div className="flex items-center">
-                <RiUserSettingsLine className="w-6 h-6 mr-2" />
-                <span className="text-lg">Cadastrar Usuário</span>
-              </div>
-            </Link>
-            <Link
-              to="/register-book"
-              className="p-4 hover:bg-blue-800 hover:text-white flex items-center transition duration-300 ease-in-out"
-            >
-              <div className="flex items-center">
-                <FaRegAddressBook className="w-6 h-6 mr-2" />
-                <span className="text-lg">Cadastrar Livros</span>
-              </div>
-            </Link>
-            <Link
-              to="/register-equipment"
-              className="p-4 hover:bg-blue-800 hover:text-white flex items-center transition duration-300 ease-in-out"
-            >
-              <div className="flex items-center">
-                <FaDesktop className="w-6 h-6 mr-2" />
-                <span className="text-lg">
-                  Cadastrar Equipamento ({equipamentosCount})
-                </span>
-              </div>
-            </Link>
-            <Link
-              to="/equipment"
-              className="p-4 hover:bg-blue-800 hover:text-white flex items-center transition duration-300 ease-in-out"
-            >
-              <div className="flex items-center">
-                <FaComputer className="w-6 h-6 mr-2" />
-                <span className="text-lg">
-                  Equipamentos ({equipamentosCount})
-                </span>
-              </div>
-            </Link>
+            <div>
+              <Link
+                to="/books"
+                className="p-4 hover:bg-blue-800 hover:text-white flex items-center transition duration-300 ease-in-out"
+              >
+                <div className="flex items-center">
+                  <RiBookLine className="w-6 h-6 mr-2" />
+                  <span className="text-lg">Livros ({livrosCount})</span>
+                </div>
+              </Link>
+              <Link
+                to="/request"
+                className="p-4 hover:bg-blue-800 hover:text-white flex items-center transition duration-300 ease-in-out"
+              >
+                <div className="flex items-center">
+                  <RiFileList2Line className="w-6 h-6 mr-2" />
+                  <span className="text-lg">
+                    Requisições ({emprestimosCount})
+                  </span>
+                </div>
+              </Link>
+
+              <Link
+                to="/equipment"
+                className="p-4 hover:bg-blue-800 hover:text-white flex items-center transition duration-300 ease-in-out"
+              >
+                <div className="flex items-center">
+                  <FaComputer className="w-6 h-6 mr-2" />
+                  <span className="text-lg">
+                    Equipamentos ({equipamentosCount})
+                  </span>
+                </div>
+              </Link>
+              <Link
+                to="/schedule"
+                className="p-4 hover:bg-blue-800 hover:text-white flex items-center transition duration-300 ease-in-out"
+              >
+                <div className="flex items-center">
+                  <FaHouseLaptop className="w-6 h-6 mr-2" />
+                  <span className="text-lg">
+                    Agendamentos ({agendamentosCount})
+                  </span>
+                </div>
+              </Link>
+            </div>
+            <div>
+              <Link
+                to="/register-user"
+                className="p-4 hover:bg-blue-800 hover:text-white flex items-center transition duration-300 ease-in-out"
+              >
+                <div className="flex items-center">
+                  <RiUserSettingsLine className="w-6 h-6 mr-2" />
+                  <span className="text-lg">Cadastrar Requisição</span>
+                </div>
+              </Link>
+              <Link
+                to="/register-book"
+                className="p-4 hover:bg-blue-800 hover:text-white flex items-center transition duration-300 ease-in-out"
+              >
+                <div className="flex items-center">
+                  <FaRegAddressBook className="w-6 h-6 mr-2" />
+                  <span className="text-lg">Cadastrar Livro</span>
+                </div>
+              </Link>
+              <Link
+                to="/register-equipment"
+                className="p-4 hover:bg-blue-800 hover:text-white flex items-center transition duration-300 ease-in-out"
+              >
+                <div className="flex items-center">
+                  <FaDesktop className="w-6 h-6 mr-2" />
+                  <span className="text-lg">Cadastrar Equipamento</span>
+                </div>
+              </Link>
+              <Link
+                to="/register-schedule"
+                className="p-4 hover:bg-blue-800 hover:text-white flex items-center transition duration-300 ease-in-out"
+              >
+                <div className="flex items-center">
+                  <BiIdCard className="w-6 h-6 mr-2" />
+                  <span className="text-lg">Cadastrar Agendamento</span>
+                </div>
+              </Link>
+            </div>
           </div>
         </motion.div>
 
@@ -272,7 +298,54 @@ const Home = () => {
                       {totalRequests}
                     </p>
                   </motion.div>
+                  <motion.div
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                    className={`bg-green-200 rounded-lg p-4 hover:shadow-md transition duration-300 ease-in-out`}
+                  >
+                    <FaComputer className="w-12 h-12 mb-2 text-gray-800" />
+                    <p className="text-gray-800 font-semibold text-lg">
+                      Equipamentos Cadastrados
+                    </p>
+                    <p className="text-gray-600">{equipamentosCount}</p>
+                  </motion.div>
+                  <motion.div
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                    className={`bg-yellow-200 rounded-lg p-4 hover:shadow-md transition duration-300 ease-in-out`}
+                  >
+                    <FaHouseLaptop className="w-12 h-12 mb-2 text-gray-800" />
+                    <p className="text-gray-800 font-semibold text-lg">
+                      Agendamentos Realizados
+                    </p>
+                    <p className="text-gray-600">{agendamentosCount}</p>
+                  </motion.div>
                 </div>
+              </motion.div>
+
+              <motion.div
+                className={`bg-white p-8 rounded-lg shadow-md`}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.5 }}
+              >
+                <h2 className="text-2xl font-semibold mb-4">
+                  Informações Adicionais
+                </h2>
+
+                <motion.div
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
+                  className={`bg-gray-200 rounded-lg p-4 ${getDelayedRequestsColor(
+                    requestsDelayedCount
+                  )} mt-4 hover:shadow-md transition duration-300 ease-in-out`}
+                >
+                  <RiFileList2Line className="w-12 h-12 mb-2 text-gray-800" />
+                  <p className="text-gray-800 font-semibold text-lg">
+                    Requisições Atrasadas
+                  </p>
+                  <p className="text-gray-600">{requestsDelayedCount}</p>
+                </motion.div>
                 <div className="mt-8">
                   <h3 className="text-lg font-semibold mb-2">
                     Requisições por Período
@@ -352,39 +425,6 @@ const Home = () => {
                     </motion.div>
                   </div>
                 </div>
-              </motion.div>
-
-              <motion.div
-                className={`bg-white p-8 rounded-lg shadow-md`}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.5 }}
-              >
-                <h2 className="text-2xl font-semibold mb-4">
-                  Informações Adicionais
-                </h2>
-                <motion.div
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.9 }}
-                  className="bg-green-200 rounded-lg p-4 hover:shadow-md transition duration-300 ease-in-out"
-                >
-                  <RiBookLine className="w-12 h-12 mb-2 text-gray-800" />
-                  <p className="text-gray-800 font-semibold text-lg">
-                    Livros Disponíveis (exceto material acadêmico)
-                  </p>
-                  <p className="text-gray-600">{livrosDisponiveisCount}</p>
-                </motion.div>
-                <motion.div
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.9 }}
-                  className="bg-gray-200 rounded-lg p-4 mt-4 hover:shadow-md transition duration-300 ease-in-out"
-                >
-                  <RiFileList2Line className="w-12 h-12 mb-2 text-gray-800" />
-                  <p className="text-gray-800 font-semibold text-lg">
-                    Requisições Atrasadas
-                  </p>
-                  <p className="text-gray-600">{requestsDelayedCount}</p>
-                </motion.div>
               </motion.div>
             </div>
           )}

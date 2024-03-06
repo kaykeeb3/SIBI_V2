@@ -19,9 +19,16 @@ export default function Equipment() {
     async function fetchEquipamentos() {
       try {
         setLoading(true);
-        const response = await axios.get(
-          `https://sibi-api.vercel.app/equipamentos?nome=${filtroNome}&categoria=${filtroCategoria}`
-        );
+        let url = `https://sibi-api.vercel.app/equipamentos?`;
+
+        if (filtroNome) {
+          url += `nome=${filtroNome}&`;
+        }
+        if (filtroCategoria !== "Todos") {
+          url += `tipo=${filtroCategoria}&`;
+        }
+
+        const response = await axios.get(url);
         setEquipamentos(response.data);
         setLoading(false);
       } catch (error) {
@@ -100,6 +107,18 @@ export default function Equipment() {
     setEquipamentoSelecionado(null);
   };
 
+  // Função para filtrar equipamentos com base no nome e categoria selecionada
+  const filteredEquipamentos = equipamentos.filter((equipamento) => {
+    if (
+      (filtroNome === "" ||
+        equipamento.nome.toLowerCase().includes(filtroNome.toLowerCase())) &&
+      (filtroCategoria === "Todos" || equipamento.tipo === filtroCategoria)
+    ) {
+      return true;
+    }
+    return false;
+  });
+
   return (
     <>
       <Header />
@@ -133,7 +152,7 @@ export default function Equipment() {
           {loading ? (
             <div className="animate-pulse bg-gray-200 p-6 rounded-lg shadow-md mb-6 h-40"></div>
           ) : (
-            equipamentos.map((equipamento) => (
+            filteredEquipamentos.map((equipamento) => (
               <motion.div
                 key={equipamento.id}
                 initial={{ opacity: 0 }}
