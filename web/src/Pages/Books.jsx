@@ -98,23 +98,27 @@ export default function Book() {
     <>
       <Header />
       <div className="container mx-auto px-4 pb-11">
-        <div className="flex items-center justify-between mb-6">
-          <div className="relative w-[75%] py-6">
+        <div className="flex flex-col md:flex-row items-center justify-between mb-6">
+          <div className="relative w-full md:w-[75%] py-2 md:py-6">
             <input
               type="text"
               placeholder="Pesquisar livro pelo nome..."
               value={filtroNome}
               onChange={handleFiltroNomeChange}
-              className="w-full border border-gray-300 px-4 py-4 rounded-full focus:outline-none focus:border-blue-500"
+              className="w-full border border-gray-300 px-4 py-2 md:py-4 rounded-full focus:outline-none focus:border-blue-500"
             />
             <button className="absolute right-0 top-0 bottom-0 px-4 flex items-center justify-center">
-              <img src={Search} className="w-5 h-5" alt="Search icon" />
+              <img
+                src={Search}
+                className="w-5 h-5 md:w-6 md:h-6"
+                alt="Search icon"
+              />
             </button>
           </div>
           <select
             value={filtroCategoria}
             onChange={handleFiltroCategoriaChange}
-            className="bg-blue-500 rounded-md text-white px-4 py-3"
+            className="bg-blue-500 rounded-md text-white px-4 py-2 md:py-3 mt-2 md:mt-0"
           >
             <option value="Todos">TODOS</option>
             <option value="Romance">Romance</option>
@@ -133,7 +137,7 @@ export default function Book() {
           </select>
         </div>
         <ButtonReturn />
-        <div className="mt-8 grid grid-cols-3 gap-6">
+        <div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {loading ? (
             <div className="animate-pulse bg-gray-200 p-6 rounded-lg shadow-md mb-6 h-40"></div>
           ) : (
@@ -187,7 +191,7 @@ export default function Book() {
           transition={{ duration: 0.5 }}
           className="fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center z-10"
         >
-          <div className="bg-white p-6 rounded-lg shadow-md w-96">
+          <div className="bg-white p-6 rounded-lg shadow-md w-full md:w-96">
             <h2 className="text-xl font-bold mb-4">Editar Livro</h2>
             <div className="mb-4">
               <label className="block mb-1">Nome:</label>

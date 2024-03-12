@@ -95,14 +95,19 @@ const Schedule = () => {
           devolvido: true,
         }
       );
-      setSchedules(
-        schedules.map((schedule) => {
+
+      // Atualiza o estado dos agendamentos diretamente e força a re-renderização
+      setSchedules((prevSchedules) => {
+        const updatedSchedules = prevSchedules.map((schedule) => {
           if (schedule.id === id) {
             return { ...schedule, devolvido: true }; // Marca o agendamento como devolvido
           }
           return schedule;
-        })
-      );
+        });
+        return [...updatedSchedules]; // Criando uma nova referência para forçar a re-renderização
+      });
+
+      handleCloseModal(); // Fechar o modal após a devolução
       toast.success("Agendamento marcado como devolvido com sucesso!");
     } catch (error) {
       console.error("Erro ao marcar como devolvido:", error);
