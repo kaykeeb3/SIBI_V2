@@ -30,6 +30,6 @@ router.delete("/:id", excluirEmprestimo);
 router.put("/:id/devolver", marcarDevolvido);
 
 // Listar empréstimos atrasados
-router.get("/atrasados", listarEmprestimosAtrasados); // Nova rota para listar empréstimos atrasados
+router.get("/atrasados", listarEmprestimosAtrasados);
 
 module.exports = router;
