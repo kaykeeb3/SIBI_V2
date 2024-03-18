@@ -11,8 +11,8 @@ const Registerbook = () => {
     nome: "",
     autor: "",
     genero: "",
-    quantidade: 0,
-    numero: 0,
+    quantidade: "",
+    numero: "",
   });
 
   const handleInputChange = (e) => {
@@ -23,14 +23,19 @@ const Registerbook = () => {
   const handleNovoLivroSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("https://sibi-api.vercel.app/livros", novoLivro);
+      const livroParaEnviar = {
+        ...novoLivro,
+        quantidade: parseInt(novoLivro.quantidade),
+        numero: parseInt(novoLivro.numero),
+      };
+      await axios.post("https://sibi-api.vercel.app/livros", livroParaEnviar);
       toast.success("Livro cadastrado com sucesso!");
       setNovoLivro({
         nome: "",
         numero: "",
         autor: "",
         genero: "",
-        quantidade: 0,
+        quantidade: "",
       });
     } catch (error) {
       console.error("Erro ao cadastrar livro:", error);
