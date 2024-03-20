@@ -430,6 +430,11 @@ const Home = () => {
           )}
         </div>
       </div>
+      <footer className="w-full flex items-center justify-center">
+        <h5 className="opacity-70 text-sm">
+          Copyright © 2024 - Todos os direitos reservados
+        </h5>
+      </footer>
     </>
   );
 };
