@@ -7,7 +7,6 @@ import { HiPencilAlt } from "react-icons/hi";
 import { RiDeleteBin5Fill } from "react-icons/ri";
 import { GiConfirmed } from "react-icons/gi";
 import { motion } from "framer-motion";
-import { format } from "date-fns"; // Remova a importação isAfter
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import moment from "moment"; // Adicione a importação do Moment.js
