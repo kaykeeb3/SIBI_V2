@@ -26,7 +26,9 @@ const Schedule = () => {
   const fetchData = async () => {
     setLoading(true);
     try {
-      const response = await axios.get("http://localhost:3000/agendamentos");
+      const response = await axios.get(
+        "https://sibi-api.vercel.app/agendamentos"
+      );
       const filteredSchedules = response.data.filter((schedule) =>
         schedule.nome.toLowerCase().includes(searchTerm.toLowerCase())
       );
@@ -57,7 +59,7 @@ const Schedule = () => {
   const handleUpdateSchedule = async () => {
     try {
       await axios.put(
-        `http://localhost:3000/agendamentos/${selectedSchedule.id}`,
+        `https://sibi-api.vercel.app/agendamentos/${selectedSchedule.id}`,
         selectedSchedule
       );
       setSchedules((prevSchedules) =>
@@ -75,7 +77,7 @@ const Schedule = () => {
 
   const handleDeleteSchedule = async (id) => {
     try {
-      await axios.delete(`http://localhost:3000/agendamentos/${id}`);
+      await axios.delete(`https://sibi-api.vercel.app/agendamentos/${id}`);
       setSchedules(schedules.filter((schedule) => schedule.id !== id));
       toast.success("Agendamento excluído com sucesso!");
     } catch (error) {
@@ -86,10 +88,13 @@ const Schedule = () => {
 
   const handleMarkAsReturned = async (id) => {
     try {
-      await axios.put(`http://localhost:3000/agendamentos/${id}/devolver`, {
-        ...selectedSchedule,
-        devolvido: true,
-      });
+      await axios.put(
+        `https://sibi-api.vercel.app/agendamentos/${id}/devolver`,
+        {
+          ...selectedSchedule,
+          devolvido: true,
+        }
+      );
 
       // Atualiza o estado dos agendamentos diretamente e força a re-renderização
       setSchedules((prevSchedules) => {
