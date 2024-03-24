@@ -7,9 +7,10 @@ import { HiPencilAlt } from "react-icons/hi";
 import { RiDeleteBin5Fill } from "react-icons/ri";
 import { GiConfirmed } from "react-icons/gi";
 import { motion } from "framer-motion";
-import { format, isAfter } from "date-fns"; // Adicionando a função isAfter para comparar datas
+import { format } from "date-fns"; // Remova a importação isAfter
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import moment from "moment"; // Adicione a importação do Moment.js
 
 const Schedule = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -26,9 +27,7 @@ const Schedule = () => {
   const fetchData = async () => {
     setLoading(true);
     try {
-      const response = await axios.get(
-        "https://sibi-api.vercel.app/agendamentos"
-      );
+      const response = await axios.get("http://localhost:3000/agendamentos");
       const filteredSchedules = response.data.filter((schedule) =>
         schedule.nome.toLowerCase().includes(searchTerm.toLowerCase())
       );
@@ -59,7 +58,7 @@ const Schedule = () => {
   const handleUpdateSchedule = async () => {
     try {
       await axios.put(
-        `https://sibi-api.vercel.app/agendamentos/${selectedSchedule.id}`,
+        `http://localhost:3000/agendamentos/${selectedSchedule.id}`,
         selectedSchedule
       );
       setSchedules((prevSchedules) =>
@@ -77,7 +76,7 @@ const Schedule = () => {
 
   const handleDeleteSchedule = async (id) => {
     try {
-      await axios.delete(`https://sibi-api.vercel.app/agendamentos/${id}`);
+      await axios.delete(`http://localhost:3000/agendamentos/${id}`);
       setSchedules(schedules.filter((schedule) => schedule.id !== id));
       toast.success("Agendamento excluído com sucesso!");
     } catch (error) {
@@ -88,13 +87,10 @@ const Schedule = () => {
 
   const handleMarkAsReturned = async (id) => {
     try {
-      await axios.put(
-        `https://sibi-api.vercel.app/agendamentos/${id}/devolver`,
-        {
-          ...selectedSchedule,
-          devolvido: true,
-        }
-      );
+      await axios.put(`http://localhost:3000/agendamentos/${id}/devolver`, {
+        ...selectedSchedule,
+        devolvido: true,
+      });
 
       // Atualiza o estado dos agendamentos diretamente e força a re-renderização
       setSchedules((prevSchedules) => {
@@ -117,7 +113,7 @@ const Schedule = () => {
 
   // Função para verificar se a data de devolução já passou
   const isPastDue = (date) => {
-    return isAfter(new Date(), new Date(date));
+    return moment().isAfter(moment(date));
   };
 
   return (
@@ -176,11 +172,11 @@ const Schedule = () => {
                 </p>
                 <p className="text-gray-600 mb-1">
                   Data de Início:{" "}
-                  {format(new Date(schedule.dataInicio), "dd/MM/yyyy")}
+                  {moment(schedule.dataInicio).format("DD/MM/YYYY")}
                 </p>
                 <p className="text-gray-600 mb-1">
                   Data de Devolução:{" "}
-                  {format(new Date(schedule.dataDevolucao), "dd/MM/yyyy")}
+                  {moment(schedule.dataDevolucao).format("DD/MM/YYYY")}
                 </p>
                 <p className="text-gray-600 mb-1">
                   Dia da Semana: {schedule.diaSemana}
@@ -288,7 +284,9 @@ const Schedule = () => {
                             type="date"
                             required
                             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                            value={selectedSchedule.dataInicio}
+                            value={moment(selectedSchedule.dataInicio).format(
+                              "YYYY-MM-DD"
+                            )}
                             onChange={(e) =>
                               setSelectedSchedule({
                                 ...selectedSchedule,
@@ -305,7 +303,9 @@ const Schedule = () => {
                             type="date"
                             required
                             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                            value={selectedSchedule.dataDevolucao}
+                            value={moment(
+                              selectedSchedule.dataDevolucao
+                            ).format("YYYY-MM-DD")}
                             onChange={(e) =>
                               setSelectedSchedule({
                                 ...selectedSchedule,

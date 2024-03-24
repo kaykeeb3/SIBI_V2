@@ -5,18 +5,11 @@ import ButtonReturn from "../components/ButtonReturn";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import moment from "moment"; // Import Moment.js
 
-const Registerbook = () => {
+const RegisterUser = () => {
   const getCurrentDate = () => {
-    const today = new Date();
-    const year = today.getFullYear();
-    let month = today.getMonth() + 1;
-    let day = today.getDate();
-
-    month = month < 10 ? `0${month}` : month;
-    day = day < 10 ? `0${day}` : day;
-
-    return `${year}-${month}-${day}`;
+    return moment().format("YYYY-MM-DD");
   };
 
   const [novaRequisicao, setNovaRequisicao] = useState({
@@ -35,10 +28,7 @@ const Registerbook = () => {
   const handleNovaRequisicaoSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post(
-        "https://sibi-api.vercel.app/emprestimos",
-        novaRequisicao
-      );
+      await axios.post("http://localhost:3000/emprestimos", novaRequisicao);
       toast.success("Requisição cadastrada com sucesso!");
       setNovaRequisicao({
         nome: "",
@@ -137,4 +127,4 @@ const Registerbook = () => {
   );
 };
 
-export default Registerbook;
+export default RegisterUser;

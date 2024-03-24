@@ -7,7 +7,8 @@ import { HiPencilAlt } from "react-icons/hi";
 import { RiDeleteBin5Fill } from "react-icons/ri";
 import { GiConfirmed } from "react-icons/gi";
 import { motion } from "framer-motion";
-import { format, addDays } from "date-fns";
+import moment from "moment"; // Import Moment.js
+import "moment/locale/pt-br"; // Definindo o idioma como Português Brasileiro
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -44,12 +45,9 @@ const Request = () => {
       if (onlyReturned) {
         params.devolvido = true;
       }
-      const response = await axios.get(
-        "https://sibi-api.vercel.app/emprestimos",
-        {
-          params,
-        }
-      );
+      const response = await axios.get("http://localhost:3000/emprestimos", {
+        params,
+      });
       setRequests(response.data);
     } catch (error) {
       console.error("Erro ao buscar empréstimos:", error);
@@ -69,9 +67,7 @@ const Request = () => {
 
   const handleDelete = async (request) => {
     try {
-      await axios.delete(
-        `https://sibi-api.vercel.app/emprestimos/${request.id}`
-      );
+      await axios.delete(`http://localhost:3000/emprestimos/${request.id}`);
       setRequests(requests.filter((r) => r.id !== request.id));
       setDevolvidos([...devolvidos, request]);
       localStorage.setItem(
@@ -88,7 +84,7 @@ const Request = () => {
   const handleReturn = async (request) => {
     try {
       await axios.put(
-        `https://sibi-api.vercel.app/emprestimos/${request.id}/devolver`
+        `http://localhost:3000/emprestimos/${request.id}/devolver`
       );
       setRequests((prevRequests) =>
         prevRequests.filter((r) => r.id !== request.id)
@@ -109,22 +105,9 @@ const Request = () => {
 
   const handleUpdateRequest = async (updatedRequest) => {
     try {
-      // Convertendo as datas para o formato esperado pela API usando date-fns
-      const formattedRequest = {
-        ...updatedRequest,
-        dataInicio: format(
-          new Date(updatedRequest.dataInicio),
-          "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
-        ),
-        dataDevolucao: format(
-          new Date(updatedRequest.dataDevolucao),
-          "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
-        ),
-      };
-
       await axios.put(
-        `https://sibi-api.vercel.app/emprestimos/${updatedRequest.id}`,
-        formattedRequest
+        `http://localhost:3000/emprestimos/${updatedRequest.id}`,
+        updatedRequest
       );
       setRequests((prevRequests) =>
         prevRequests.map((r) =>
@@ -140,10 +123,10 @@ const Request = () => {
   };
 
   const isOverdue = (dateString) => {
-    const today = new Date();
-    const dueDate = new Date(dateString);
+    const today = moment();
+    const dueDate = moment(dateString);
 
-    return dueDate < today;
+    return dueDate.isBefore(today);
   };
 
   const handleFilterReturned = async () => {
@@ -218,11 +201,8 @@ const Request = () => {
                     SÉRIE/CURSO: {request.serieCurso}
                   </p>
                   <p className="text-gray-600">
-                    DATA:{" "}
-                    {new Date(request.dataInicio).toLocaleDateString("pt-BR")} -{" "}
-                    {new Date(request.dataDevolucao).toLocaleDateString(
-                      "pt-BR"
-                    )}
+                    DATA: {moment(request.dataInicio).format("DD/MM/YYYY")} -{" "}
+                    {moment(request.dataDevolucao).format("DD/MM/YYYY")}
                   </p>
 
                   <div className="flex items-center justify-end mt-4 space-x-4">
@@ -366,7 +346,8 @@ const Request = () => {
                 </button>
                 <button
                   onClick={handleCloseModal}
-                  className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+                  className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm
+                    :text-sm"
                 >
                   Cancelar
                 </button>
