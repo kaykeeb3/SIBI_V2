@@ -1,7 +1,5 @@
 const jwt = require("jsonwebtoken");
 const { login, getUserProfile } = require("../controllers/authController");
-//const prisma = require("../prisma"); // Supondo que você tenha um arquivo prisma.js que exporta uma instância do Prisma
-
 jest.mock("jsonwebtoken");
 
 describe("login", () => {

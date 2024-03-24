@@ -1,14 +1,17 @@
 // loanController.js
-
 const { PrismaClient } = require("@prisma/client");
-const { isValid, parseISO } = require("date-fns"); // Importe a função isValid do date-fns
+const moment = require("moment"); // Import Moment.js
 
 const prisma = new PrismaClient();
 
-// Função para validar as datas
+// Função para validar as datas usando Moment.js
 async function validarDatas(dataInicio, dataDevolucao) {
-  return isValid(new Date(dataInicio)) && isValid(new Date(dataDevolucao));
+  return (
+    moment(dataInicio, "YYYY-MM-DD", true).isValid() &&
+    moment(dataDevolucao, "YYYY-MM-DD", true).isValid()
+  );
 }
+
 async function listarEmprestimos(req, res) {
   try {
     const { nome, serieCurso } = req.query;
@@ -85,8 +88,8 @@ async function criarEmprestimo(req, res) {
       data: {
         nome: nome,
         serieCurso: serieCurso,
-        dataInicio: parseISO(dataInicio), // Parse das datas para o formato Date
-        dataDevolucao: parseISO(dataDevolucao), // Parse das datas para o formato Date
+        dataInicio: moment(dataInicio).toDate(), // Convertendo para objeto Date
+        dataDevolucao: moment(dataDevolucao).toDate(), // Convertendo para objeto Date
         livroId: parseInt(livroId), // Converter para inteiro,
       },
     });
@@ -138,8 +141,8 @@ async function atualizarEmprestimo(req, res) {
       data: {
         nome,
         serieCurso,
-        dataInicio: parseISO(dataInicio),
-        dataDevolucao: parseISO(dataDevolucao),
+        dataInicio: moment(dataInicio).toDate(), // Convertendo para objeto Date
+        dataDevolucao: moment(dataDevolucao).toDate(), // Convertendo para objeto Date
         livroId: parseInt(livroId),
       },
     });

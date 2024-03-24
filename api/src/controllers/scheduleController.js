@@ -1,10 +1,13 @@
 const { PrismaClient } = require("@prisma/client");
-const { isValid, parseISO } = require("date-fns");
+const moment = require("moment");
 
 const prisma = new PrismaClient();
 
 async function validarDatas(dataInicio, dataDevolucao) {
-  return isValid(new Date(dataInicio)) && isValid(new Date(dataDevolucao));
+  return (
+    moment(dataInicio, "YYYY-MM-DD", true).isValid() &&
+    moment(dataDevolucao, "YYYY-MM-DD", true).isValid()
+  );
 }
 
 async function criarAgendamento(req, res) {
@@ -19,10 +22,6 @@ async function criarAgendamento(req, res) {
       tipo,
     } = req.body;
 
-    // Converter as datas para objetos Date
-    const inicio = new Date(dataInicio);
-    const devolucao = new Date(dataDevolucao);
-
     // Verificar se o equipamento existe
     const equipmentExists = await prisma.equipment.findUnique({
       where: {
@@ -35,7 +34,7 @@ async function criarAgendamento(req, res) {
     }
 
     // Verificar se as datas fornecidas são válidas
-    if (!isValid(inicio) || !isValid(devolucao)) {
+    if (!validarDatas(dataInicio, dataDevolucao)) {
       return res.status(400).json({ error: "Datas fornecidas são inválidas" });
     }
 
@@ -44,8 +43,8 @@ async function criarAgendamento(req, res) {
       data: {
         nome,
         quantidade,
-        dataInicio: inicio,
-        dataDevolucao: devolucao,
+        dataInicio: moment(dataInicio, "YYYY-MM-DD").toDate(),
+        dataDevolucao: moment(dataDevolucao, "YYYY-MM-DD").toDate(),
         diaSemana,
         equipamentoId: parseInt(equipamentoId),
         tipo,
@@ -148,6 +147,11 @@ async function atualizarAgendamento(req, res) {
       return res.status(404).json({ error: "Agendamento não encontrado" });
     }
 
+    // Verificar se as datas fornecidas são válidas
+    if (!validarDatas(dataInicio, dataDevolucao)) {
+      return res.status(400).json({ error: "Datas fornecidas são inválidas" });
+    }
+
     // Atualizar o agendamento
     const agendamentoAtualizado = await prisma.schedule.update({
       where: {
@@ -156,8 +160,8 @@ async function atualizarAgendamento(req, res) {
       data: {
         nome,
         quantidade,
-        dataInicio: new Date(dataInicio),
-        dataDevolucao: new Date(dataDevolucao),
+        dataInicio: moment(dataInicio, "YYYY-MM-DD").toDate(),
+        dataDevolucao: moment(dataDevolucao, "YYYY-MM-DD").toDate(),
         diaSemana,
         equipamentoId: parseInt(equipamentoId),
         tipo,
