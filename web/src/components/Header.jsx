@@ -17,8 +17,8 @@ const Header = ({ onLogout }) => {
     <header className="bg-blue-900 text-white h-16">
       <div className="container mx-auto flex items-center justify-end py-4 px-6 ">
         <button onClick={handleLogout} className="text-lg">
-          <div className="flex items-center justify-center p-2 gap-4 text-center font-medium">
-            Sair <IoLogOutOutline className="w-5 h-5" />
+          <div className="flex items-center justify-center p-2 gap-2 font-semibold hover:font-bold">
+            SAIR <IoLogOutOutline className="w-7 h-7" />
           </div>
         </button>
       </div>
