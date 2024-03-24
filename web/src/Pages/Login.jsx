@@ -53,14 +53,14 @@ const Login = ({ onLogin }) => {
     <>
       <Header />
       <motion.div
-        className="flex justify-center items-center mt-20"
+        className="flex justify-center items-center mt-24"
         id="background"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1 }}
       >
         <motion.div
-          className="w-96 bg-white/90 p-8 rounded-md shadow-md border border-blue-500 h-[350px]"
+          className="w-96 bg-white/90 p-8 rounded-md shadow-md border border-blue-500 h-[370px]"
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
           transition={{ delay: 0.5, duration: 0.5 }}
@@ -71,7 +71,7 @@ const Login = ({ onLogin }) => {
               className="block text-gray-600 text-sm font-semibold mb-2"
               htmlFor="nome"
             >
-              Nome de Usuário:
+              Nome de Usuário*
             </label>
             <input
               type="text"
@@ -88,7 +88,7 @@ const Login = ({ onLogin }) => {
               className="block text-gray-600 text-sm font-semibold mb-2"
               htmlFor="senha"
             >
-              Senha:
+              Senha*
             </label>
             <input
               type="password"
@@ -100,6 +100,14 @@ const Login = ({ onLogin }) => {
               className="w-full border rounded-md p-2 focus:outline-none focus:border-blue-500"
             />
           </div>
+          <div className="pb-3 font-normal text-xs underline">
+            <a
+              href="https://api.whatsapp.com/send?phone=88994013479"
+              target="_blank"
+            >
+              Contate o Suporte.
+            </a>
+          </div>
           <motion.button
             onClick={handleLogin}
             className="bg-blue-500 text-white p-2 rounded-md w-full hover:bg-blue-600 transition duration-300"
@@ -110,6 +118,14 @@ const Login = ({ onLogin }) => {
           </motion.button>
         </motion.div>
       </motion.div>
+
+      <footer className="flex items-center justify-center mt-10 h-10">
+        <p className="text-sm font-medium text-zinc-500 animate-slide-in-left">
+          "Sistema está disponível diariamente das 8h00 às 17h30, oferecendo
+          suporte contínuo e eficiente ao atendimento ao cliente."
+        </p>
+      </footer>
+
       {/* Renderizando o ToastContainer */}
       <ToastContainer position="bottom-right" />
     </>

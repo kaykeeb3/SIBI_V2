@@ -9,6 +9,7 @@ import {
 } from "react-icons/ri";
 import { FaRegAddressBook, FaDesktop } from "react-icons/fa";
 import { FaComputer, FaHouseLaptop } from "react-icons/fa6";
+import { GrConfigure } from "react-icons/gr";
 import { IoReloadSharp } from "react-icons/io5";
 import { BiIdCard } from "react-icons/bi";
 import axios from "axios";
@@ -228,6 +229,16 @@ const Home = () => {
                   <span className="text-lg">Cadastrar Agendamento</span>
                 </div>
               </Link>
+              <a
+                href="https://api.whatsapp.com/send?phone=88994013479"
+                target="_blank"
+                className="p-4 hover:bg-blue-800 hover:text-white flex items-center transition duration-300 ease-in-out"
+              >
+                <div className="flex items-center">
+                  <GrConfigure className="w-6 h-6 mr-2" />
+                  <span className="text-lg">Suporte</span>
+                </div>
+              </a>
             </div>
           </div>
         </motion.div>
