@@ -9,6 +9,7 @@ import {
 } from "react-icons/ri";
 import { FaRegAddressBook, FaDesktop } from "react-icons/fa";
 import { FaComputer, FaHouseLaptop } from "react-icons/fa6";
+import { IoReloadSharp } from "react-icons/io5";
 import { BiIdCard } from "react-icons/bi";
 import axios from "axios";
 import Header from "../components/Header";
@@ -257,7 +258,10 @@ const Home = () => {
           </button>
 
           {loading ? (
-            <div className="text-center text-gray-500">Carregando...</div>
+            <div className="flex flex-col items-center justify-center h-[80vh]">
+              <IoReloadSharp className="text-zinc-700 animate-spin w-10 h-10 p-1 font-medium outline-none" />
+              <h5 className="font-medium">Carregando...</h5>
+            </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               <motion.div
