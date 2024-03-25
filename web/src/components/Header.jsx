@@ -16,10 +16,10 @@ const Header = ({ onLogout }) => {
   return (
     <header className="bg-blue-900 text-white h-16">
       <div className="container mx-auto flex items-center justify-end py-4 px-6 ">
-        <button onClick={handleLogout} className="text-lg">
-          <div className="flex items-center justify-center p-2 gap-2 font-semibold hover:font-bold">
-            SAIR <IoLogOutOutline className="w-7 h-7" />
-          </div>
+        <button onClick={handleLogout}>
+          <h3 className="flex items-center justify-center text-center p-2 gap-2 font-semibold hover:underline">
+            SAIR <IoLogOutOutline className="w-5 h-5 text-zinc-50" />
+          </h3>
         </button>
       </div>
     </header>
@@ -27,3 +27,11 @@ const Header = ({ onLogout }) => {
 };
 
 export default Header;
+
+{
+  /*
+   <div className="flex items-center justify-center p-2 gap-2 font-semibold hover:font-bold">
+      SAIR <IoLogOutOutline className="w-7 h-7" />
+    </div>
+*/
+}
