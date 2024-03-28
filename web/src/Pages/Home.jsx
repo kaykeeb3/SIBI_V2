@@ -229,16 +229,15 @@ const Home = () => {
                   <span className="text-lg">Cadastrar Agendamento</span>
                 </div>
               </Link>
-              <a
-                href="https://api.whatsapp.com/send?phone=88994013479"
-                target="_blank"
+              <Link
+                to="/support"
                 className="p-4 hover:bg-blue-800 hover:text-white flex items-center transition duration-300 ease-in-out"
               >
                 <div className="flex items-center">
                   <GrConfigure className="w-6 h-6 mr-2" />
                   <span className="text-lg">Suporte</span>
                 </div>
-              </a>
+              </Link>
             </div>
           </div>
         </motion.div>

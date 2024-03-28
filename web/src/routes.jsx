@@ -9,6 +9,7 @@ import RegisterEquipment from "./Pages/Register-equipment";
 import Equipment from "./Pages/Equipment";
 import RegisterSchedule from "./Pages/Register-schedule";
 import Schedule from "./Pages/Schedule";
+import Support from "./Pages/Support";
 
 function AppRoutes() {
   return (
@@ -31,6 +32,7 @@ function AppRoutes() {
             path="/register-equipment"
             element={<RegisterEquipment />}
           ></Route>
+          <Route path="/support" element={<Support />}></Route>
         </Route>
       </Routes>
     </BrowserRouter>
