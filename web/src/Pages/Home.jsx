@@ -276,7 +276,7 @@ const Home = () => {
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               <motion.div
-                className={`bg-white p-8 rounded-lg shadow-md`}
+                className={`bg-white 2xl:p-10 xl:p-8 p-2 rounded-lg shadow-md`}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.5 }}

@@ -51,7 +51,7 @@ const Login = ({ onLogin }) => {
 
   return (
     <>
-      <Header />
+      <Header isLoginPage={true} />
       <motion.div
         className="flex justify-center items-center mt-24"
         id="background"
@@ -121,8 +121,8 @@ const Login = ({ onLogin }) => {
 
       <footer className="flex items-center justify-center mt-10 h-10">
         <p className="text-sm font-medium text-zinc-500 animate-slide-in-left">
-          "Sistema está disponível diariamente das 8h00 às 17h30, oferecendo
-          suporte contínuo e eficiente ao atendimento ao cliente."
+          Sistema está disponível diariamente das 8h00 às 17h30, oferecendo
+          suporte contínuo e eficiente ao atendimento ao cliente.
         </p>
       </footer>
 
