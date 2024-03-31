@@ -38,6 +38,20 @@ async function criarAgendamento(req, res) {
       return res.status(400).json({ error: "Datas fornecidas são inválidas" });
     }
 
+    // Verificar se o equipamento já possui 2 agendamentos ativos
+    const activeSchedulesCount = await prisma.schedule.count({
+      where: {
+        equipamentoId: parseInt(equipamentoId),
+        devolvido: false,
+      },
+    });
+
+    if (activeSchedulesCount >= 2) {
+      return res
+        .status(400)
+        .json({ error: "O equipamento já possui dois agendamentos ativos" });
+    }
+
     // Criar o agendamento
     const agendamento = await prisma.schedule.create({
       data: {
@@ -55,6 +69,22 @@ async function criarAgendamento(req, res) {
     res.json(agendamento);
   } catch (error) {
     console.error("Erro ao criar agendamento:", error.message);
+    res.status(500).json({ error: "Erro interno do servidor" });
+  }
+}
+
+async function marcarDevolvido(req, res) {
+  const { id } = req.params;
+
+  try {
+    const agendamento = await prisma.schedule.update({
+      where: { id: parseInt(id) },
+      data: { devolvido: true },
+    });
+
+    res.json(agendamento);
+  } catch (error) {
+    console.error("Erro ao marcar agendamento como devolvido:", error.message);
     res.status(500).json({ error: "Erro interno do servidor" });
   }
 }
