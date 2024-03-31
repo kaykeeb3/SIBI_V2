@@ -40,16 +40,16 @@ const Support = () => {
       <Header />
       <div className="container mx-auto py-12">
         <motion.h3
-          className="text-3xl font-bold uppercase mb-6 text-center"
+          className="text-3xl font-bold uppercase text-center mb-10"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
         >
-          Suporte via WhatsApp
+          Suporte via Chat WhatsApp
         </motion.h3>
-        <div className="max-w-lg mx-auto">
+        <div className="max-w-xl mx-auto">
           <label className="block text-gray-700 text-sm font-bold mb-2">
-            Problema ou Dúvida:
+            Melhoria, Problema ou Dúvida:
           </label>
           <textarea
             value={message}

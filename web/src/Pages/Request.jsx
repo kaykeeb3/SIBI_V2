@@ -7,8 +7,8 @@ import { HiPencilAlt } from "react-icons/hi";
 import { RiDeleteBin5Fill } from "react-icons/ri";
 import { GiConfirmed } from "react-icons/gi";
 import { motion } from "framer-motion";
-import moment from "moment"; // Import Moment.js
-import "moment/locale/pt-br"; // Definindo o idioma como Português Brasileiro
+import moment from "moment";
+import "moment/locale/pt-br";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -45,12 +45,9 @@ const Request = () => {
       if (onlyReturned) {
         params.devolvido = true;
       }
-      const response = await axios.get(
-        "https://sibi-api.vercel.app/emprestimos",
-        {
-          params,
-        }
-      );
+      const response = await axios.get("http://localhost:3000/emprestimos", {
+        params,
+      });
       setRequests(response.data);
     } catch (error) {
       console.error("Erro ao buscar empréstimos:", error);
@@ -70,9 +67,7 @@ const Request = () => {
 
   const handleDelete = async (request) => {
     try {
-      await axios.delete(
-        `https://sibi-api.vercel.app/emprestimos/${request.id}`
-      );
+      await axios.delete(`http://localhost:3000/emprestimos/${request.id}`);
       setRequests(requests.filter((r) => r.id !== request.id));
       setDevolvidos([...devolvidos, request]);
       localStorage.setItem(
@@ -89,11 +84,11 @@ const Request = () => {
   const handleReturn = async (request) => {
     try {
       await axios.put(
-        `https://sibi-api.vercel.app/emprestimos/${request.id}/devolver`
+        `http://localhost:3000/emprestimos/${request.id}/devolver`
       );
       setRequests((prevRequests) =>
         prevRequests.filter((r) => r.id !== request.id)
-      ); // Remove o empréstimo da lista após devolução
+      );
       setDevolvidos([...devolvidos, request]);
       localStorage.setItem("devolvidos", JSON.stringify(devolvidos));
       toast.success("Livro devolvido com sucesso!");
@@ -111,7 +106,7 @@ const Request = () => {
   const handleUpdateRequest = async (updatedRequest) => {
     try {
       await axios.put(
-        `https://sibi-api.vercel.app/emprestimos/${updatedRequest.id}`,
+        `http://localhost:3000/emprestimos/${updatedRequest.id}`,
         updatedRequest
       );
       setRequests((prevRequests) =>
@@ -135,7 +130,25 @@ const Request = () => {
   };
 
   const handleFilterReturned = async () => {
-    fetchData(true); // Buscar apenas requisições devolvidas
+    fetchData(true);
+  };
+
+  const handleCreateRequest = async () => {
+    try {
+      const response = await axios.post("http://localhost:3000/emprestimos", {
+        nome: "Nome do Aluno",
+        serieCurso: "1° ADM",
+        dataInicio: moment().format("YYYY-MM-DD"),
+        dataDevolucao: moment().add(7, "days").format("YYYY-MM-DD"),
+        livroId: 1, // ID do livro que será emprestado
+      });
+
+      setRequests([...requests, response.data]);
+      toast.success("Empréstimo criado com sucesso!");
+    } catch (error) {
+      console.error("Erro ao criar empréstimo:", error.response.data.error);
+      toast.error(error.response.data.error);
+    }
   };
 
   return (
@@ -186,7 +199,7 @@ const Request = () => {
           ) : (
             requests.map((request) => {
               if (devolvidos.some((devolvido) => devolvido.id === request.id)) {
-                return null; // Ignora os empréstimos devolvidos
+                return null;
               }
               return (
                 <motion.div
