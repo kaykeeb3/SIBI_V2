@@ -109,9 +109,6 @@ const Schedule = () => {
 
       handleCloseModal(); // Fechar o modal após a devolução
       toast.success("Agendamento marcado como devolvido com sucesso!");
-
-      // Recarrega a página após o sucesso da devolução
-      window.location.reload();
     } catch (error) {
       console.error("Erro ao marcar como devolvido:", error);
       toast.error("Erro ao marcar como devolvido.");
