@@ -83,7 +83,26 @@ async function criarEmprestimo(req, res) {
       return res.status(400).json({ error: "Datas fornecidas são inválidas" });
     }
 
-    // Se as datas forem válidas, criar o empréstimo
+    // Verificar se há livros disponíveis para empréstimo
+    const livro = await prisma.book.findUnique({
+      where: { id: parseInt(livroId) },
+    });
+
+    // Verificar se a quantidade de livros disponíveis é suficiente
+    const emprestimosAtivos = await prisma.loan.count({
+      where: {
+        livroId: parseInt(livroId),
+        devolvido: false,
+      },
+    });
+
+    if (!livro || livro.quantidade - emprestimosAtivos <= 0) {
+      return res
+        .status(400)
+        .json({ error: "Livro não disponível para empréstimo" });
+    }
+
+    // Se as datas forem válidas e houver livros disponíveis, criar o empréstimo
     const emprestimo = await prisma.loan.create({
       data: {
         nome: nome,
@@ -93,6 +112,7 @@ async function criarEmprestimo(req, res) {
         livroId: parseInt(livroId), // Converter para inteiro,
       },
     });
+
     res.json(emprestimo);
   } catch (error) {
     console.error("Erro ao criar empréstimo:", error.message);
