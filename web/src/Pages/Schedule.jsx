@@ -9,7 +9,7 @@ import { GiConfirmed } from "react-icons/gi";
 import { motion } from "framer-motion";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import moment from "moment"; // Adicione a importação do Moment.js
+import moment from "moment";
 
 const Schedule = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -96,18 +96,9 @@ const Schedule = () => {
         }
       );
 
-      // Atualiza o estado dos agendamentos diretamente e força a re-renderização
-      setSchedules((prevSchedules) => {
-        const updatedSchedules = prevSchedules.map((schedule) => {
-          if (schedule.id === id) {
-            return { ...schedule, devolvido: true }; // Marca o agendamento como devolvido
-          }
-          return schedule;
-        });
-        return [...updatedSchedules]; // Criando uma nova referência para forçar a re-renderização
-      });
+      setSchedules(schedules.filter((schedule) => schedule.id !== id)); // Remover agendamento da lista após a devolução
 
-      handleCloseModal(); // Fechar o modal após a devolução
+      handleCloseModal();
       toast.success("Agendamento marcado como devolvido com sucesso!");
     } catch (error) {
       console.error("Erro ao marcar como devolvido:", error);
@@ -115,7 +106,6 @@ const Schedule = () => {
     }
   };
 
-  // Função para verificar se a data de devolução já passou
   const isPastDue = (date) => {
     return moment().isAfter(moment(date));
   };
@@ -166,7 +156,7 @@ const Schedule = () => {
                 transition={{ duration: 0.5 }}
                 className={`bg-white p-6 rounded-lg shadow-md mb-6 border ${
                   isPastDue(schedule.dataDevolucao)
-                    ? "border-red-500" // Adiciona borda vermelha se a data de devolução já passou
+                    ? "border-red-500"
                     : "border-gray-300"
                 }`}
               >
