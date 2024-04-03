@@ -33,6 +33,7 @@ function AppRoutes() {
             element={<RegisterEquipment />}
           ></Route>
           <Route path="/support" element={<Support />}></Route>
+          {/*<Route path="/support" element={<Chat />}></Route>*/}
         </Route>
       </Routes>
     </BrowserRouter>
