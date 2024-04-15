@@ -1,5 +1,6 @@
-const { PrismaClient } = require("@prisma/client");
-const moment = require("moment");
+// controllers/scheduleController.js
+import { PrismaClient } from "@prisma/client";
+import moment from "moment";
 
 const prisma = new PrismaClient();
 
@@ -22,7 +23,6 @@ async function criarAgendamento(req, res) {
       tipo,
     } = req.body;
 
-    // Verificar se o equipamento existe
     const equipmentExists = await prisma.equipment.findUnique({
       where: {
         id: parseInt(equipamentoId),
@@ -33,12 +33,10 @@ async function criarAgendamento(req, res) {
       return res.status(400).json({ error: "Equipamento não encontrado" });
     }
 
-    // Verificar se as datas fornecidas são válidas
     if (!validarDatas(dataInicio, dataDevolucao)) {
       return res.status(400).json({ error: "Datas fornecidas são inválidas" });
     }
 
-    // Verificar se o equipamento já possui 2 agendamentos ativos
     const activeSchedulesCount = await prisma.schedule.count({
       where: {
         equipamentoId: parseInt(equipamentoId),
@@ -52,7 +50,6 @@ async function criarAgendamento(req, res) {
         .json({ error: "O equipamento já possui dois agendamentos ativos" });
     }
 
-    // Criar o agendamento
     const agendamento = await prisma.schedule.create({
       data: {
         nome,
@@ -62,29 +59,13 @@ async function criarAgendamento(req, res) {
         diaSemana,
         equipamentoId: parseInt(equipamentoId),
         tipo,
-        devolvido: false, // Definindo devolvido como false ao criar um novo agendamento
+        devolvido: false,
       },
     });
 
     res.json(agendamento);
   } catch (error) {
     console.error("Erro ao criar agendamento:", error.message);
-    res.status(500).json({ error: "Erro interno do servidor" });
-  }
-}
-
-async function marcarDevolvido(req, res) {
-  const { id } = req.params;
-
-  try {
-    const agendamento = await prisma.schedule.update({
-      where: { id: parseInt(id) },
-      data: { devolvido: true },
-    });
-
-    res.json(agendamento);
-  } catch (error) {
-    console.error("Erro ao marcar agendamento como devolvido:", error.message);
     res.status(500).json({ error: "Erro interno do servidor" });
   }
 }
@@ -100,32 +81,26 @@ async function listarAgendamentos(req, res) {
           AND: [
             { data: { contains: data } },
             { local: { contains: local } },
-            { devolvido: false }, // Apenas agendamentos não devolvidos
+            { devolvido: false },
           ],
         },
       });
     } else if (data) {
       agendamentos = await prisma.schedule.findMany({
         where: {
-          AND: [
-            { data: { contains: data } },
-            { devolvido: false }, // Apenas agendamentos não devolvidos
-          ],
+          AND: [{ data: { contains: data } }, { devolvido: false }],
         },
       });
     } else if (local) {
       agendamentos = await prisma.schedule.findMany({
         where: {
-          AND: [
-            { local: { contains: local } },
-            { devolvido: false }, // Apenas agendamentos não devolvidos
-          ],
+          AND: [{ local: { contains: local } }, { devolvido: false }],
         },
       });
     } else {
       agendamentos = await prisma.schedule.findMany({
         where: {
-          devolvido: false, // Apenas agendamentos não devolvidos
+          devolvido: false,
         },
       });
     }
@@ -165,24 +140,20 @@ async function atualizarAgendamento(req, res) {
   } = req.body;
 
   try {
-    // Verificar se o agendamento existe
     const agendamento = await prisma.schedule.findUnique({
       where: {
         id: parseInt(id),
       },
     });
 
-    // Verificar se o agendamento existe antes de prosseguir
     if (!agendamento) {
       return res.status(404).json({ error: "Agendamento não encontrado" });
     }
 
-    // Verificar se as datas fornecidas são válidas
     if (!validarDatas(dataInicio, dataDevolucao)) {
       return res.status(400).json({ error: "Datas fornecidas são inválidas" });
     }
 
-    // Atualizar o agendamento
     const agendamentoAtualizado = await prisma.schedule.update({
       where: {
         id: parseInt(id),
@@ -205,7 +176,6 @@ async function atualizarAgendamento(req, res) {
   }
 }
 
-// Função para marcar um agendamento como devolvido
 async function marcarDevolvido(req, res) {
   const { id } = req.params;
 
@@ -222,10 +192,10 @@ async function marcarDevolvido(req, res) {
   }
 }
 
-module.exports = {
+export {
   criarAgendamento,
   listarAgendamentos,
   excluirAgendamento,
   atualizarAgendamento,
-  marcarDevolvido, // Adicionando a função para marcar como devolvido
+  marcarDevolvido,
 };

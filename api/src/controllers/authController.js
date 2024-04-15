@@ -1,4 +1,4 @@
-const jwt = require("jsonwebtoken");
+import jwt from "jsonwebtoken";
 
 async function login({ nome, senha }, prisma) {
   try {
@@ -41,4 +41,4 @@ async function getUserProfile(userId, prisma) {
   }
 }
 
-module.exports = { login, getUserProfile };
+export { login, getUserProfile };

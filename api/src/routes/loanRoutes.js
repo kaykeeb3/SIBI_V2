@@ -1,18 +1,14 @@
-// loanRoutes.js
-
-const express = require("express");
-const router = express.Router();
-const loanController = require("../controllers/loanController");
-
-// Destructuring das funções do loanController
-const {
+import express from "express";
+import {
   listarEmprestimos,
   criarEmprestimo,
   atualizarEmprestimo,
   excluirEmprestimo,
   marcarDevolvido,
-  listarEmprestimosAtrasados, // Adicionando a nova função do controller
-} = loanController;
+  listarEmprestimosAtrasados,
+} from "../controllers/loanController.js";
+
+const router = express.Router();
 
 // Listar todos os empréstimos
 router.get("/", listarEmprestimos);
@@ -32,4 +28,4 @@ router.put("/:id/devolver", marcarDevolvido);
 // Listar empréstimos atrasados
 router.get("/atrasados", listarEmprestimosAtrasados);
 
-module.exports = router;
+export default router;

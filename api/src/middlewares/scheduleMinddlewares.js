@@ -1,5 +1,4 @@
-// scheduleMiddlewares.js
-const { isValid, parseISO } = require("date-fns");
+import { isValid } from "date-fns"; // Correção da importação
 
 function validarDadosAgendamento(req, res, next) {
   const {
@@ -31,6 +30,4 @@ function validarDadosAgendamento(req, res, next) {
   next();
 }
 
-module.exports = {
-  validarDadosAgendamento,
-};
+export { validarDadosAgendamento }; // Correção da exportação

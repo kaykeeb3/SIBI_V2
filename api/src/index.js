@@ -1,15 +1,14 @@
-const equipmentRoutes = require("./routes/equipmentRoutes");
-const bookRoutes = require("./routes/bookRoutes");
-const express = require("express");
-const bodyParser = require("body-parser");
-const cors = require("cors");
-const cookieParser = require("cookie-parser");
-const { PrismaClient } = require("@prisma/client");
-const { authenticateToken } = require("./middlewares/authMiddleware");
-const { login, getUserProfile } = require("./controllers/authController");
-
-const loanRoutes = require("./routes/loanRoutes"); // Importe as rotas de empréstimos
-const scheduleRoutes = require("./routes/scheduleRoutes");
+import express from "express";
+import bodyParser from "body-parser";
+import cors from "cors";
+import cookieParser from "cookie-parser";
+import { PrismaClient } from "@prisma/client";
+import { authenticateToken } from "./middlewares/authMiddleware.js";
+import { login, getUserProfile } from "./controllers/authController.js";
+import bookRoutes from "./routes/bookRoutes.js";
+import equipmentRoutes from "./routes/equipmentRoutes.js";
+import loanRoutes from "./routes/loanRoutes.js";
+import scheduleRoutes from "./routes/scheduleRoutes.js";
 
 const prisma = new PrismaClient();
 const app = express();

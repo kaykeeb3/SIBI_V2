@@ -1,5 +1,4 @@
 // middlewares/bookMiddleware.js
-
 async function validateLivroInput(req, res, next) {
   const { nome, numero, autor, genero, quantidade } = req.body;
 
@@ -48,4 +47,4 @@ async function validateLivroInput(req, res, next) {
   next();
 }
 
-module.exports = { validateLivroInput };
+export { validateLivroInput }; // Correção da exportação

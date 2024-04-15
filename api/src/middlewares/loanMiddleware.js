@@ -1,4 +1,5 @@
-const { PrismaClient } = require("@prisma/client");
+import { PrismaClient } from "@prisma/client"; // Correção da importação
+
 const prisma = new PrismaClient();
 
 async function verificarDisponibilidadeLivro(req, res) {
@@ -41,4 +42,4 @@ async function verificarDisponibilidadeLivro(req, res) {
   }
 }
 
-module.exports = { verificarDisponibilidadeLivro };
+export { verificarDisponibilidadeLivro }; // Correção da exportação

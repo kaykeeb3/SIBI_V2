@@ -1,17 +1,14 @@
-const express = require("express");
-const router = express.Router();
-const scheduleController = require("../controllers/scheduleController");
-const {
-  validarDadosAgendamento,
-} = require("../middlewares/scheduleMinddlewares");
-
-const {
+import express from "express";
+import {
   criarAgendamento,
   listarAgendamentos,
   excluirAgendamento,
   atualizarAgendamento,
-  marcarDevolvido, // Adicionando a função para marcar como devolvido
-} = scheduleController;
+  marcarDevolvido,
+} from "../controllers/scheduleController.js";
+import { validarDadosAgendamento } from "../middlewares/scheduleMinddlewares.js";
+
+const router = express.Router();
 
 // Criar um novo agendamento
 router.post("/", validarDadosAgendamento, criarAgendamento);
@@ -23,9 +20,9 @@ router.get("/", listarAgendamentos);
 router.delete("/:id", excluirAgendamento);
 
 // Atualizar um agendamento existente
-router.put("/:id", validarDadosAgendamento, atualizarAgendamento); // Usar o middleware de validação antes de atualizar
+router.put("/:id", validarDadosAgendamento, atualizarAgendamento);
 
 // Rota para marcar um agendamento como devolvido
 router.put("/:id/devolver", marcarDevolvido);
 
-module.exports = router;
+export default router;

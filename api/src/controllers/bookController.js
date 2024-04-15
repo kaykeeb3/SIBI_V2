@@ -1,6 +1,6 @@
 // controllers/bookController.js
+import { PrismaClient } from "@prisma/client";
 
-const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
 async function listarLivros(req, res) {
@@ -136,10 +136,10 @@ async function contarLivrosDisponiveis(req, res) {
   }
 }
 
-module.exports = {
+export {
+  listarLivros,
   cadastrarLivro,
   editarLivro,
   deletarLivro,
-  listarLivros,
   contarLivrosDisponiveis,
 };

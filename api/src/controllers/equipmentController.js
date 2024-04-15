@@ -1,8 +1,8 @@
 // controllers/equipmentController.js
-const { PrismaClient } = require("@prisma/client");
+import { PrismaClient } from "@prisma/client";
+
 const prisma = new PrismaClient();
 
-// Cadastrar um novo equipamento
 async function cadastrarEquipamento(req, res) {
   const { nome, tipo, quantidade } = req.body;
   try {
@@ -20,7 +20,6 @@ async function cadastrarEquipamento(req, res) {
   }
 }
 
-// Listar todos os equipamentos cadastrados
 async function listarEquipamentos(req, res) {
   try {
     const equipamentos = await prisma.equipment.findMany();
@@ -31,13 +30,12 @@ async function listarEquipamentos(req, res) {
   }
 }
 
-// Obter um equipamento pelo ID
 async function obterEquipamentoPorId(req, res) {
   const equipamentoId = parseInt(req.params.id);
   try {
     const equipamento = await prisma.equipment.findUnique({
       where: {
-        id: equipamentoId, // Corrigido: utilize o valor de equipamentoId como o ID do equipamento
+        id: equipamentoId,
       },
     });
     if (!equipamento) {
@@ -50,7 +48,6 @@ async function obterEquipamentoPorId(req, res) {
   }
 }
 
-// Atualizar um equipamento pelo ID
 async function atualizarEquipamento(req, res) {
   const equipamentoId = parseInt(req.params.id);
   const { nome, tipo, quantidade } = req.body;
@@ -72,7 +69,6 @@ async function atualizarEquipamento(req, res) {
   }
 }
 
-// Excluir um equipamento pelo ID
 async function excluirEquipamento(req, res) {
   const equipamentoId = parseInt(req.params.id);
   try {
@@ -88,7 +84,7 @@ async function excluirEquipamento(req, res) {
   }
 }
 
-module.exports = {
+export {
   cadastrarEquipamento,
   listarEquipamentos,
   obterEquipamentoPorId,

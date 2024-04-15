@@ -1,10 +1,9 @@
-// loanController.js
-const { PrismaClient } = require("@prisma/client");
-const moment = require("moment"); // Import Moment.js
+// controllers/loanController.js
+import { PrismaClient } from "@prisma/client";
+import moment from "moment";
 
 const prisma = new PrismaClient();
 
-// Função para validar as datas usando Moment.js
 async function validarDatas(dataInicio, dataDevolucao) {
   return (
     moment(dataInicio, "YYYY-MM-DD", true).isValid() &&
@@ -23,32 +22,24 @@ async function listarEmprestimos(req, res) {
           AND: [
             { nome: { contains: nome } },
             { serieCurso: { contains: serieCurso } },
-            { devolvido: false }, // Apenas empréstimos não devolvidos
+            { devolvido: false },
           ],
         },
       });
     } else if (nome) {
       emprestimos = await prisma.loan.findMany({
         where: {
-          AND: [
-            { nome: { contains: nome } },
-            { devolvido: false }, // Apenas empréstimos não devolvidos
-          ],
+          AND: [{ nome: { contains: nome } }, { devolvido: false }],
         },
       });
     } else if (serieCurso) {
       emprestimos = await prisma.loan.findMany({
         where: {
-          AND: [
-            { serieCurso: { contains: serieCurso } },
-            { devolvido: false }, // Apenas empréstimos não devolvidos
-          ],
+          AND: [{ serieCurso: { contains: serieCurso } }, { devolvido: false }],
         },
       });
     } else {
-      emprestimos = await prisma.loan.findMany({
-        where: { devolvido: false }, // Apenas empréstimos não devolvidos
-      });
+      emprestimos = await prisma.loan.findMany({ where: { devolvido: false } });
     }
 
     res.json(emprestimos);
@@ -78,17 +69,14 @@ async function criarEmprestimo(req, res) {
   const { nome, serieCurso, dataInicio, dataDevolucao, livroId } = req.body;
 
   try {
-    // Verificar se as datas fornecidas são válidas
     if (!validarDatas(dataInicio, dataDevolucao)) {
       return res.status(400).json({ error: "Datas fornecidas são inválidas" });
     }
 
-    // Verificar se há livros disponíveis para empréstimo
     const livro = await prisma.book.findUnique({
       where: { id: parseInt(livroId) },
     });
 
-    // Verificar se a quantidade de livros disponíveis é suficiente
     const emprestimosAtivos = await prisma.loan.count({
       where: {
         livroId: parseInt(livroId),
@@ -102,14 +90,13 @@ async function criarEmprestimo(req, res) {
         .json({ error: "Livro não disponível para empréstimo" });
     }
 
-    // Se as datas forem válidas e houver livros disponíveis, criar o empréstimo
     const emprestimo = await prisma.loan.create({
       data: {
         nome: nome,
         serieCurso: serieCurso,
-        dataInicio: moment(dataInicio).toDate(), // Convertendo para objeto Date
-        dataDevolucao: moment(dataDevolucao).toDate(), // Convertendo para objeto Date
-        livroId: parseInt(livroId), // Converter para inteiro,
+        dataInicio: moment(dataInicio).toDate(),
+        dataDevolucao: moment(dataDevolucao).toDate(),
+        livroId: parseInt(livroId),
       },
     });
 
@@ -161,8 +148,8 @@ async function atualizarEmprestimo(req, res) {
       data: {
         nome,
         serieCurso,
-        dataInicio: moment(dataInicio).toDate(), // Convertendo para objeto Date
-        dataDevolucao: moment(dataDevolucao).toDate(), // Convertendo para objeto Date
+        dataInicio: moment(dataInicio).toDate(),
+        dataDevolucao: moment(dataDevolucao).toDate(),
         livroId: parseInt(livroId),
       },
     });
@@ -195,9 +182,9 @@ async function listarEmprestimosAtrasados(req, res) {
   try {
     const emprestimosAtrasados = await prisma.loan.findMany({
       where: {
-        devolvido: false, // Apenas empréstimos não devolvidos
+        devolvido: false,
         dataDevolucao: {
-          lt: new Date(), // Data de devolução é anterior à data atual
+          lt: new Date(),
         },
       },
     });
@@ -209,12 +196,12 @@ async function listarEmprestimosAtrasados(req, res) {
   }
 }
 
-module.exports = {
+export {
   listarEmprestimos,
   criarEmprestimo,
   obterEmprestimos,
   atualizarEmprestimo,
   excluirEmprestimo,
   marcarDevolvido,
-  listarEmprestimosAtrasados, // Adicionando a nova função ao exports
+  listarEmprestimosAtrasados,
 };

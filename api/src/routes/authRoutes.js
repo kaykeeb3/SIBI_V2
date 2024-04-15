@@ -1,6 +1,4 @@
-// authRoutes.js
-
-const { Router } = require("express");
+import { Router } from "express"; // Correção da importação
 
 const authRoutes = (router) => {
   const { PrismaClient } = require("@prisma/client");
@@ -41,4 +39,4 @@ const authRoutes = (router) => {
   return router;
 };
 
-module.exports = authRoutes;
+export default authRoutes; // Correção da exportação
