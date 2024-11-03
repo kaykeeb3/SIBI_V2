@@ -1,0 +1,9 @@
+{
+  "extends": ["@rocketseat/eslint-config/react"],
+  "rules": {
+    "no-useless-constructor": "off"
+  },
+  "env": {
+    "jest": true
+  }
+}
