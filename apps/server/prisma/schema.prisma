@@ -6,3 +6,69 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+// LOGIN/CADASTRO
+model User {
+  id             Int      @id @default(autoincrement())
+  name           String
+  institution    String
+  limit          Int
+  role           Role
+  email          String   @unique
+  password       String
+  phone          String?
+  profilePicture String?
+  createdAt      DateTime @default(now())
+}
+
+enum Role {
+  ADMIN
+  USER
+}
+
+// LIVROS
+model Book {
+  id       Int    @id @default(autoincrement())
+  name     String
+  number   Int
+  author   String
+  gender   String
+  quantity Int
+  loans    Loan[] @relation("BookLoans")
+}
+
+// REQUISIÇÃO
+model Loan {
+  id           Int      @id @default(autoincrement())
+  name         String
+  seriesCourse String
+  startDate    DateTime
+  returnDate   DateTime
+  returned     Boolean  @default(false)
+  bookId       Int
+  book         Book     @relation("BookLoans", fields: [bookId], references: [id])
+}
+
+// EQUIPAMENTOS
+model Equipment {
+  id        Int        @id @default(autoincrement())
+  name      String
+  type      String
+  quantity  Int
+  number    Int        @unique
+  schedules Schedule[] @relation("EquipmentSchedules")
+}
+
+// AGENDAMENTOS
+model Schedule {
+  id          Int       @id @default(autoincrement())
+  name        String
+  quantity    Int
+  startDate   DateTime
+  returnDate  DateTime
+  weekDay     String
+  equipment   Equipment @relation("EquipmentSchedules", fields: [equipmentId], references: [id])
+  equipmentId Int
+  type        String?
+  returned    Boolean   @default(false)
+}
