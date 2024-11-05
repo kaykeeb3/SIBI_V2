@@ -1,8 +1,14 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { LoginForm } from "@/components/login-form";
 import { RegisterForm } from "@/components/register-form";
+import { Home } from "@/app/home/home";
 
 const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Home />,
+  },
+
   {
     path: "/login",
     element: <LoginForm />,
