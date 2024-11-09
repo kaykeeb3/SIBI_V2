@@ -6,11 +6,13 @@ import { Loan } from "@/app/loan/loan";
 import { SignIn } from "@/app/auth/sign-in";
 import { ProtectedRoute } from "@/components/protected-route";
 import { SignUp } from "@/app/auth/sign-up";
+import { NotFound } from "@/app/404";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
+    errorElement: <NotFound />,
     children: [
       {
         path: "/sign-in",
