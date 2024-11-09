@@ -53,6 +53,7 @@ export class AuthController {
     try {
       const user = await getUserDetails(decoded.id);
       res.status(200).json({
+        id: user.id,
         name: user.name,
         role: user.role,
         profilePicture: user.profilePicture,
