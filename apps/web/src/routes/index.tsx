@@ -1,11 +1,11 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { RegisterForm } from "@/components/register-form";
 import { Home } from "@/app/home/home";
 import { App } from "@/app";
 import { Book } from "@/app/book/book";
 import { Loan } from "@/app/loan/loan";
-import { Login } from "@/app/login/login";
+import { SignIn } from "@/app/auth/sign-in";
 import { ProtectedRoute } from "@/components/protected-route";
+import { SignUp } from "@/app/auth/sign-up";
 
 const router = createBrowserRouter([
   {
@@ -14,11 +14,11 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/sign-in",
-        element: <Login />,
+        element: <SignIn />,
       },
       {
         path: "/sign-up",
-        element: <RegisterForm />,
+        element: <SignUp />,
       },
       {
         element: <ProtectedRoute />,
