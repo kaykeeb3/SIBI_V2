@@ -1,9 +1,11 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { LoginForm } from "@/components/login-form";
 import { RegisterForm } from "@/components/register-form";
 import { Home } from "@/app/home/home";
-import { Book } from "@/app/book";
 import { App } from "@/app";
+import { Book } from "@/app/book/book";
+import { Loan } from "@/app/loan/loan";
+import { Login } from "@/app/login/login";
+import { ProtectedRoute } from "@/components/protected-route";
 
 const router = createBrowserRouter([
   {
@@ -11,20 +13,29 @@ const router = createBrowserRouter([
     element: <App />,
     children: [
       {
-        index: true,
-        element: <Home />,
+        path: "/sign-in",
+        element: <Login />,
       },
       {
-        path: "/login",
-        element: <LoginForm />,
-      },
-      {
-        path: "/register",
+        path: "/sign-up",
         element: <RegisterForm />,
       },
       {
-        path: "/books",
-        element: <Book />,
+        element: <ProtectedRoute />,
+        children: [
+          {
+            index: true,
+            element: <Home />,
+          },
+          {
+            path: "/books",
+            element: <Book />,
+          },
+          {
+            path: "/loans",
+            element: <Loan />,
+          },
+        ],
       },
     ],
   },
