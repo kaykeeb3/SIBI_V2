@@ -2,13 +2,13 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useState } from "react";
 import { EyeIcon, EyeOffIcon, Loader2 } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, UseMutationResult } from "@tanstack/react-query";
 import { login } from "@/services/auth/auth";
 import { toast } from "sonner";
 
@@ -20,11 +20,12 @@ const loginSchema = z.object({
 type LoginFormData = z.infer<typeof loginSchema>;
 
 export function LoginForm() {
-  const [showPassword, setShowPassword] = useState(false);
-  const [loginStatus, setLoginStatus] = useState<"success" | "error" | null>(
-    null
-  );
   const navigate = useNavigate();
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const [showPassword, setShowPassword] = useState(
+    searchParams.get("showPassword") === "true"
+  );
 
   const {
     register,
@@ -34,24 +35,43 @@ export function LoginForm() {
     resolver: zodResolver(loginSchema),
   });
 
-  const { mutate, isPending } = useMutation({
-    mutationFn: (data: LoginFormData) => login(data),
-    onSuccess: () => {
-      toast.success("Login realizado com sucesso!", {
-        duration: 2000,
-      });
-      navigate("/", { replace: true });
-    },
-    onError: () => {
-      toast.error("Erro ao fazer login", {
-        description: "Verifique suas credenciais e tente novamente.",
-        duration: 2000,
-      });
-    },
-  });
+  const { mutate, isPending }: UseMutationResult<any, Error, LoginFormData> =
+    useMutation({
+      mutationFn: (data: LoginFormData) => login(data),
+      onSuccess: () => {
+        toast.success("Login realizado com sucesso!", {
+          duration: 2000,
+        });
+        navigate("/", { replace: true });
+      },
+      onError: () => {
+        toast.error("Erro ao fazer login", {
+          description: "Verifique suas credenciais e tente novamente.",
+          duration: 2000,
+        });
+      },
+    });
 
   const onSubmit = (data: LoginFormData) => {
     mutate(data);
+  };
+
+  const togglePasswordVisibility = () => {
+    const newShowPassword = !showPassword;
+    setShowPassword(newShowPassword);
+
+    // Atualizar o parâmetro na URL para refletir o estado
+    const updatedSearchParams = new URLSearchParams(location.search);
+    updatedSearchParams.set("showPassword", newShowPassword.toString());
+
+    // Atualizar a URL sem redirecionar a página
+    navigate(
+      {
+        pathname: location.pathname,
+        search: `?${updatedSearchParams.toString()}`,
+      },
+      { replace: true }
+    );
   };
 
   return (
@@ -110,7 +130,7 @@ export function LoginForm() {
                   />
                   <button
                     type="button"
-                    onClick={() => setShowPassword(!showPassword)}
+                    onClick={togglePasswordVisibility}
                     className="absolute right-3 top-1/2 transform -translate-y-1/2 text-zinc-600 hover:text-zinc-800 focus:outline-none"
                   >
                     {showPassword ? (
