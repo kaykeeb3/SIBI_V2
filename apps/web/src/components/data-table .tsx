@@ -81,8 +81,6 @@ export function DataTable({
       </div>
 
       <div className="overflow-x-auto max-h-[400px]">
-        {" "}
-        {/* Limita a altura da tabela */}
         <Table className="min-w-full border border-zinc-200 shadow-sm rounded-lg">
           <TableHeader className="bg-foreground text-primary-foreground">
             {table.getHeaderGroups().map((headerGroup) => (
@@ -109,7 +107,7 @@ export function DataTable({
             {table.getRowModel().rows.map((row) => (
               <TableRow
                 key={row.id}
-                className="hover:bg-zinc-200/40 transition-all duration-300 group"
+                className="hover:bg-zinc-200/40 transition-all duration-300 group botder border-foreground/30"
               >
                 {row.getVisibleCells().map((cell) => (
                   <TableCell

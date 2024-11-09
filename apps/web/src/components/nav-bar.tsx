@@ -8,21 +8,19 @@ import {
   Library,
   NotebookTextIcon,
   Tv,
-  UserPenIcon,
 } from "lucide-react";
 
-import Logo from "../public/assets/logo-1.svg";
+import logo from "../public/assets/logo.svg";
 
 const navItems = [
-  { to: "/books", icon: NotebookTextIcon, label: "Books" },
-  { to: "/loans", icon: Blend, label: "Loans" },
-  { to: "/profile", icon: Tv, label: "Profile" },
-  { to: "/settings", icon: ClipboardCheck, label: "Settings" },
-  { to: "/calendar", icon: CalendarCheck, label: "Calendar" },
-  { to: "/library", icon: Library, label: "Library" },
-  { to: "/card", icon: IdCard, label: "Card" },
-  { to: "/computer", icon: Computer, label: "Computer" },
-  { to: "/user", icon: UserPenIcon, label: "User" },
+  { to: "/books", icon: NotebookTextIcon, label: "Livros" },
+  { to: "/loans", icon: Blend, label: "Empréstimos" },
+  /*{ to: "/", icon: Tv, label: "Equipamentos" },
+  { to: "/", icon: ClipboardCheck, label: "Agendamentos" },
+  { to: "/", icon: CalendarCheck, label: "Calendar" },
+  { to: "/", icon: Library, label: "Library" },
+  { to: "/", icon: IdCard, label: "Card" },
+  { to: "/", icon: Computer, label: "Computer" },*/
 ];
 
 export function NavBar() {
@@ -36,7 +34,7 @@ export function NavBar() {
         <div className="p-2">
           <div className="flex items-center justify-center mb-8 mt-4">
             <Link to="/">
-              <img src={Logo} className="w-4" />
+              <img src={logo} className="w-4" />
             </Link>
           </div>
 
