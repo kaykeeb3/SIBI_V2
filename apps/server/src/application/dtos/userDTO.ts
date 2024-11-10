@@ -11,11 +11,15 @@ export const UserDTO = z.object({
   profilePicture: z.string().url().optional(),
 });
 
+// Definindo o DTO parcial para atualização de perfil
+export const PartialUserDTO = UserDTO.partial();
+
 export const LoginDTO = z.object({
   email: z.string().email(),
   password: z.string().min(6),
 });
 
-export type LoginDTO = z.infer<typeof LoginDTO>;
-
+// Exportando os tipos inferidos com nomes distintos
 export type UserDTO = z.infer<typeof UserDTO>;
+export type PartialUserDTO = z.infer<typeof PartialUserDTO>;
+export type LoginDTO = z.infer<typeof LoginDTO>;

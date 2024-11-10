@@ -1,5 +1,5 @@
 import prisma from "@/infra/prisma/client";
-import { UserDTO } from "@/application/dtos/userDTO";
+import { UserDTO, PartialUserDTO } from "@/application/dtos/userDTO";
 import { User } from "@/core/domain/entities/userEntity";
 
 export class UserRepository {
@@ -71,7 +71,7 @@ export class UserRepository {
     );
   }
 
-  async updateUser(id: number, data: UserDTO): Promise<User> {
+  async updateUser(id: number, data: PartialUserDTO): Promise<User> {
     const user = await prisma.user.update({
       where: { id },
       data,

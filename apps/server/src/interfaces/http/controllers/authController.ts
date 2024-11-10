@@ -4,7 +4,7 @@ import {
   loginUser,
   getUserDetails,
 } from "@/application/use-cases/authUseCase";
-import { LoginDTO, UserDTO } from "@/application/dtos/userDTO";
+import { LoginDTO, PartialUserDTO, UserDTO } from "@/application/dtos/userDTO";
 import { verifyToken } from "@/shared/utils/tokenManager";
 import { UserRepository } from "@/infra/repositories/userRepository";
 
@@ -85,7 +85,7 @@ export class AuthController {
   async updateUser(req: Request, res: Response) {
     const { id } = req.params;
     try {
-      const data = UserDTO.parse(req.body);
+      const data = PartialUserDTO.parse(req.body); // Usar o DTO opcional
       const user = await userRepository.updateUser(Number(id), data);
       res.status(200).json({ user });
     } catch (error: any) {
