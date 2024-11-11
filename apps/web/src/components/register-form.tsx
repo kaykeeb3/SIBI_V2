@@ -76,7 +76,7 @@ export function RegisterForm() {
       });
 
       reset();
-      navigate("/sing-in", { replace: true });
+      navigate("/", { replace: true });
     },
     onError: (error) => {
       toast.error("Erro no cadastro", {
