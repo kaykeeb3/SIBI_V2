@@ -16,7 +16,18 @@ class SocketService {
 
   // Método de conexão
   connect() {
-    this.socket = io("http://localhost:3000");
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      console.warn(
+        "Usuário não logado. Conexão ao socket não será estabelecida."
+      );
+      return;
+    }
+
+    this.socket = io("http://localhost:3000", {
+      auth: { token },
+    });
 
     this.socket.on("connect", () => {
       console.log("Conectado ao servidor");
@@ -34,10 +45,9 @@ class SocketService {
     this.socket.on(
       "overdueScheduleNotification",
       (notifications: Notification[]) => {
-        // Define o tipo "schedule" de forma explícita para cada notificação
         const formattedNotifications = notifications.map((notification) => ({
           ...notification,
-          type: "schedule" as const, // <-- Aqui usamos `as const` para restringir o tipo
+          type: "schedule" as const,
         }));
         callback(formattedNotifications);
       }
@@ -46,27 +56,22 @@ class SocketService {
     this.socket.on(
       "overdueLoanNotification",
       (notifications: Notification[]) => {
-        // Define o tipo "loan" de forma explícita para cada notificação
         const formattedNotifications = notifications.map((notification) => ({
           ...notification,
-          type: "loan" as const, // <-- Aqui usamos `as const` para restringir o tipo
+          type: "loan" as const,
         }));
         callback(formattedNotifications);
       }
     );
   }
 
-  // Recebe notificações de agendamento devolvido
   onScheduleReturned(callback: (scheduleId: string) => void) {
     if (!this.socket) return;
-
     this.socket.on("scheduleReturned", callback);
   }
 
-  // Recebe notificações de empréstimo devolvido
   onLoanReturned(callback: (loanId: string) => void) {
     if (!this.socket) return;
-
     this.socket.on("loanReturned", callback);
   }
 
@@ -75,10 +80,10 @@ class SocketService {
     if (this.socket) {
       this.socket.disconnect();
       this.socket = null;
+      console.log("Socket desconectado");
     }
   }
 }
 
-// Instância do serviço
 const socketService = new SocketService();
 export default socketService;

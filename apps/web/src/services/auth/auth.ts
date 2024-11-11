@@ -1,4 +1,5 @@
 import api from "@/lib/api";
+import socketService from "../socket/socket-service";
 
 interface LoginParams {
   email: string;
@@ -28,9 +29,16 @@ export const login = async (data: LoginParams) => {
 
   if (token) {
     localStorage.setItem("token", token);
+    socketService.connect();
   }
 
   return response.data;
+};
+
+// Função para logout
+export const logout = () => {
+  localStorage.removeItem("token");
+  socketService.disconnect();
 };
 
 // Função para cadastro
