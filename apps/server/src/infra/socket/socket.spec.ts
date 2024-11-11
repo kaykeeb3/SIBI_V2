@@ -6,7 +6,6 @@ import {
   checkOverdueLoans,
 } from "@/application/use-cases/notificationUseCase";
 
-// Mock das dependências
 jest.mock("socket.io");
 jest.mock("@/application/use-cases/notificationUseCase");
 
@@ -18,7 +17,11 @@ describe("Socket Server", () => {
   let connectionHandler: (socket: any) => void;
 
   beforeEach(() => {
+    jest.useFakeTimers();
+
     jest.clearAllMocks();
+
+    jest.spyOn(console, "error").mockImplementation(() => {});
 
     mockSocket = {
       id: "test-socket-id",
@@ -38,12 +41,14 @@ describe("Socket Server", () => {
     (SocketIOServer as unknown as jest.Mock).mockImplementation(() => mockIO);
 
     httpServer = new HttpServer();
-
     socketServer = Socket(httpServer);
   });
 
   afterEach(() => {
+    // Limpa todos os timers pendentes:
+    jest.clearAllTimers();
     socketServer.cleanup();
+    jest.restoreAllMocks();
   });
 
   it("should initialize socket server with correct configuration", () => {
@@ -55,18 +60,14 @@ describe("Socket Server", () => {
     });
   });
 
-  it("should handle client connection and setup notifications", () => {
+  it("should handle client connection without sending notifications immediately", () => {
     connectionHandler(mockSocket);
 
-    expect(mockSocket.on).toHaveBeenCalledWith(
-      "disconnect",
-      expect.any(Function)
-    );
-    expect(checkOverdueSchedules).toHaveBeenCalled();
-    expect(checkOverdueLoans).toHaveBeenCalled();
+    expect(checkOverdueSchedules).not.toHaveBeenCalled();
+    expect(checkOverdueLoans).not.toHaveBeenCalled();
   });
 
-  it("should emit overdue schedules notification when there are overdue items", async () => {
+  it("should emit overdue schedules notification after 24 hours", async () => {
     const mockOverdueSchedules = [
       { id: 1, name: "Schedule 1" },
       { id: 2, name: "Schedule 2" },
@@ -77,15 +78,20 @@ describe("Socket Server", () => {
     );
 
     connectionHandler(mockSocket);
-    await Promise.resolve(); // Aguarda a resolução da promessa
 
+    jest.advanceTimersByTime(86400000); // 24 horas
+
+    await Promise.resolve();
+    await Promise.resolve();
+
+    expect(checkOverdueSchedules).toHaveBeenCalled();
     expect(mockIO.emit).toHaveBeenCalledWith(
       "overdueScheduleNotification",
       mockOverdueSchedules
     );
   });
 
-  it("should emit overdue loans notification when there are overdue items", async () => {
+  it("should emit overdue loans notification after 24 hours", async () => {
     const mockOverdueLoans = [
       { id: 1, name: "Loan 1" },
       { id: 2, name: "Loan 2" },
@@ -94,8 +100,13 @@ describe("Socket Server", () => {
     (checkOverdueLoans as jest.Mock).mockResolvedValue(mockOverdueLoans);
 
     connectionHandler(mockSocket);
-    await Promise.resolve(); // Aguarda a resolução da promessa
 
+    jest.advanceTimersByTime(86400000);
+
+    await Promise.resolve();
+    await Promise.resolve();
+
+    expect(checkOverdueLoans).toHaveBeenCalled();
     expect(mockIO.emit).toHaveBeenCalledWith(
       "overdueLoanNotification",
       mockOverdueLoans
@@ -104,51 +115,50 @@ describe("Socket Server", () => {
 
   it("should handle errors in overdue schedules check", async () => {
     const error = new Error("Test error");
+    const consoleSpy = jest.spyOn(console, "error");
 
     (checkOverdueSchedules as jest.Mock).mockRejectedValue(error);
 
-    const consoleSpy = jest
-      .spyOn(console, "error")
-      .mockImplementation(() => {});
-
     connectionHandler(mockSocket);
-    await Promise.resolve(); // Aguarda a resolução da promessa
+
+    jest.advanceTimersByTime(86400000);
+
+    await Promise.resolve();
+    await Promise.resolve();
 
     expect(consoleSpy).toHaveBeenCalledWith(
       "Error fetching overdue schedules:",
       error
     );
-    consoleSpy.mockRestore();
   });
 
   it("should handle errors in overdue loans check", async () => {
     const error = new Error("Test error");
+    const consoleSpy = jest.spyOn(console, "error");
 
     (checkOverdueLoans as jest.Mock).mockRejectedValue(error);
 
-    const consoleSpy = jest
-      .spyOn(console, "error")
-      .mockImplementation(() => {});
-
     connectionHandler(mockSocket);
-    await Promise.resolve(); // Aguarda a resolução da promessa
+
+    jest.advanceTimersByTime(86400000);
+
+    await Promise.resolve();
+    await Promise.resolve();
 
     expect(consoleSpy).toHaveBeenCalledWith(
       "Error fetching overdue loans:",
       error
     );
-    consoleSpy.mockRestore();
   });
 
   it("should cleanup interval when server is closed", () => {
     const clearIntervalSpy = jest.spyOn(global, "clearInterval");
 
     connectionHandler(mockSocket);
+
     socketServer.cleanup();
 
-    expect(mockIO.close).toHaveBeenCalled();
     expect(clearIntervalSpy).toHaveBeenCalled();
-
-    clearIntervalSpy.mockRestore();
+    expect(mockIO.close).toHaveBeenCalled();
   });
 });

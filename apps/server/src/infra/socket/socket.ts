@@ -5,7 +5,6 @@ import {
   checkOverdueLoans,
 } from "@/application/use-cases/notificationUseCase";
 
-// Corrigimos o nome da interface para evitar conflito com o tipo importado `Server`
 interface SocketServerInstance {
   io: Server;
   cleanup: () => void;
@@ -52,23 +51,19 @@ export function Socket(server: HttpServer): SocketServerInstance {
   io.on("connection", (socket) => {
     console.log(`Client connected: ${socket.id}`);
 
-    // Notifica os agendamentos e empréstimos atrasados quando o cliente se conecta
-    notifyOverdueSchedules();
-    notifyOverdueLoans();
-
     socket.on("disconnect", () => {
       console.log(`Client disconnected: ${socket.id}`);
     });
   });
 
-  // Inicia o intervalo de notificações a cada 60 segundos
+  // Inicia o intervalo de notificações a cada 24 horas
   notificationInterval = setInterval(async () => {
     try {
       await Promise.all([notifyOverdueSchedules(), notifyOverdueLoans()]);
     } catch (error) {
       console.error("Error during notifications:", error);
     }
-  }, 60000); // Intervalo de 1 minuto (60000 ms)
+  }, 86400000); // Intervalo de 24 horas (86400000 ms)
 
   // Retornar o objeto io e a função de limpeza
   return {
@@ -79,7 +74,7 @@ export function Socket(server: HttpServer): SocketServerInstance {
         notificationInterval = null;
         console.log("Notification interval cleared.");
       }
-      io.close(); // Fecha o servidor Socket.IO
+      io.close();
       console.log("Socket.IO server closed.");
     },
   };
