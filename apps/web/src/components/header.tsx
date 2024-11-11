@@ -164,6 +164,7 @@ export function Header() {
               <AvatarImage
                 src={profile?.profilePicture || "/default-avatar.jpg"}
                 alt={profile?.name || "Avatar"}
+                className="object-cover"
               />
               <AvatarFallback>
                 {getFirstName(profile?.name || "")}
