@@ -6,10 +6,13 @@ import { Sheet, SheetContent, SheetTitle } from "@/components/ui/sheet";
 import { Input } from "@/components/ui/input";
 import { getProfile, updateProfile } from "@/services/auth/auth";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Bell, PowerIcon } from "lucide-react";
+import { Bell, BellRing, PowerIcon } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Label } from "./ui/label";
 import { toast } from "sonner";
+import { NotificationDialog } from "./notification-dialog";
+import socketService from "@/services/socket/socket-service";
+import { Notification } from "@/services/socket/socket-service";
 
 interface Profile {
   id: string;
@@ -23,6 +26,8 @@ interface Profile {
 }
 
 export function Header() {
+  const [isSheetOpen, setIsSheetOpen] = useState(false);
+  const [isNotificationOpen, setIsNotificationOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [profile, setProfile] = useState<Profile | null>(null);
   const [isEditing, setIsEditing] = useState(false);
@@ -30,6 +35,8 @@ export function Header() {
   const [newProfilePicture, setNewProfilePicture] = useState("");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [notifications, setNotifications] = useState<Notification[]>([]);
+  const [isHovered, setIsHovered] = useState(false);
 
   const fetchProfile = async () => {
     const token = localStorage.getItem("token");
@@ -52,8 +59,32 @@ export function Header() {
     }
   };
 
+  const handleNotifications = (overdueItems: any[]) => {
+    const notifications: Notification[] = overdueItems.map((item) => ({
+      id: item.id || crypto.randomUUID(),
+      name: item.name || "Notificação",
+      message: item.message || "Mensagem não disponível",
+      quantity: item.quantity || 0,
+      startDate: item.startDate || new Date().toISOString(),
+      type: item.type,
+    }));
+
+    setNotifications((prevNotifications) => [
+      ...prevNotifications,
+      ...notifications,
+    ]);
+  };
+
   useEffect(() => {
     fetchProfile();
+
+    socketService.connect();
+
+    socketService.onOverdueNotifications(handleNotifications);
+
+    return () => {
+      socketService.disconnect();
+    };
   }, []);
 
   const handleOpen = () => setIsOpen(true);
@@ -75,7 +106,6 @@ export function Header() {
         name: newName,
         profilePicture: newProfilePicture,
       });
-
       await fetchProfile();
       setIsEditing(false);
       setIsOpen(false);
@@ -88,7 +118,7 @@ export function Header() {
 
   const handleLogout = () => {
     localStorage.removeItem("token");
-    window.location.reload();
+    window.location.href = "/";
   };
 
   const getFirstName = (name: string) => {
@@ -102,11 +132,32 @@ export function Header() {
   return (
     <header className="w-full bg-zinc-100 px-4 py-2 z-10 relative">
       <div className="flex items-center justify-end mr-6">
-        <div className="relative mr-6">
-          <Bell size={18} />
-          <span className="absolute -top-[1px] right-[1px] w-[7px] h-[7px] bg-red-500 rounded-full"></span>
+        {/* Notificações */}
+        <div className="mr-4 items-center justify-center flex group relative">
+          <Button
+            variant="ghost"
+            onClick={() => setIsNotificationOpen(true)}
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+            className="relative p-2 h-12 w-12 hover:bg-zinc-200 transition-all duration-200 rounded-full"
+          >
+            {isHovered ? (
+              <BellRing className="w-6 h-6 text-zinc-700 animate-slight-shake" />
+            ) : (
+              <Bell className="w-6 h-6 text-zinc-600" />
+            )}
+            {notifications.length > 0 && (
+              <span className="absolute -top-0 -right-1 p-1 inline-flex items-center justify-center font-bold leading-none text-white bg-red-500 rounded-full min-w-[20px] min-h-[20px] text-xs">
+                {notifications.length > 99 ? "99+" : notifications.length}
+              </span>
+            )}
+          </Button>
+          <span className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 px-2 py-1 bg-zinc-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap">
+            Notificações
+          </span>
         </div>
 
+        {/* Informações do usuário */}
         <div className="flex items-center space-x-2">
           {loading ? (
             <Skeleton className="h-12 w-12 rounded-full" />
@@ -124,14 +175,14 @@ export function Header() {
           <div className="flex flex-col">
             {loading ? (
               <>
-                <Skeleton className="h-4 w-[100px] mb" />
-                <Skeleton className="h-4 w-[100px]" />
+                <Skeleton className="h-[16px] w-[100px]" />
+                <Skeleton className="h-[14px] w-[100px]" />
               </>
             ) : error ? (
               <span className="text-sm text-red-600">{error}</span>
             ) : (
               <>
-                <span className="font-semibold text-sm text-black">
+                <span className="font-semibold text-base text-black">
                   Olá, {getFirstName(profile?.name || "Usuário")}
                 </span>
                 <span className="font-normal text-xs text-zinc-800">
@@ -151,6 +202,7 @@ export function Header() {
         </button>
       </div>
 
+      {/* Menu de edição */}
       <Sheet open={isOpen} onOpenChange={setIsOpen}>
         <SheetContent>
           <SheetTitle>
@@ -227,31 +279,30 @@ export function Header() {
                 </p>
                 <Button
                   onClick={() => setIsEditing(true)}
-                  variant="outline"
-                  className="w-full bg-white hover:bg-white/40"
+                  className="w-full border"
                 >
                   Editar Perfil
                 </Button>
                 <Button
-                  onClick={handleClose}
-                  variant="outline"
-                  className="w-full bg-white hover:bg-white/40"
+                  onClick={handleLogout}
+                  variant="destructive"
+                  className="w-full"
                 >
-                  Fechar Menu
+                  <PowerIcon className="mr-2" />
+                  Sair
                 </Button>
               </div>
-              <Button
-                variant="destructive"
-                onClick={handleLogout}
-                className="w-full flex items-center justify-center space-x-2 hover:bg-red-700"
-              >
-                <PowerIcon className="h-4 w-4" />
-                <span>Sair</span>
-              </Button>
             </div>
           )}
         </SheetContent>
       </Sheet>
+
+      {/* Dialog de notificações */}
+      <NotificationDialog
+        notifications={notifications}
+        isOpen={isNotificationOpen}
+        setIsOpen={setIsNotificationOpen}
+      />
     </header>
   );
 }
