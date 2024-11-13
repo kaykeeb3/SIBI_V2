@@ -236,7 +236,7 @@ export function Header() {
                     value={newName}
                     onChange={(e) => setNewName(e.target.value)}
                     placeholder="Digite o nome"
-                    className="w-full border border-gray-300 rounded-md px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="w-full border border-gray-300 rounded-md px-4 py-2"
                   />
                 </div>
 
@@ -249,22 +249,21 @@ export function Header() {
                     value={newProfilePicture}
                     onChange={(e) => setNewProfilePicture(e.target.value)}
                     placeholder="URL da Foto de Perfil"
-                    className="w-full border border-gray-300 rounded-md px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="w-full border border-gray-300 rounded-md px-4 py-2"
                   />
                 </div>
               </div>
 
-              <div className="flex justify-end space-x-4 mt-6">
+              <div className="flex justify-end space-x-3 mt-6">
                 <Button
                   onClick={() => setIsEditing(false)}
-                  variant="outline"
-                  className="w-24 text-red-600 border border-red-500 hover:bg-red-100 hover:text-red-600"
+                  className="w-24 bg-danger text-white hover:bg-red-600"
                 >
                   Cancelar
                 </Button>
                 <Button
                   onClick={handleSaveChanges}
-                  className="w-24 bg-green-600 hover:bg-green-700 text-white"
+                  className="w-24 bg-success hover:bg-teal-500 text-white"
                 >
                   Salvar
                 </Button>

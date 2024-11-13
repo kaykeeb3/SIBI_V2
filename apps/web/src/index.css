@@ -29,10 +29,9 @@
     --chart-3: 197 37% 24%;
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
-    --radius: 0.5rem;
+    --danger: 0 60% 52%;
+    --success: 170 92% 44%;
   }
-
-
 }
 
 @layer base {
@@ -42,6 +41,23 @@
 
   body {
     @apply bg-background text-foreground;
+  }
+
+  /* Exemplo de uso das variáveis para as cores de success e danger */
+  .text-danger {
+    color: hsl(var(--danger));
+  }
+
+  .bg-danger {
+    background-color: hsl(var(--danger));
+  }
+
+  .text-success {
+    color: hsl(var(--success));
+  }
+
+  .bg-success {
+    background-color: hsl(var(--success));
   }
 }
 
