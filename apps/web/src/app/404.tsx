@@ -12,9 +12,9 @@ export function NotFound() {
       <h1 className="text-4xl font-bold text-black">
         A página não foi encontrada
       </h1>
-      <p className="text-accent-foreground  hover:underline">
+      <p className="text-accent-prtext-primary">
         Voltar para{" "}
-        <Link className="text-foreground font-medium" to="/">
+        <Link className="text-primary font-medium  hover:underline" to="/">
           início
         </Link>
         .

@@ -197,7 +197,6 @@ export function Header() {
         </button>
       </div>
 
-      {/* EditProfile Component */}
       <EditProfile
         isOpen={isOpen}
         setIsOpen={setIsOpen}

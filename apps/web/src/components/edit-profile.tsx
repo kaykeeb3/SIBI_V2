@@ -87,7 +87,7 @@ export function EditProfile({
               <div className="flex flex-col items-center space-y-1">
                 <Button
                   onClick={handleSaveChanges}
-                  className="w-full bg-primary text-white hover:bg-yellow-500 transition duration-200"
+                  className="w-full bg-primary text-white hover:bg-blue-700 transition duration-200"
                 >
                   Salvar alterações
                 </Button>
@@ -109,7 +109,7 @@ export function EditProfile({
 
               <Button
                 onClick={() => setIsEditing(true)}
-                className="w-full bg-primary text-white hover:bg-yellow-500 transition duration-200"
+                className="w-full bg-primary text-white hover:bg-blue-700 transition duration-200"
               >
                 Editar Perfil
               </Button>
