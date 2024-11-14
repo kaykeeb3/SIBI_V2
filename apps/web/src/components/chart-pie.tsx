@@ -15,11 +15,11 @@ import { ChartContainer, ChartTooltipContent } from "@/components/ui/chart";
 const chartConfig = {
   loans: {
     label: "Empréstimos",
-    color: "hsl(var(--chart-1))", // Cores dinâmicas definidas nas variáveis CSS
+    color: "hsl(var(--chart-1))",
   },
   schedules: {
     label: "Agendamentos",
-    color: "hsl(var(--chart-2))",
+    color: "hsl(var(--chart-5))",
   },
 };
 
@@ -55,7 +55,7 @@ export function ChartPie() {
   ];
 
   return (
-    <Card className="border-none bg-transparent shadow-none min-h-[60vh]">
+    <Card className="rounded-md shadow-none border-none">
       <CardHeader>
         <CardTitle className="text-xl font-semibold text-black">
           Empréstimos e Agendamentos
@@ -65,18 +65,16 @@ export function ChartPie() {
         </CardDescription>
       </CardHeader>
 
-      <CardContent className="p-4">
+      <CardContent>
         <ChartContainer config={chartConfig}>
           <PieChart width={200} height={200} className="mx-auto">
-            {/* Tooltip para o gráfico */}
             <RechartsTooltip content={<ChartTooltipContent />} />
             <Pie
               data={chartData}
               dataKey="value"
               nameKey="name"
               innerRadius={50}
-              outerRadius={80}
-              strokeWidth={5}
+              outerRadius={70}
               animationDuration={1000}
             >
               <Label
@@ -105,12 +103,6 @@ export function ChartPie() {
           </PieChart>
         </ChartContainer>
       </CardContent>
-
-      <CardFooter className="p-4">
-        <div className="text-center text-sm text-gray-600">
-          Empréstimos e agendamentos totais
-        </div>
-      </CardFooter>
     </Card>
   );
 }

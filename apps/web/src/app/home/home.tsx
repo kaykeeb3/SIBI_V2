@@ -6,15 +6,7 @@ import {
   CardDescription,
   CardTitle,
 } from "@/components/ui/card";
-import {
-  Book,
-  User,
-  Calendar,
-  Package,
-  Loader2,
-  ArrowUp,
-  ArrowDown,
-} from "lucide-react";
+import { Book, User, Calendar, Package, Loader2 } from "lucide-react";
 import {
   Select,
   SelectContent,
@@ -25,12 +17,14 @@ import {
 } from "@/components/ui/select";
 import { fetchHomeData } from "@/services/home/home";
 import { Chart } from "@/components/chart";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface CountData {
   books: number;
   loans: number;
   schedules: number;
   equipments: number;
+  date: string;
 }
 
 export function Home() {
@@ -40,25 +34,15 @@ export function Home() {
     loans: 0,
     schedules: 0,
     equipments: 0,
+    date: "",
   });
-
-  const [previousData, setPreviousData] = useState<CountData | null>(null);
 
   useEffect(() => {
     const getData = async () => {
       try {
         const homeData = await fetchHomeData();
-
-        const storedData = localStorage.getItem("previousData");
-        const prevData = storedData ? JSON.parse(storedData) : null;
-
-        setPreviousData(
-          prevData || { books: 0, loans: 0, schedules: 0, equipments: 0 }
-        );
+        homeData.date = new Date().toISOString();
         setData(homeData);
-
-        localStorage.setItem("previousData", JSON.stringify(homeData));
-
         setIsLoading(false);
       } catch (error) {
         console.error("Erro ao buscar dados para Home", error);
@@ -69,19 +53,32 @@ export function Home() {
     getData();
   }, []);
 
-  const calculatePercentageChange = (
-    current: number,
-    previous: number
-  ): number => {
-    if (previous === 0) return 0;
-    return ((current - previous) / previous) * 100;
-  };
+  const renderCard = (
+    title: string,
+    count: number,
+    Icon: React.ComponentType<any>,
+    iconColor: string
+  ) => (
+    <Card className="aspect-video rounded-md shadow-md p-4 transition-all duration-500 transform hover:scale-105 flex flex-col justify-between border-b-4 border-b-primary">
+      <CardDescription className="flex items-center justify-between">
+        <CardTitle className="text-base font-semibold text-gray-800">
+          {title}
+        </CardTitle>
+        <Icon size={28} className={iconColor} />
+      </CardDescription>
+      {isLoading ? (
+        <Skeleton className="w-full h-16 animate-pulse bg-zinc-100 rounded-md" />
+      ) : (
+        <span className="text-4xl font-bold text-gray-900">{count}</span>
+      )}
+    </Card>
+  );
 
   return (
-    <div className="mx-auto flex flex-col items-center w-5/6">
+    <div className="mx-auto flex flex-col items-center w-full px-4 sm:w-5/6">
       <Card className="shadow-none border-none bg-transparent w-full">
         <div className="flex items-center justify-between p-4">
-          <CardTitle className="text-3xl font-semibold text-black">
+          <CardTitle className="text-3xl font-semibold text-gray-900">
             Dashboard
           </CardTitle>
           <div className="flex items-center gap-4">
@@ -102,166 +99,47 @@ export function Home() {
         <CardContent className="w-full flex flex-col items-center">
           <div className="flex flex-col w-full">
             <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
-              {/* Cartão de Livros */}
-              <Card className="aspect-video rounded-md bg-gradient-to-tl from-zinc-100 to-zinc-50 shadow-lg p-4 transition-all duration-500 transform hover:scale-105 flex flex-col justify-between border-b-4 border-b-green-500">
-                <CardDescription className="flex items-center justify-between">
-                  <CardTitle className="text-base font-bold text-zinc-900">
-                    Total de Livros Cadastrados
-                  </CardTitle>
-                  <Book size={24} className="text-green-500" />
-                </CardDescription>
-
-                {isLoading ? (
-                  <Loader2 className="text-green-500 animate-spin" size={28} />
-                ) : (
-                  <div className="flex flex-col items-start">
-                    <span className="text-3xl font-semibold">{data.books}</span>
-                    {previousData && (
-                      <span className="text-sm text-gray-500 flex items-center">
-                        {calculatePercentageChange(
-                          data.books,
-                          previousData.books
-                        ) > 0 ? (
-                          <ArrowUp size={16} className="text-green-500 mr-1" />
-                        ) : (
-                          <ArrowDown size={16} className="text-red-500 mr-1" />
-                        )}
-                        {calculatePercentageChange(
-                          data.books,
-                          previousData.books
-                        ).toFixed(2)}
-                        %
-                      </span>
-                    )}
-                  </div>
-                )}
-              </Card>
-
-              {/* Cartão de Empréstimos */}
-              <Card className="aspect-video rounded-md bg-gradient-to-tl from-zinc-100 to-zinc-50 shadow-lg p-4 transition-all duration-500 transform hover:scale-105 flex flex-col justify-between border-b-4 border-b-blue-500">
-                <CardDescription className="flex items-center justify-between">
-                  <CardTitle className="text-base font-bold text-zinc-900">
-                    Total de Empréstimos Ativos
-                  </CardTitle>
-                  <User size={24} className="text-blue-500" />
-                </CardDescription>
-                {isLoading ? (
-                  <Loader2 className="text-blue-500 animate-spin" size={28} />
-                ) : (
-                  <div className="flex flex-col items-start">
-                    <span className="text-3xl font-semibold">{data.loans}</span>
-                    {previousData && (
-                      <span className="text-sm text-gray-500 flex items-center">
-                        {calculatePercentageChange(
-                          data.loans,
-                          previousData.loans
-                        ) > 0 ? (
-                          <ArrowUp size={16} className="text-green-500 mr-1" />
-                        ) : (
-                          <ArrowDown size={16} className="text-red-500 mr-1" />
-                        )}
-                        {calculatePercentageChange(
-                          data.loans,
-                          previousData.loans
-                        ).toFixed(2)}
-                        %
-                      </span>
-                    )}
-                  </div>
-                )}
-              </Card>
-
-              {/* Cartão de Agendamentos */}
-              <Card className="aspect-video rounded-md bg-gradient-to-tl from-zinc-100 to-zinc-50 shadow-lg p-4 transition-all duration-500 transform hover:scale-105 flex flex-col justify-between border-b-4 border-b-yellow-500">
-                <CardDescription className="flex items-center justify-between">
-                  <CardTitle className="text-base font-bold text-zinc-900">
-                    Total de Agendamentos Cadastrados
-                  </CardTitle>
-                  <Calendar size={24} className="text-yellow-500" />
-                </CardDescription>
-                {isLoading ? (
-                  <Loader2 className="text-yellow-500 animate-spin" size={28} />
-                ) : (
-                  <div className="flex flex-col items-start">
-                    <span className="text-3xl font-semibold">
-                      {data.schedules}
-                    </span>
-                    {previousData && (
-                      <span className="text-sm text-gray-500 flex items-center">
-                        {calculatePercentageChange(
-                          data.schedules,
-                          previousData.schedules
-                        ) > 0 ? (
-                          <ArrowUp size={16} className="text-green-500 mr-1" />
-                        ) : (
-                          <ArrowDown size={16} className="text-red-500 mr-1" />
-                        )}
-                        {calculatePercentageChange(
-                          data.schedules,
-                          previousData.schedules
-                        ).toFixed(2)}
-                        %
-                      </span>
-                    )}
-                  </div>
-                )}
-              </Card>
-
-              {/* Cartão de Equipamentos */}
-              <Card className="aspect-video rounded-md bg-gradient-to-tl from-zinc-100 to-zinc-50 shadow-lg p-4 transition-all duration-500 transform hover:scale-105 flex flex-col justify-between border-b-4 border-b-purple-500">
-                <CardDescription className="flex items-center justify-between">
-                  <CardTitle className="text-base font-bold text-zinc-900">
-                    Total de Equipamentos Cadastrados
-                  </CardTitle>
-                  <Package size={24} className="text-purple-500" />
-                </CardDescription>
-                {isLoading ? (
-                  <Loader2 className="text-purple-500 animate-spin" size={28} />
-                ) : (
-                  <div className="flex flex-col items-start">
-                    <span className="text-3xl font-semibold">
-                      {data.equipments}
-                    </span>
-                    {previousData && (
-                      <span className="text-sm text-gray-500 flex items-center">
-                        {calculatePercentageChange(
-                          data.equipments,
-                          previousData.equipments
-                        ) > 0 ? (
-                          <ArrowUp size={16} className="text-green-500 mr-1" />
-                        ) : (
-                          <ArrowDown size={16} className="text-red-500 mr-1" />
-                        )}
-                        {calculatePercentageChange(
-                          data.equipments,
-                          previousData.equipments
-                        ).toFixed(2)}
-                        %
-                      </span>
-                    )}
-                  </div>
-                )}
-              </Card>
+              {renderCard(
+                "Total de Livros Cadastrados",
+                data.books,
+                Book,
+                "text-green-500"
+              )}
+              {renderCard(
+                "Total de Empréstimos Ativos",
+                data.loans,
+                User,
+                "text-blue-500"
+              )}
+              {renderCard(
+                "Total de Agendamentos Cadastrados",
+                data.schedules,
+                Calendar,
+                "text-yellow-500"
+              )}
+              {renderCard(
+                "Total de Equipamentos Cadastrados",
+                data.equipments,
+                Package,
+                "text-purple-500"
+              )}
             </div>
 
             <div className="grid gap-4 grid-cols-1 lg:grid-cols-3 mt-6">
-              {/* Gráficos */}
-              <Card className="lg:col-span-2 rounded-md bg-white shadow-lg">
+              <Card className="lg:col-span-2 rounded-md border-b-4 border-b-primary">
                 <CardContent className="p-4">
                   {isLoading ? (
-                    <Loader2 className="text-gray-500 animate-spin" size={40} />
+                    <Skeleton className="w-full h-40 animate-pulse bg-zinc-100 rounded-md" />
                   ) : (
-                    <div>
-                      <Chart />
-                    </div>
+                    <Chart />
                   )}
                 </CardContent>
               </Card>
 
-              <Card className="rounded-md bg-white shadow-lg">
+              <Card className="rounded-md border-b-4 border-b-primary">
                 <CardContent className="p-4">
                   {isLoading ? (
-                    <Loader2 className="text-gray-500 animate-spin" size={40} />
+                    <Skeleton className="w-full h-40 animate-pulse bg-zinc-100 rounded-md border-b-4 border-b-primary" />
                   ) : (
                     <ChartPie />
                   )}
