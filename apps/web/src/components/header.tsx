@@ -257,13 +257,13 @@ export function Header() {
               <div className="flex justify-end space-x-3 mt-6">
                 <Button
                   onClick={() => setIsEditing(false)}
-                  className="w-24 bg-danger text-white hover:bg-red-600"
+                  className="w-24 bg-red-500 text-white hover:bg-red-600"
                 >
                   Cancelar
                 </Button>
                 <Button
                   onClick={handleSaveChanges}
-                  className="w-24 bg-success hover:bg-teal-500 text-white"
+                  className="w-24 bg-teal-500 hover:bg-teal-600 text-white"
                 >
                   Salvar
                 </Button>
