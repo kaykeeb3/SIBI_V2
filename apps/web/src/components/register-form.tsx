@@ -108,8 +108,8 @@ export function RegisterForm() {
   }
 
   return (
-    <div className="flex items-center justify-between min-h-screen bg-zinc-100">
-      <div className="hidden md:flex flex-col justify-center items-center min-h-screen w-1/2 bg-zinc-50 px-8 py-12">
+    <div className="flex items-center justify-between min-h-screen bg-white">
+      <div className="hidden md:flex flex-col justify-center items-center min-h-screen w-1/2 px-8 py-12 bg-gradient-to-tl from-zinc-950 to-gray-800">
         <div className="flex justify-center mb-14">
           <img
             src={userComputer}
@@ -119,25 +119,23 @@ export function RegisterForm() {
         </div>
 
         <div className="flex flex-col items-start px-6 w-full">
-          <h1 className="text-3xl font-semibold text-black mb-4">
+          <h1 className="text-3xl font-semibold text-white mb-4">
             Olá, seja bem-vindo(a)
           </h1>
-          <p className="text-base text-black/90 mb-2">
+          <p className="text-sm text-zinc-200 mb-2 font-normal">
             Antes de iniciar a utilização do sistema, será necessário cadastrar
             algumas informações suas 🤗.
           </p>
-          <Link to="/sign-in" className="text-sm text-black/80 underline">
+          <Link to="/sign-in" className="text-sm text-zinc-300 underline">
             Já tem uma conta?
           </Link>
         </div>
       </div>
 
-      <div className="hidden md:block border-r border-zinc-300 h-screen"></div>
-
-      <div className="w-full md:w-1/2 flex flex-col space-y-6 px-12">
-        <Card className="w-full max-w-2xl mx-auto px-4">
+      <div className="w-full md:w-1/2 flex flex-col space-y-2 px-12">
+        <Card className="w-full max-w-2xl mx-auto px-4 bg-transparent  shadow-none">
           <CardContent>
-            <CardHeader>
+            <CardHeader className="px-0">
               <CardTitle className="text-2xl font-semibold">Cadastro</CardTitle>
               <CardDescription className="text-sm">
                 Preencha os campos abaixo para criar sua conta.
