@@ -2,16 +2,14 @@ import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { ChevronDownIcon } from "@radix-ui/react-icons";
-import { Sheet, SheetContent, SheetTitle } from "@/components/ui/sheet";
-import { Input } from "@/components/ui/input";
-import { getProfile, updateProfile } from "@/services/auth/auth";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Bell, BellRing, PowerIcon } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Label } from "./ui/label";
+import { Bell, BellRing } from "lucide-react";
+import { getProfile, updateProfile } from "@/services/auth/auth";
 import { toast } from "sonner";
-import { NotificationDialog } from "./notification-dialog";
 import socketService, { Notification } from "@/services/socket/socket-service";
+import { EditProfile } from "./edit-profile";
+import { NotificationDialog } from "./notification-dialog";
+
 interface Profile {
   id: string;
   name: string;
@@ -24,7 +22,6 @@ interface Profile {
 }
 
 export function Header() {
-  const [isSheetOpen, setIsSheetOpen] = useState(false);
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [profile, setProfile] = useState<Profile | null>(null);
@@ -86,7 +83,6 @@ export function Header() {
   }, []);
 
   const handleOpen = () => setIsOpen(true);
-  const handleClose = () => setIsOpen(false);
 
   const handleSaveChanges = async () => {
     if (!newName || !newProfilePicture) {
@@ -201,100 +197,19 @@ export function Header() {
         </button>
       </div>
 
-      <Sheet open={isOpen} onOpenChange={setIsOpen}>
-        <SheetContent className="bg-white rounded-lg shadow-lg max-w-sm mx-auto">
-          <SheetTitle className="text-xl font-semibold text-gray-900">
-            {isEditing ? "Editar Perfil" : "Menu Principal"}
-          </SheetTitle>
-
-          {isEditing ? (
-            <div className="space-y-6 pt-6">
-              <div className="text-sm text-gray-600">
-                <p>
-                  Você poderá editar apenas as informações como Nome e Foto de
-                  Perfil. <br />
-                  <br />
-                  As demais informações não serão possíveis de editar. <br />
-                  Caso tenha alguma dúvida, entre em contato com o{" "}
-                  <Link
-                    to="/"
-                    className="text-blue-600 hover:text-blue-800 underline"
-                  >
-                    Suporte
-                  </Link>
-                  .
-                </p>
-              </div>
-
-              <div className="space-y-4">
-                <div>
-                  <Label className="text-sm font-medium text-gray-700">
-                    Nome*
-                  </Label>
-                  <Input
-                    type="text"
-                    value={newName}
-                    onChange={(e) => setNewName(e.target.value)}
-                    placeholder="Digite o nome"
-                    className="w-full border border-gray-300 rounded-md px-4 py-2"
-                  />
-                </div>
-
-                <div>
-                  <Label className="text-sm font-medium text-gray-700">
-                    Foto URL*
-                  </Label>
-                  <Input
-                    type="text"
-                    value={newProfilePicture}
-                    onChange={(e) => setNewProfilePicture(e.target.value)}
-                    placeholder="URL da Foto de Perfil"
-                    className="w-full border border-gray-300 rounded-md px-4 py-2"
-                  />
-                </div>
-              </div>
-
-              <div className="flex justify-end space-x-3 mt-6">
-                <Button
-                  onClick={() => setIsEditing(false)}
-                  className="w-24 bg-red-500 text-white hover:bg-red-600"
-                >
-                  Cancelar
-                </Button>
-                <Button
-                  onClick={handleSaveChanges}
-                  className="w-24 bg-teal-500 hover:bg-teal-600 text-white"
-                >
-                  Salvar
-                </Button>
-              </div>
-            </div>
-          ) : (
-            <div className="flex flex-col space-y-4 pt-4">
-              <div className="text-sm text-gray-600 mb-4">
-                Aqui você pode gerenciar suas configurações, editar seu perfil
-                ou sair da conta.
-              </div>
-
-              <Button
-                onClick={() => setIsEditing(true)}
-                className="w-full bg-blue-600 hover:bg-blue-700 text-white border border-blue-600"
-              >
-                Editar Perfil
-              </Button>
-
-              <Button
-                onClick={handleLogout}
-                variant="destructive"
-                className="w-full bg-red-600 hover:bg-red-700 text-white border border-red-600"
-              >
-                <PowerIcon className="mr-2" />
-                Sair
-              </Button>
-            </div>
-          )}
-        </SheetContent>
-      </Sheet>
+      {/* EditProfile Component */}
+      <EditProfile
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        isEditing={isEditing}
+        setIsEditing={setIsEditing}
+        newName={newName}
+        setNewName={setNewName}
+        newProfilePicture={newProfilePicture}
+        setNewProfilePicture={setNewProfilePicture}
+        handleSaveChanges={handleSaveChanges}
+        handleLogout={handleLogout}
+      />
 
       <NotificationDialog
         notifications={notifications}
