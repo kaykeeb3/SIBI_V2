@@ -3,7 +3,7 @@ import { Outlet, useLocation } from "react-router-dom";
 import { Header } from "@/components/header";
 import { Separator } from "@/components/ui/separator";
 import { CustomToaster } from "@/components/custom-toaster";
-import { WhatsappButton } from "./components/whatsapp-button";
+import { WhatsappButton } from "@/components/whatsapp-button";
 
 export function App() {
   const location = useLocation();
