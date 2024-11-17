@@ -5,13 +5,11 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
 import { ChartContainer, ChartTooltipContent } from "@/components/ui/chart";
 
-// Definição das cores e rótulos do gráfico
 const chartConfig = {
   loans: {
     label: "Empréstimos",
@@ -27,24 +25,23 @@ export function ChartPie() {
   const [loanCount, setLoanCount] = React.useState(0);
   const [scheduleCount, setScheduleCount] = React.useState(0);
 
-  // Carrega os dados de empréstimos e agendamentos
+  const fetchData = async () => {
+    try {
+      const loans = await getAllLoans();
+      const schedules = await getAllSchedules();
+      setLoanCount(loans.length);
+      setScheduleCount(schedules.length);
+    } catch (error) {
+      console.error("Erro ao buscar dados", error);
+    }
+  };
+
   React.useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const loans = await getAllLoans();
-        const schedules = await getAllSchedules();
-        setLoanCount(loans.length);
-        setScheduleCount(schedules.length);
-      } catch (error) {
-        console.error("Erro ao buscar dados", error);
-      }
-    };
     fetchData();
   }, []);
 
   const total = loanCount + scheduleCount;
 
-  // Dados para o gráfico
   const chartData = [
     { name: "Empréstimos", value: loanCount, fill: chartConfig.loans.color },
     {

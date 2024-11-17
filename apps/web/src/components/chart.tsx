@@ -1,13 +1,10 @@
-"use client";
-
-import { Line, LineChart, CartesianGrid, XAxis, Tooltip } from "recharts";
+import { Line, LineChart, CartesianGrid, XAxis } from "recharts";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -62,11 +59,26 @@ export function Chart() {
 
   useEffect(() => {
     const fetchData = async () => {
+      const cachedData = localStorage.getItem("chartData");
+      const cachedTime = localStorage.getItem("chartDataTime");
+
+      const currentTime = new Date().getTime();
+      const FOUR_HOURS = 4 * 60 * 60 * 1000;
+
+      if (
+        cachedData &&
+        cachedTime &&
+        currentTime - Number(cachedTime) < FOUR_HOURS
+      ) {
+        setChartData(JSON.parse(cachedData));
+        console.log("Dados carregados do cache.");
+        return;
+      }
+
       try {
         const { loans, schedules } = await fetchLoanAndScheduleData();
         const currentYear = new Date().getFullYear();
 
-        // Filtra empréstimos e agendamentos para o ano atual
         const filteredLoans = loans.filter(
           (loan: LoanData) =>
             new Date(loan.startDate).getFullYear() === currentYear
@@ -76,9 +88,7 @@ export function Chart() {
             new Date(schedule.startDate).getFullYear() === currentYear
         );
 
-        // Processa os dados para exibir a quantidade mensal
         const processedData = Array.from({ length: 12 }, (_, monthIndex) => {
-          const month = monthIndex + 1;
           const monthName = format(new Date(currentYear, monthIndex), "MMMM", {
             locale: ptBR,
           });
@@ -99,6 +109,9 @@ export function Chart() {
         });
 
         setChartData(processedData);
+        localStorage.setItem("chartData", JSON.stringify(processedData));
+        localStorage.setItem("chartDataTime", currentTime.toString());
+        console.log("Dados carregados com sucesso!");
       } catch (error) {
         console.error("Erro ao buscar dados:", error);
       }
@@ -127,7 +140,6 @@ export function Chart() {
             }}
           >
             <CartesianGrid vertical={false} />
-
             <XAxis
               dataKey="month"
               tickLine={false}
@@ -139,7 +151,6 @@ export function Chart() {
               cursor={false}
               content={<ChartTooltipContent hideLabel />}
             />
-
             <Line
               dataKey="loans"
               type="monotone"
