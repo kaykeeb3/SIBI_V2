@@ -11,13 +11,13 @@ export function App() {
     location.pathname === "/sign-in" || location.pathname === "/sign-up";
 
   return (
-    <div className="flex flex-col w-full min-h-screen">
+    <div className="flex flex-col w-full">
       {!isLoginPage && <Header />}
       {!isLoginPage && <Separator className="bg-zinc-300 w-full" />}
       {!isLoginPage && <WhatsappButton />}
-      <div className="flex">
+      <div className="flex w-full">
         {!isLoginPage && <NavBar />}
-        <div className="flex-1 flex items-center justify-center text-red-500">
+        <div className="flex-1 flex items-center justify-center">
           <Outlet />
         </div>
         <CustomToaster />
