@@ -22,7 +22,7 @@ import { z } from "zod";
 import { useMutation } from "@tanstack/react-query";
 import userComputer from "@/public/assets/user-computer.svg";
 import { Link, useNavigate } from "react-router-dom";
-import { register } from "@/services/auth/auth";
+import { register } from "@/services/auth/auth-service";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
 

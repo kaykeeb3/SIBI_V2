@@ -14,7 +14,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-import { fetchLoanAndScheduleData } from "@/services/home/home";
+import { fetchLoanAndScheduleData } from "@/services/home/home-service";
 import { useEffect, useState } from "react";
 
 interface LoanData {

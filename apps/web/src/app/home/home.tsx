@@ -7,7 +7,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Card, CardContent } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Book, User, Calendar, Package } from "lucide-react";
-import { fetchHomeData } from "@/services/home/home";
+import { fetchHomeData } from "@/services/home/home-service";
 
 interface CountData {
   books: number;

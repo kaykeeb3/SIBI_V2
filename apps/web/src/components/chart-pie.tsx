@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Pie, PieChart, Label, Tooltip as RechartsTooltip } from "recharts";
-import { getAllLoans, getAllSchedules } from "@/services/home/home";
+import { getAllLoans, getAllSchedules } from "@/services/home/home-service";
 import {
   Card,
   CardContent,

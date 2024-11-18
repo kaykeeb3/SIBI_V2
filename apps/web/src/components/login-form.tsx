@@ -9,7 +9,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, UseMutationResult } from "@tanstack/react-query";
-import { login } from "@/services/auth/auth";
+import { login } from "@/services/auth/auth-service";
 import { toast } from "sonner";
 
 const loginSchema = z.object({
