@@ -11,7 +11,7 @@ export function App() {
     location.pathname === "/sign-in" || location.pathname === "/sign-up";
 
   return (
-    <div className="flex flex-col w-full">
+    <div className="flex flex-col items-center justify-center w-full">
       {!isLoginPage && <Header />}
       {!isLoginPage && <Separator className="bg-zinc-300 w-full" />}
       {!isLoginPage && <WhatsappButton />}
