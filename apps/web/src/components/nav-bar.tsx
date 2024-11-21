@@ -1,5 +1,12 @@
 import { Link, useLocation } from "react-router-dom";
-import { Blend, Home, IdCard, NotebookTextIcon, Tv } from "lucide-react";
+import {
+  Blend,
+  Home,
+  IdCard,
+  NotebookTextIcon,
+  Tv,
+  UserPen,
+} from "lucide-react";
 
 import logo from "../public/assets/logo.svg";
 
@@ -9,6 +16,7 @@ const navItems = [
   { to: "/loans", icon: Blend, label: "Empréstimos" },
   { to: "/equipments", icon: Tv, label: "Equipamentos" },
   { to: "/schedules", icon: IdCard, label: "Agendamentos" },
+  { to: "/users", icon: UserPen, label: "Usuários" },
 ];
 
 export function NavBar() {
@@ -17,7 +25,7 @@ export function NavBar() {
   const isActive = (path: any) => location.pathname === path;
 
   return (
-    <div className="h-screen bg-card-foreground flex flex-col items-center justify-start w-16 fixed top-0 left-0 z-20">
+    <div className="h-screen bg-card-foreground flex flex-col items-center justify-start w-14 fixed top-0 left-0 z-20">
       <div className="flex flex-col items-center justify-start">
         <div className="p-2">
           <div className="flex items-center justify-center mb-8 mt-4">
@@ -37,7 +45,7 @@ export function NavBar() {
                     } group-hover:scale-110 group-hover:bg-primary/30 transform duration-300 ease-in-out`}
                   >
                     <Icon
-                      width={20}
+                      width={18}
                       className="text-zinc-300 group-hover:text-white transition-all duration-200"
                     />
                   </div>
