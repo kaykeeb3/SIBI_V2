@@ -107,7 +107,7 @@ export function Home() {
   }, []);
 
   return (
-    <div className="mx-auto flex flex-col items-center w-full px-4 sm:w-5/6">
+    <div className="mx-auto flex flex-col items-center w-full px-20">
       <Card className="shadow-none border-none bg-transparent w-full mb-8">
         <DashboardHeader />
         <CardContent className="w-full flex flex-col items-center">

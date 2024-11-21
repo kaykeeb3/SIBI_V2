@@ -37,6 +37,14 @@ const router = createBrowserRouter([
             path: "/loans",
             element: <Loan />,
           },
+          {
+            path: "/users",
+            element: <Loan />,
+          },
+          {
+            path: "/journey",
+            element: <Loan />,
+          },
         ],
       },
     ],
