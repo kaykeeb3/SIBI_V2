@@ -41,11 +41,11 @@ export const NotificationDialog: React.FC<NotificationDialogProps> = ({
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogContent className="sm:max-w-[525px]">
         <DialogHeader>
-          <DialogTitle className="text-xl font-semibold text-left">
+          <DialogTitle className="text-2xl font-semibold text-left">
             Central de Notificações
           </DialogTitle>
           <div className="flex justify-start items-center mt-2">
-            <DialogDescription className="text-left text-sm">
+            <DialogDescription className="text-left text-sm text-zinc-700">
               Acompanhe seus agendamentos e empréstimos pendentes
             </DialogDescription>
           </div>
@@ -66,14 +66,14 @@ export const NotificationDialog: React.FC<NotificationDialogProps> = ({
                   <div
                     className={`flex items-center justify-center h-10 w-10 rounded-full shrink-0 ${
                       category === "Agendamento"
-                        ? "bg-blue-100"
+                        ? "bg-violet-100"
                         : "bg-amber-100"
                     }`}
                   >
                     <div
                       className={`text-lg ${
                         category === "Agendamento"
-                          ? "text-blue-600"
+                          ? "text-violet-600"
                           : "text-amber-600"
                       }`}
                     >
@@ -85,7 +85,7 @@ export const NotificationDialog: React.FC<NotificationDialogProps> = ({
                       <h3
                         className={`font-medium truncate ${
                           category === "Agendamento"
-                            ? "text-blue-700"
+                            ? "text-violet-700"
                             : "text-amber-700"
                         }`}
                       >
@@ -121,11 +121,7 @@ export const NotificationDialog: React.FC<NotificationDialogProps> = ({
         )}
 
         <DialogFooter>
-          <Button
-            variant="outline"
-            className="border border-zinc-500 hover:bg-zinc-200"
-            onClick={() => setIsOpen(false)}
-          >
+          <Button variant="destructive" onClick={() => setIsOpen(false)}>
             Fechar
           </Button>
         </DialogFooter>

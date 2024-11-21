@@ -124,7 +124,7 @@ export function Header() {
   };
 
   return (
-    <header className="w-full bg-zinc-100 px-4 py-2 z-10 relative">
+    <header className="w-full bg-white px-4 py-2 z-10 relative">
       <div className="flex items-center justify-end mr-6">
         {/* Notificações */}
         <div className="mr-4 items-center justify-center flex group relative">

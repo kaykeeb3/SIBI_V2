@@ -32,7 +32,7 @@ export function EditProfile({
 }: EditProfileProps) {
   return (
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
-      <SheetContent className="bg-white p-6 rounded-lg shadow-lg max-w-sm mx-auto flex flex-col justify-between h-full">
+      <SheetContent className="bg-white p-6  max-w-sm mx-auto flex flex-col justify-between h-full">
         <div>
           <SheetTitle className="text-2xl font-semibold text-gray-900">
             {isEditing ? "Editar Perfil" : "Menu de Configurações"}
@@ -87,14 +87,14 @@ export function EditProfile({
               <div className="flex flex-col items-center space-y-1">
                 <Button
                   onClick={handleSaveChanges}
-                  className="w-full bg-primary text-white hover:bg-blue-700 transition duration-200"
+                  className="w-full bg-primary text-white bg-blue-500 hover:bg-blue-600 transition duration-200"
                 >
                   Salvar alterações
                 </Button>
                 <Button
                   onClick={() => setIsEditing(false)}
                   variant="destructive"
-                  className="w-full bg-red-600 text-white hover:bg-red-500 transition duration-200"
+                  className="w-full bg-red-500 text-white hover:bg-red-600 transition duration-200"
                 >
                   Cancelar
                 </Button>
@@ -109,7 +109,7 @@ export function EditProfile({
 
               <Button
                 onClick={() => setIsEditing(true)}
-                className="w-full bg-primary text-white hover:bg-blue-700 transition duration-200"
+                className="w-full bg-primary text-white bg-blue-500 hover:bg-blue-600 transition duration-200"
               >
                 Editar Perfil
               </Button>
@@ -120,7 +120,7 @@ export function EditProfile({
         {/* Botão de Logout posicionado no final */}
         <Button
           onClick={handleLogout}
-          className="w-full text-black border-none shadow-none mt-auto bg-transparent hover:bg-zinc-100"
+          className="w-full text-black border-none shadow-none mt-auto bg-transparent hover:bg-red-100"
         >
           <PowerIcon className="mr-2 text-red-500" />
           Sair
