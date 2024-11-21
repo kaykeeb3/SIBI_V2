@@ -10,38 +10,26 @@
     --card-foreground: 210 14% 17%;
     --popover: 0 0% 96%;
     --popover-foreground: 210 14% 17%;
-    --primary: 214 91% 56%;
-    /* Cor ajustada para #2563eb */
+    --primary: 276 64% 58%;
     --primary-foreground: 210 20% 98%;
-    --secondary: 214 70% 70%;
-    /* Tonalidade mais clara de #2563eb */
-    --secondary-foreground: 214 40% 25%;
-    /* Tonalidade escura de #2563eb */
-    --muted: 214 30% 85%;
-    /* Tom suave de #2563eb */
-    --muted-foreground: 214 20% 45%;
-    /* Tom mais escuro de #2563eb */
-    --accent: 214 80% 60%;
-    /* Tom vibrante de #2563eb */
-    --accent-foreground: 214 50% 35%;
-    /* Tom escuro de #2563eb */
+    --secondary: 276 60% 70%;
+    --secondary-foreground: 276 40% 25%;
+    --muted: 276 30% 85%;
+    --muted-foreground: 276 20% 45%;
+    --accent: 276 80% 60%;
+    --accent-foreground: 276 50% 35%;
     --destructive: 0 84% 53%;
     --destructive-foreground: 210 20% 98%;
-    --border: 214 60% 80%;
-    /* Bordas mais claras */
-    --input: 214 60% 80%;
-    /* Entrada com uma tonalidade mais clara */
-    --ring: 214 91% 56%;
-    /* Cor do anel */
+    --border: 276 60% 80%;
+    --input: 276 60% 80%;
+    --ring: 276 64% 58%;
     --radius: 0.5rem;
-    --chart-1: 214 70% 50%;
+    --chart-1: 276 64% 58%;
     --chart-5: 160 60% 45%;
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
     --chart-2: 340 75% 55%;
   }
-
-
 }
 
 @layer base {
