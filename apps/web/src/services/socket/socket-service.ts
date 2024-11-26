@@ -13,6 +13,7 @@ export interface Notification {
 
 class SocketService {
   socket: Socket | null = null;
+  isConnected: boolean = false;
 
   // Método de conexão
   connect() {
@@ -22,6 +23,7 @@ class SocketService {
       console.warn(
         "Usuário não logado. Conexão ao socket não será estabelecida."
       );
+      this.isConnected = false;
       return;
     }
 
@@ -31,11 +33,28 @@ class SocketService {
 
     this.socket.on("connect", () => {
       console.log("Conectado ao servidor");
+      this.isConnected = true;
     });
 
     this.socket.on("disconnect", () => {
       console.log("Desconectado do servidor");
+      this.isConnected = false;
     });
+
+    this.socket.on("connect_error", () => {
+      console.error("Erro ao conectar ao servidor");
+      this.isConnected = false;
+    });
+
+    this.socket.on("connect_timeout", () => {
+      console.error("Tempo de conexão esgotado");
+      this.isConnected = false;
+    });
+  }
+
+  // Verifica o status de conexão do socket
+  getConnectionStatus() {
+    return this.isConnected ? "Operacional" : "Erro";
   }
 
   // Recebe notificações de agendamentos e empréstimos vencidos
@@ -65,21 +84,12 @@ class SocketService {
     );
   }
 
-  onScheduleReturned(callback: (scheduleId: string) => void) {
-    if (!this.socket) return;
-    this.socket.on("scheduleReturned", callback);
-  }
-
-  onLoanReturned(callback: (loanId: string) => void) {
-    if (!this.socket) return;
-    this.socket.on("loanReturned", callback);
-  }
-
   // Desconectar o socket
   disconnect() {
     if (this.socket) {
       this.socket.disconnect();
       this.socket = null;
+      this.isConnected = false;
       console.log("Socket desconectado");
     }
   }
