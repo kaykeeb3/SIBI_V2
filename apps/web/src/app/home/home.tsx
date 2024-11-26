@@ -29,8 +29,8 @@ export function Home() {
 
   const [apiStatus, setApiStatus] = useState<string>("API parada");
   const [showApiStatus, setShowApiStatus] = useState<boolean>(false);
-
   const [isAlertVisible, setIsAlertVisible] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
 
   const checkApiStatus = () => {
     const lastUpdated = localStorage.getItem("lastUpdated");
@@ -106,35 +106,54 @@ export function Home() {
     };
   }, []);
 
+  const handleSearch = (query: string) => {
+    setSearchQuery(query.toLowerCase());
+  };
+
+  const highlightText = (text: string) => {
+    if (!searchQuery) return text;
+
+    const parts = text.split(new RegExp(`(${searchQuery})`, "gi"));
+    return parts.map((part, index) =>
+      part.toLowerCase() === searchQuery ? (
+        <span key={index} className="bg-yellow-300">
+          {part}
+        </span>
+      ) : (
+        part
+      )
+    );
+  };
+
   return (
-    <div className="mx-auto flex flex-col items-center w-full px-20">
+    <div className="mx-auto flex flex-col items-center px-20">
       <Card className="shadow-none border-none bg-transparent w-full mb-8">
-        <DashboardHeader />
+        <DashboardHeader onSearch={handleSearch} />
         <CardContent className="w-full flex flex-col items-center">
           <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 mb-6">
             <StatsCard
-              title="Total de Livros Cadastrados"
+              title={highlightText("Total de Livros Cadastrados")}
               count={data.books}
               Icon={Book}
               iconColor="text-green-500"
               isLoading={isLoading}
             />
             <StatsCard
-              title="Total de Empréstimos Ativos"
+              title={highlightText("Total de Empréstimos Ativos")}
               count={data.loans}
               Icon={User}
               iconColor="text-blue-500"
               isLoading={isLoading}
             />
             <StatsCard
-              title="Total de Agendamentos Cadastrados"
+              title={highlightText("Total de Agendamentos Cadastrados")}
               count={data.schedules}
               Icon={Calendar}
               iconColor="text-yellow-500"
               isLoading={isLoading}
             />
             <StatsCard
-              title="Total de Equipamentos Cadastrados"
+              title={highlightText("Total de Equipamentos Cadastrados")}
               count={data.equipments}
               Icon={Package}
               iconColor="text-purple-500"
