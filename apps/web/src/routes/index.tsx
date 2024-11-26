@@ -7,6 +7,7 @@ import { SignIn } from "@/app/auth/sign-in";
 import { ProtectedRoute } from "@/components/protected-route";
 import { SignUp } from "@/app/auth/sign-up";
 import { NotFound } from "@/app/404";
+import { StatusDashboard } from "@/app/settings/settings";
 
 const router = createBrowserRouter([
   {
@@ -37,13 +38,10 @@ const router = createBrowserRouter([
             path: "/loans",
             element: <Loan />,
           },
+
           {
-            path: "/users",
-            element: <Loan />,
-          },
-          {
-            path: "/journey",
-            element: <Loan />,
+            path: "/settings",
+            element: <StatusDashboard />,
           },
         ],
       },
