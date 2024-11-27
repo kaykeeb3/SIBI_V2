@@ -10,26 +10,36 @@
     --card-foreground: 210 14% 17%;
     --popover: 0 0% 96%;
     --popover-foreground: 210 14% 17%;
-    --primary: 276 64% 58%;
+
+    --primary: 210 100% 40%;
     --primary-foreground: 210 20% 98%;
-    --secondary: 276 60% 70%;
-    --secondary-foreground: 276 40% 25%;
-    --muted: 276 30% 85%;
-    --muted-foreground: 276 20% 45%;
-    --accent: 276 80% 60%;
-    --accent-foreground: 276 50% 35%;
+
+    --secondary: 220 80% 50%;
+    --secondary-foreground: 220 40% 30%;
+
+    --muted: 210 20% 70%;
+    --muted-foreground: 210 40% 20%;
+
+    --accent: 210 60% 60%;
+    --accent-foreground: 210 30% 30%;
+
     --destructive: 0 84% 53%;
     --destructive-foreground: 210 20% 98%;
-    --border: 276 60% 80%;
-    --input: 276 60% 80%;
-    --ring: 276 64% 58%;
+
+    --border: 210 60% 80%;
+    --input: 210 60% 80%;
+    --ring: 210 100% 60%;
+
     --radius: 0.5rem;
-    --chart-1: 276 64% 58%;
+
+    --chart-1: 210 100% 40%;
     --chart-5: 160 60% 45%;
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
     --chart-2: 340 75% 55%;
   }
+
+
 }
 
 @layer base {

@@ -37,7 +37,7 @@ export function CardItem({
           </CardDescription>
         </div>
         <div className="relative flex">
-          <div className="absolute left-4 top-0 h-full w-[2px] bg-primary" />
+          <div className="absolute left-4 top-0 h-full w-[2px] bg-zinc-300" />
           <div
             className={`absolute left-0 top-6 w-8 h-8 ${statusStyles[status]} text-white flex items-center justify-center rounded-full`}
           >
@@ -47,7 +47,7 @@ export function CardItem({
             <div className="absolute -left-2 top-6 w-0 h-0 border-t-[8px] border-t-transparent border-b-[8px] border-b-transparent border-r-[8px] border-r-zinc-50" />
             <CardContent className="flex items-center space-x-2 px-0 py-0">
               <Badge
-                className={`bg-purple-500  text-white px-2 py-1 rounded ${status === "success" ? "bg-primary" : status === "pending" ? "bg-primary" : "bg-primary"}`}
+                className={` text-white px-2 py-1 rounded ${status === "success" ? "bg-primary" : status === "pending" ? "bg-primary" : "bg-primary"}`}
               >
                 {title.split(" ")[0]}
               </Badge>

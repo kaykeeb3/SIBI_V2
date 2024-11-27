@@ -271,10 +271,10 @@ export function StatusDashboard() {
                   className="relative flex  border-none shadow-none rounded-none"
                 >
                   {/* Linha do tempo */}
-                  <div className="absolute left-4 top-0 h-full w-[2px] bg-primary" />
+                  <div className="absolute left-4 top-0 h-full w-[2px] bg-zinc-300" />
 
                   {/* Ícone do incidente */}
-                  <div className="absolute left-0 top-6 w-8 h-8 bg-purple-600 text-white flex items-center justify-center rounded-full">
+                  <div className="absolute left-0 top-6 w-8 h-8 bg-secondary text-white flex items-center justify-center rounded-full">
                     <span className="text-lg font-bold">
                       {incident.icon === "alert" ? "!" : "✔"}
                     </span>
@@ -286,7 +286,7 @@ export function StatusDashboard() {
 
                     <div className="flex items-center space-x-2">
                       {/* Tipo do incidente */}
-                      <Badge className="bg-purple-500 text-white px-2 py-1 rounded">
+                      <Badge className=" text-white px-2 py-1 rounded">
                         {incident.icon === "alert"
                           ? "Incidente"
                           : "Sistema Operacional"}
