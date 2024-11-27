@@ -5,7 +5,13 @@ import {
   AccordionContent,
 } from "@/components/ui/accordion";
 import { Badge } from "@/components/ui/badge";
-import { Card, CardHeader } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { CirclePlus, CircleMinus } from "lucide-react";
 import { useEffect, useState } from "react";
 import { getStatus } from "@/services/api/api-service";
@@ -237,13 +243,13 @@ export function StatusDashboard() {
         </Accordion>
 
         {/* Exibindo os incidentes formatados */}
-        <div className="flex flex-col space-y-6">
+        <Card className="flex flex-col space-y-6 border-none shadow-none rounded-none">
           <div className="flex flex-col">
             <h1 className="text-4xl font-bold mb-1">Incidentes anteriores</h1>
 
             {/* Informações adicionais sobre o status do sistema */}
-            <div className="text-zinc-800 mb-6">
-              <p className="text-zinc-700 mb-2 font-normal">
+            <CardContent className="text-zinc-800 mb-6 px-0 py-0">
+              <CardDescription className="text-zinc-700 mb-2 font-normal">
                 Total de incidentes registrados:{" "}
                 <span>{status.incidents.length}</span> - Incidentes de alerta
                 (erros):{" "}
@@ -254,13 +260,16 @@ export function StatusDashboard() {
                     ).length
                   }
                 </span>
-              </p>
-            </div>
+              </CardDescription>
+            </CardContent>
 
             {/* Lista de incidentes */}
             {status.incidents.map((incident, index) => {
               return (
-                <div key={index} className="relative flex">
+                <Card
+                  key={index}
+                  className="relative flex  border-none shadow-none rounded-none"
+                >
                   {/* Linha do tempo */}
                   <div className="absolute left-4 top-0 h-full w-[2px] bg-primary" />
 
@@ -277,28 +286,28 @@ export function StatusDashboard() {
 
                     <div className="flex items-center space-x-2">
                       {/* Tipo do incidente */}
-                      <span className="bg-purple-500 text-white px-2 py-1 rounded">
+                      <Badge className="bg-purple-500 text-white px-2 py-1 rounded">
                         {incident.icon === "alert"
                           ? "Incidente"
                           : "Sistema Operacional"}
-                      </span>
+                      </Badge>
                       {/* Exibindo a data e o dia da semana */}
-                      <span className="text-sm text-zinc-400">
+                      <CardTitle className="text-sm text-zinc-400">
                         {incident.date}
-                      </span>
+                      </CardTitle>
                     </div>
 
                     {/* Título do incidente */}
-                    <h2 className="text-lg font-semibold mt-2">
+                    <CardTitle className="text-lg font-semibold mt-2">
                       {incident.message}
-                    </h2>
+                    </CardTitle>
 
                     {/* Detalhes do incidente */}
-                    <p className="text-zinc-400 font-normal mt-1 text-sm">
+                    <CardDescription className="text-zinc-400 font-normal mt-1 text-sm">
                       {incident.icon === "alert"
                         ? `Erro ocorrido: ${incident.details || "Sem detalhes disponíveis."}`
                         : "Instabilidade normalizada."}
-                    </p>
+                    </CardDescription>
 
                     {/* Exibindo mais detalhes se o incidente tiver um erro */}
                     {incident.icon === "alert" && (
@@ -315,11 +324,11 @@ export function StatusDashboard() {
                       </div>
                     )}
                   </div>
-                </div>
+                </Card>
               );
             })}
           </div>
-        </div>
+        </Card>
       </div>
     </div>
   );
