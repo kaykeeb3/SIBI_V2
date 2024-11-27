@@ -39,6 +39,9 @@
 
   body {
     @apply bg-background text-foreground;
-    font-family: "Ubuntu", serif;
+    font-family: "Asap", sans-serif;
+    background-color: #f3f3f3;
+    height: 100%;
+    width: 100%;
   }
 }
