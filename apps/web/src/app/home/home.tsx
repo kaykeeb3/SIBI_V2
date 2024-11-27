@@ -146,7 +146,7 @@ export function Home() {
               isLoading={isLoading}
             />
             <StatsCard
-              title={highlightText("Total de Agendamentos Cadastrados")}
+              title={highlightText("Total de Agendamentos Ativos")}
               count={data.schedules}
               Icon={Calendar}
               iconColor="text-yellow-500"
