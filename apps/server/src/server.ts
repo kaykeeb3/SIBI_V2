@@ -8,6 +8,7 @@ import bookRoutes from "@/infra/routes/bookRoutes";
 import loanRoutes from "@/infra/routes/loanRoutes";
 import equipmentRoutes from "@/infra/routes/equipmentRoutes";
 import scheduleRoutes from "@/infra/routes/scheduleRoutes";
+import faqRoutes from "@/infra/routes/faqRoutes";
 
 const app = express();
 const server = http.createServer(app);
@@ -27,13 +28,14 @@ app.use("/books", bookRoutes);
 app.use("/loans", loanRoutes);
 app.use("/equipments", equipmentRoutes);
 app.use("/schedules", scheduleRoutes);
+app.use("/faq", faqRoutes);
 
 // Configuração do Socket.io
 const { io, cleanup } = Socket(server);
 
 // Iniciar o servidor
 server.listen(process.env.PORT || 3000, () => {
-  console.log(`Server running on port ${process.env.PORT || 3000}`);
+  console.log(`Server running on port ${process.env.PORT || 3000} 🚀`);
 });
 
 export { server, io, cleanup };
