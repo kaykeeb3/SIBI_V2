@@ -8,6 +8,8 @@ import { ProtectedRoute } from "@/components/protected-route";
 import { SignUp } from "@/app/auth/sign-up";
 import { NotFound } from "@/app/404";
 import { StatusDashboard } from "@/app/settings/settings";
+import { About } from "@/app/about/about";
+import { ChatBot } from "@/app/chatbot/chatbot";
 
 const router = createBrowserRouter([
   {
@@ -42,6 +44,14 @@ const router = createBrowserRouter([
           {
             path: "/settings",
             element: <StatusDashboard />,
+          },
+          {
+            path: "/about",
+            element: <About />,
+          },
+          {
+            path: "/messages",
+            element: <ChatBot />,
           },
         ],
       },
