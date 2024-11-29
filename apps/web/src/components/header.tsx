@@ -9,6 +9,8 @@ import { toast } from "sonner";
 import socketService, { Notification } from "@/services/socket/socket-service";
 import { EditProfile } from "./edit-profile";
 import { NotificationDialog } from "./notification-dialog";
+import { motion } from "framer-motion";
+import { Card, CardDescription, CardTitle } from "./ui/card";
 
 interface Profile {
   id: string;
@@ -127,7 +129,12 @@ export function Header() {
     <header className="w-full bg-white px-4 py-2 z-10 relative">
       <div className="flex items-center justify-end mr-6">
         {/* Notificações */}
-        <div className="mr-4 items-center justify-center flex group relative">
+        <motion.div
+          className="mr-4 items-center justify-center flex group relative"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.3 }}
+        >
           <Button
             variant="ghost"
             onClick={() => setIsNotificationOpen(true)}
@@ -149,10 +156,15 @@ export function Header() {
           <span className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 px-2 py-1 bg-zinc-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap">
             Notificações
           </span>
-        </div>
+        </motion.div>
 
         {/* Informações do usuário */}
-        <div className="flex items-center space-x-2">
+        <motion.div
+          className="flex items-center space-x-2"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.3, delay: 0.2 }}
+        >
           {loading ? (
             <Skeleton className="h-12 w-12 rounded-full" />
           ) : (
@@ -167,34 +179,36 @@ export function Header() {
               </AvatarFallback>
             </Avatar>
           )}
-          <div className="flex flex-col">
+          <Card className="flex flex-col shadow-none border-none bg-transparent hover:opacity-80">
             {loading ? (
               <>
                 <Skeleton className="h-[16px] w-[100px]" />
                 <Skeleton className="h-[14px] w-[100px]" />
               </>
             ) : error ? (
-              <span className="text-sm text-red-600">{error}</span>
+              <CardDescription className="text-sm text-red-600">
+                {error}
+              </CardDescription>
             ) : (
               <>
-                <span className="font-semibold text-base text-black">
+                <CardTitle className="font-semibold text-base text-black">
                   Olá, {getFirstName(profile?.name || "Usuário")}
-                </span>
-                <span className="font-normal text-xs text-zinc-800">
+                </CardTitle>
+                <CardTitle className="font-normal text-xs text-zinc-800">
                   {getRoleDescription(profile?.role || "USER")}
-                </span>
+                </CardTitle>
               </>
             )}
-          </div>
-        </div>
+          </Card>
+        </motion.div>
 
-        <button
+        <Button
           onClick={handleOpen}
-          className="flex items-center justify-center ml-2"
+          className="flex items-center justify-center ml-2 px-0 py-0 bg-transparent hover:bg-transparent shadow-none"
           aria-label="Abrir menu"
         >
-          <ChevronDownIcon className="h-5 w-5 text-black" />
-        </button>
+          <ChevronDownIcon className="h-5 w-5 text-black " />
+        </Button>
       </div>
 
       <EditProfile

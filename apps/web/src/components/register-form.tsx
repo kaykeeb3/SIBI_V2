@@ -25,6 +25,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { register } from "@/services/auth/auth-service";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
+import { motion } from "framer-motion"; // Importando o motion
 
 const registerSchema = z.object({
   name: z.string().min(1, "Nome é obrigatório").max(100, "Nome muito longo"),
@@ -109,7 +110,12 @@ export function RegisterForm() {
 
   return (
     <div className="flex items-center justify-between min-h-screen bg-white">
-      <div className="hidden md:flex flex-col justify-center items-center min-h-screen w-1/2 px-8 py-12 bg-gradient-to-tl from-zinc-950 to-gray-800">
+      <motion.div
+        className="hidden md:flex flex-col justify-center items-center min-h-screen w-1/2 px-8 py-12 bg-gradient-to-tl from-zinc-950 to-gray-800"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5 }}
+      >
         <div className="flex justify-center mb-14">
           <img
             src={userComputer}
@@ -118,22 +124,30 @@ export function RegisterForm() {
           />
         </div>
 
-        <div className="flex flex-col items-start px-6 w-full">
-          <h1 className="text-3xl font-semibold text-white mb-4">
+        <Card className="flex flex-col items-start px-6 w-full bg-transparent shadow-none border-none rounded-none">
+          <CardTitle className="text-3xl font-semibold text-white mb-4">
             Olá, seja bem-vindo(a)
-          </h1>
-          <p className="text-sm text-zinc-200 mb-2 font-normal">
+          </CardTitle>
+          <blockquote className="text-sm font-light text-zinc-300">
             Antes de iniciar a utilização do sistema, será necessário cadastrar
-            algumas informações suas 🤗.
-          </p>
-          <Link to="/sign-in" className="text-sm text-zinc-300 underline">
+            algumas informações suas.
+          </blockquote>
+          <Link
+            to="/sign-in"
+            className="mt-4 block text-xs text-zinc-400 hover:underline"
+          >
             Já tem uma conta?
           </Link>
-        </div>
-      </div>
+        </Card>
+      </motion.div>
 
-      <div className="w-full md:w-1/2 flex flex-col space-y-2 px-12">
-        <Card className="w-full max-w-2xl mx-auto px-4 bg-transparent  shadow-none">
+      <motion.div
+        className="w-full md:w-1/2 flex flex-col space-y-2 px-12"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5 }}
+      >
+        <Card className="w-full max-w-2xl mx-auto px-4 bg-transparent shadow-none">
           <CardContent>
             <CardHeader className="px-0">
               <CardTitle className="text-2xl font-semibold">Cadastro</CardTitle>
@@ -141,10 +155,17 @@ export function RegisterForm() {
                 Preencha os campos abaixo para criar sua conta.
               </CardDescription>
             </CardHeader>
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
+              <motion.div
+                className="grid grid-cols-1 md:grid-cols-2 gap-4"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.5 }}
+              >
                 <div>
-                  <Label htmlFor="name">Nome*</Label>
+                  <Label htmlFor="name">
+                    Nomes <span className="text-sm text-red-500">*</span>
+                  </Label>
                   <Input
                     id="name"
                     type="text"
@@ -160,7 +181,9 @@ export function RegisterForm() {
                 </div>
 
                 <div>
-                  <Label htmlFor="email">E-mail*</Label>
+                  <Label htmlFor="email">
+                    E-mail <span className="text-sm text-red-500">*</span>
+                  </Label>
                   <Input
                     id="email"
                     type="email"
@@ -174,11 +197,18 @@ export function RegisterForm() {
                     </p>
                   )}
                 </div>
-              </div>
+              </motion.div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <motion.div
+                className="grid grid-cols-1 md:grid-cols-3 gap-4"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.5 }}
+              >
                 <div>
-                  <Label htmlFor="password">Senha*</Label>
+                  <Label htmlFor="password">
+                    Senha <span className="text-sm text-red-500">*</span>
+                  </Label>
                   <Input
                     id="password"
                     type="password"
@@ -194,7 +224,9 @@ export function RegisterForm() {
                 </div>
 
                 <div>
-                  <Label htmlFor="phone">Telefone*</Label>
+                  <Label htmlFor="phone">
+                    Telefone <span className="text-sm text-red-500">*</span>
+                  </Label>
                   <Input
                     id="phone"
                     type="tel"
@@ -212,17 +244,17 @@ export function RegisterForm() {
                     </p>
                   )}
                 </div>
-              </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <Label htmlFor="limit">Limite*</Label>
+                <div className="">
+                  <Label htmlFor="limit">
+                    Limite <span className="text-sm text-red-500">*</span>
+                  </Label>
                   <Input
                     id="limit"
                     type="number"
                     placeholder="Digite o limite"
                     className="mb-2"
-                    {...formRegister("limit", { valueAsNumber: true })}
+                    {...formRegister("limit")}
                   />
                   {errors.limit && (
                     <p className="text-red-500 text-xs mt-1">
@@ -230,24 +262,28 @@ export function RegisterForm() {
                     </p>
                   )}
                 </div>
+              </motion.div>
 
+              <motion.div
+                className="grid grid-cols-1 md:grid-cols-2 gap-4"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.5 }}
+              >
                 <div>
                   <Label htmlFor="role">Função*</Label>
                   <Controller
-                    control={control}
                     name="role"
+                    control={control}
                     render={({ field }) => (
-                      <Select
-                        onValueChange={field.onChange}
-                        value={field.value}
-                      >
+                      <Select {...field}>
                         <SelectTrigger>
                           <SelectValue placeholder="Selecione uma função" />
                         </SelectTrigger>
                         <SelectContent>
                           <SelectGroup>
-                            <SelectItem value="USER">Comum</SelectItem>
-                            <SelectItem value="ADMIN">Administrador</SelectItem>
+                            <SelectItem value="admin">Administrador</SelectItem>
+                            <SelectItem value="user">Usuário</SelectItem>
                           </SelectGroup>
                         </SelectContent>
                       </Select>
@@ -259,15 +295,15 @@ export function RegisterForm() {
                     </p>
                   )}
                 </div>
-              </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <Label htmlFor="institution">Instituição*</Label>
+                  <Label htmlFor="institution">
+                    Instituição <span className="text-sm text-red-500">*</span>
+                  </Label>
                   <Input
                     id="institution"
                     type="text"
-                    placeholder="Digite o nome da instituição"
+                    placeholder="Nome da instituição"
                     className="mb-2"
                     {...formRegister("institution")}
                   />
@@ -277,12 +313,22 @@ export function RegisterForm() {
                     </p>
                   )}
                 </div>
+              </motion.div>
 
+              <motion.div
+                className="grid grid-cols-1 md:grid-cols-1 gap-4"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.5 }}
+              >
                 <div>
-                  <Label htmlFor="profilePicture">Foto de Perfil*</Label>
+                  <Label htmlFor="profilePicture">
+                    Foto de Perfil{" "}
+                    <span className="text-sm text-red-500">*</span>
+                  </Label>
                   <Input
                     id="profilePicture"
-                    type="url"
+                    type="text"
                     placeholder="URL da foto de perfil"
                     className="mb-2"
                     {...formRegister("profilePicture")}
@@ -293,25 +339,30 @@ export function RegisterForm() {
                     </p>
                   )}
                 </div>
-              </div>
+              </motion.div>
 
-              <Button
-                type="submit"
-                className="w-full rounded-lg py-2 text-white transition-colors"
-                disabled={mutation.isPending}
+              <motion.div
+                className="flex justify-center"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.5 }}
               >
-                {mutation.isPending ? (
-                  <div className="flex items-center justify-center">
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  </div>
-                ) : (
-                  "Cadastrar"
-                )}
-              </Button>
+                <Button
+                  type="submit"
+                  className="w-full"
+                  disabled={mutation.isPending}
+                >
+                  {mutation.isPending ? (
+                    <Loader2 className="animate-spin mr-2" />
+                  ) : (
+                    "Cadastrar"
+                  )}
+                </Button>
+              </motion.div>
             </form>
           </CardContent>
         </Card>
-      </div>
+      </motion.div>
     </div>
   );
 }
