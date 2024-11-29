@@ -72,3 +72,11 @@ model Schedule {
   type        String?
   returned    Boolean   @default(false)
 }
+
+// PERGUNTAS E RESPOSTAS - IA (INTELIGÊNCIA ARTIFICIAL)
+model FAQ {
+  id        Int      @id @default(autoincrement())
+  question  String
+  answer    String
+  createdAt DateTime @default(now())
+}
