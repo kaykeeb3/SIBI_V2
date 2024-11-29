@@ -8,6 +8,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Book, User, Calendar, Package } from "lucide-react";
 import { fetchHomeData } from "@/services/home/home-service";
+import { motion } from "framer-motion";
 
 interface CountData {
   books: number;
@@ -127,64 +128,76 @@ export function Home() {
 
   return (
     <div className="mx-auto flex flex-col items-center px-20">
-      <Card className="shadow-none border-none bg-transparent w-full mb-8">
-        <DashboardHeader onSearch={handleSearch} />
-        <CardContent className="w-full flex flex-col items-center">
-          <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 mb-6">
-            <StatsCard
-              title={highlightText("Total de Livros Cadastrados")}
-              count={data.books}
-              Icon={Book}
-              iconColor="text-green-500"
-              isLoading={isLoading}
-            />
-            <StatsCard
-              title={highlightText("Total de Empréstimos Ativos")}
-              count={data.loans}
-              Icon={User}
-              iconColor="text-blue-500"
-              isLoading={isLoading}
-            />
-            <StatsCard
-              title={highlightText("Total de Agendamentos Ativos")}
-              count={data.schedules}
-              Icon={Calendar}
-              iconColor="text-yellow-500"
-              isLoading={isLoading}
-            />
-            <StatsCard
-              title={highlightText("Total de Equipamentos Cadastrados")}
-              count={data.equipments}
-              Icon={Package}
-              iconColor="text-purple-500"
-              isLoading={isLoading}
-            />
-          </div>
-          <div className="grid gap-4 grid-cols-1 lg:grid-cols-3 w-full">
-            <Card className="lg:col-span-2 rounded-md border-b-4 border-b-primary">
-              <CardContent className="p-4">
-                {isLoading ? (
-                  <Skeleton className="w-full h-40 animate-pulse bg-zinc-100 rounded-md" />
-                ) : (
-                  <Chart />
-                )}
-              </CardContent>
-            </Card>
-            <Card className="rounded-md border-b-4 border-b-primary">
-              <CardContent className="p-4">
-                {isLoading ? (
-                  <Skeleton className="w-full h-40 animate-pulse bg-zinc-100 rounded-md" />
-                ) : (
-                  <ChartPie />
-                )}
-              </CardContent>
-            </Card>
-          </div>
-        </CardContent>
-      </Card>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5 }}
+      >
+        <Card className="shadow-none border-none bg-transparent w-full mb-8">
+          <DashboardHeader onSearch={handleSearch} />
+          <CardContent className="w-full flex flex-col items-center">
+            <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 mb-6">
+              <StatsCard
+                title={highlightText("Total de Livros Cadastrados")}
+                count={data.books}
+                Icon={Book}
+                iconColor="text-green-500"
+                isLoading={isLoading}
+              />
+              <StatsCard
+                title={highlightText("Total de Empréstimos Ativos")}
+                count={data.loans}
+                Icon={User}
+                iconColor="text-blue-500"
+                isLoading={isLoading}
+              />
+              <StatsCard
+                title={highlightText("Total de Agendamentos Ativos")}
+                count={data.schedules}
+                Icon={Calendar}
+                iconColor="text-yellow-500"
+                isLoading={isLoading}
+              />
+              <StatsCard
+                title={highlightText("Total de Equipamentos Cadastrados")}
+                count={data.equipments}
+                Icon={Package}
+                iconColor="text-purple-500"
+                isLoading={isLoading}
+              />
+            </div>
+            <div className="grid gap-4 grid-cols-1 lg:grid-cols-3 w-full">
+              <Card className="lg:col-span-2 rounded-md border-b-4 border-b-primary">
+                <CardContent className="p-4">
+                  {isLoading ? (
+                    <Skeleton className="w-full h-40 animate-pulse bg-zinc-100 rounded-md" />
+                  ) : (
+                    <Chart />
+                  )}
+                </CardContent>
+              </Card>
+              <Card className="rounded-md border-b-4 border-b-primary">
+                <CardContent className="p-4">
+                  {isLoading ? (
+                    <Skeleton className="w-full h-40 animate-pulse bg-zinc-100 rounded-md" />
+                  ) : (
+                    <ChartPie />
+                  )}
+                </CardContent>
+              </Card>
+            </div>
+          </CardContent>
+        </Card>
+      </motion.div>
 
       {isAlertVisible && (
-        <div className="fixed bottom-0 left-0 w-full flex justify-center">
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.5 }}
+          className="fixed bottom-0 left-0 w-full flex justify-center"
+        >
           <Alert className="flex flex-col items-center justify-center bg-gradient-to-t from-cyan-400 to-sky-500 rounded-none w-full h-7">
             <AlertDescription className="font-medium text-white text-center text-xs">
               A aplicação atualiza os dados totais dos gráficos e dos cards, com
@@ -192,7 +205,7 @@ export function Home() {
               {showApiStatus ? <b>({apiStatus})</b> : <b>({apiStatus})</b>}
             </AlertDescription>
           </Alert>
-        </div>
+        </motion.div>
       )}
     </div>
   );
