@@ -38,8 +38,6 @@
     --chart-4: 280 65% 60%;
     --chart-2: 340 75% 55%;
   }
-
-
 }
 
 @layer base {
@@ -49,7 +47,6 @@
 
   body {
     @apply bg-background text-foreground;
-    font-family: "Asap", sans-serif;
-    background-color: #f3f3f3;
+    font-family: "Ubuntu", serif;
   }
 }

@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { ChevronDownIcon } from "@radix-ui/react-icons";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Bell, BellRing } from "lucide-react";
+import { Bell, BellRing, Info } from "lucide-react";
 import { getProfile, updateProfile } from "@/services/auth/auth-service";
 import { toast } from "sonner";
 import socketService, { Notification } from "@/services/socket/socket-service";
@@ -11,6 +11,7 @@ import { EditProfile } from "./edit-profile";
 import { NotificationDialog } from "./notification-dialog";
 import { motion } from "framer-motion";
 import { Card, CardDescription, CardTitle } from "./ui/card";
+import { Badge } from "./ui/badge";
 
 interface Profile {
   id: string;
@@ -128,7 +129,6 @@ export function Header() {
   return (
     <header className="w-full bg-white px-4 py-2 z-10 relative">
       <div className="flex items-center justify-end mr-6">
-        {/* Notificações */}
         <motion.div
           className="mr-4 items-center justify-center flex group relative"
           initial={{ opacity: 0 }}
@@ -140,7 +140,7 @@ export function Header() {
             onClick={() => setIsNotificationOpen(true)}
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
-            className="relative p-2 h-12 w-12 hover:bg-zinc-200 transition-all duration-200 rounded-full"
+            className="relative hover:bg-transparent hover:opacity-70"
           >
             {isHovered ? (
               <BellRing className="w-6 h-6 text-zinc-700 animate-slight-shake" />
@@ -148,17 +148,16 @@ export function Header() {
               <Bell className="w-6 h-6 text-zinc-600" />
             )}
             {notifications.length > 0 && (
-              <span className="absolute -top-0 -right-1 p-1 inline-flex items-center justify-center font-bold leading-none text-white bg-red-500 rounded-full min-w-[20px] min-h-[20px] text-xs">
+              <Badge className="absolute -top-0 -right-1 p-1 inline-flex items-center justify-center font-bold leading-none text-white bg-red-500 rounded-full min-w-[20px] min-h-[20px] text-xs">
                 {notifications.length > 99 ? "99+" : notifications.length}
-              </span>
+              </Badge>
             )}
           </Button>
-          <span className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 px-2 py-1 bg-zinc-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap">
+          <Badge className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 px-2 py-1 bg-zinc-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap">
             Notificações
-          </span>
+          </Badge>
         </motion.div>
 
-        {/* Informações do usuário */}
         <motion.div
           className="flex items-center space-x-2"
           initial={{ opacity: 0 }}
