@@ -59,27 +59,29 @@ export function EditProfile({
               <div className="space-y-4">
                 <div>
                   <Label className="text-sm font-medium text-gray-700">
-                    Nome completo*
+                    Nome completo{" "}
+                    <span className="text-sm text-red-500">*</span>
                   </Label>
                   <Input
                     type="text"
                     value={newName}
                     onChange={(e) => setNewName(e.target.value)}
                     placeholder="Digite seu nome completo"
-                    className="w-full border border-gray-300 rounded-md px-4 py-3 text-gray-900 focus:ring-2 focus:ring-blue-500 transition duration-200"
+                    className="w-full border border-gray-300 rounded-md text-gray-900 focus:ring-2 focus:ring-blue-500 transition duration-200"
                   />
                 </div>
 
                 <div>
                   <Label className="text-sm font-medium text-gray-700">
-                    Foto de Perfil (URL)*
+                    Foto de Perfil (URL){" "}
+                    <span className="text-sm text-red-500">*</span>
                   </Label>
                   <Input
                     type="text"
                     value={newProfilePicture}
                     onChange={(e) => setNewProfilePicture(e.target.value)}
                     placeholder="URL da Foto de Perfil"
-                    className="w-full border border-gray-300 rounded-md px-4 py-3 text-gray-900 focus:ring-2 focus:ring-blue-500 transition duration-200"
+                    className="w-full border border-gray-300 rounded-md text-gray-900 focus:ring-2 focus:ring-blue-500 transition duration-200"
                   />
                 </div>
               </div>
