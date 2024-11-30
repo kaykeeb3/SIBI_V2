@@ -1,5 +1,11 @@
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Link, useNavigate, useLocation } from "react-router-dom";
@@ -77,7 +83,7 @@ export function LoginForm() {
 
   return (
     <div className="flex min-h-screen w-full items-center justify-between relative">
-      <div className="hidden h-screen w-1/2 flex-col justify-between bg-gradient-to-tl from-black to-gray-800 p-8 md:flex relative">
+      <div className="hidden h-screen w-3/4 flex-col justify-between bg-gradient-to-tl from-black to-gray-800 p-8 md:flex relative">
         <div className="w-full h-full bg-[url('@/public/assets/bg-stars.svg')] bg-cover bg-center" />
 
         <div className="mt-auto overflow-hidden">
@@ -94,20 +100,25 @@ export function LoginForm() {
         <div className="absolute top-1/2 left-1/2 h-[288px] w-[526px] -translate-y-1/2 -translate-x-1/2 rounded-full bg-primary opacity-50 blur-full" />
       </div>
 
-      <div className="w-full p-8 md:w-1/2">
+      <div className="w-full px-2 md:w-1/2">
         <form onSubmit={handleSubmit(onSubmit)}>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <Card className="border-none bg-transparent px-12 shadow-none sm:px-16 md:px-24 lg:px-32">
-              <CardHeader className="text-left">
-                <CardTitle className="text-2xl font-semibold">
-                  Faça login com sua conta
+            <Card className="border-none px-20 shadow-none">
+              <CardHeader>
+                <CardTitle className="text-2xl text-center font-normal">
+                  Entre na sua conta
                 </CardTitle>
+                <CardDescription className="text-center text-zinc-500">
+                  Se você já tem cadastro no sistema, digite as informações de
+                  login abaixo.
+                </CardDescription>
               </CardHeader>
-              <CardContent className="space-y-4">
+
+              <CardContent className="space-y-1">
                 <motion.div
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
@@ -120,7 +131,7 @@ export function LoginForm() {
                     id="email"
                     type="email"
                     placeholder="email@gmail.com"
-                    className="mt-1 border-zinc-400"
+                    className="mt-1 border-zinc-400 placeholder:text-zinc-600 placeholder:font-light"
                     {...register("email")}
                     aria-invalid={errors.email ? "true" : "false"}
                   />
@@ -144,7 +155,7 @@ export function LoginForm() {
                       id="password"
                       type={showPassword ? "text" : "password"}
                       placeholder="******"
-                      className="mt-1 border-zinc-400 pr-10"
+                      className="mt-1 border-zinc-400 pr-10 placeholder:text-zinc-600 placeholder:font-light"
                       {...register("password")}
                       aria-invalid={errors.password ? "true" : "false"}
                     />
@@ -174,7 +185,7 @@ export function LoginForm() {
                 >
                   <Button
                     type="submit"
-                    className="w-full rounded-lg py-2 text-white transition-colors"
+                    className="w-full rounded-lg py-2 text-white transition-colors mt-4"
                     disabled={isPending}
                   >
                     {isPending ? (
@@ -201,17 +212,24 @@ export function LoginForm() {
                   </Link>
                 </div>
 
-                <div className="mt-4 text-center text-xs text-gray-500">
-                  Ao continuar, você concorda com nossos{" "}
-                  <Link to="/terms" className="underline">
-                    Termos de Serviço
+                <Card className="text-center text-xs text-gray-500 pt-4 bg-transparent border-none shadow-none">
+                  Biblioteca virtual © 2024 Todos os direitos reservados.
+                  <br />
+                  <Link
+                    to="/terms"
+                    className="text-primary font-light text-xs hover:text-primary/60"
+                  >
+                    Termos de uso
                   </Link>{" "}
                   e{" "}
-                  <Link to="/privacy" className="underline">
-                    Política de Privacidade
+                  <Link
+                    to="/privacy"
+                    className="text-primary font-light text-xs hover:text-primary/60"
+                  >
+                    e Política de privacidade
                   </Link>
                   .
-                </div>
+                </Card>
               </CardContent>
             </Card>
           </motion.div>

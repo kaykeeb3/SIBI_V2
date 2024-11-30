@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { ChevronDownIcon } from "@radix-ui/react-icons";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Bell, BellRing, Info } from "lucide-react";
+import { Bell, BellRing } from "lucide-react";
 import { getProfile, updateProfile } from "@/services/auth/auth-service";
 import { toast } from "sonner";
 import socketService, { Notification } from "@/services/socket/socket-service";
