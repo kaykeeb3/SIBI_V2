@@ -83,23 +83,6 @@ export function LoginForm() {
 
   return (
     <div className="flex min-h-screen w-full items-center justify-between relative">
-      <div className="hidden h-screen w-3/4 flex-col justify-between bg-gradient-to-tl from-black to-gray-800 p-8 md:flex relative">
-        <div className="w-full h-full bg-[url('@/public/assets/bg-stars.svg')] bg-cover bg-center" />
-
-        <div className="mt-auto overflow-hidden">
-          <blockquote className="text-xs font-light text-zinc-300">
-            "A tecnologia é apenas uma ferramenta. No que se refere a motivar e
-            inspirar pessoas, o professor é o mais importante"
-          </blockquote>
-          <span className="mt-4 block text-sm text-zinc-400 hover:underline">
-            Bill Gates
-          </span>
-        </div>
-
-        {/* Blur */}
-        <div className="absolute top-1/2 left-1/2 h-[288px] w-[526px] -translate-y-1/2 -translate-x-1/2 rounded-full bg-primary opacity-50 blur-full" />
-      </div>
-
       <div className="w-full px-2 md:w-1/2">
         <form onSubmit={handleSubmit(onSubmit)}>
           <motion.div
@@ -113,8 +96,8 @@ export function LoginForm() {
                   Entre na sua conta
                 </CardTitle>
                 <CardDescription className="text-center text-zinc-500">
-                  Se você já tem cadastro no sistema, digite as informações de
-                  login abaixo.
+                  Se você já possui um cadastro no sistema, insira suas
+                  informações de login abaixo.
                 </CardDescription>
               </CardHeader>
 
@@ -130,8 +113,8 @@ export function LoginForm() {
                   <Input
                     id="email"
                     type="email"
-                    placeholder="email@gmail.com"
-                    className="mt-1 border-zinc-400 placeholder:text-zinc-600 placeholder:font-light"
+                    placeholder="Digite seu e-mail"
+                    className="mt-1 border-zinc-400 placeholder:text-zinc-600 placeholder:font-light hover:border-primary focus:hover:border-none"
                     {...register("email")}
                     aria-invalid={errors.email ? "true" : "false"}
                   />
@@ -154,8 +137,8 @@ export function LoginForm() {
                     <Input
                       id="password"
                       type={showPassword ? "text" : "password"}
-                      placeholder="******"
-                      className="mt-1 border-zinc-400 pr-10 placeholder:text-zinc-600 placeholder:font-light"
+                      placeholder="Digite sua senha"
+                      className="mt-1 border-zinc-400 pr-10 placeholder:text-zinc-600 placeholder:font-light hover:border-primary focus:hover:border-none"
                       {...register("password")}
                       aria-invalid={errors.password ? "true" : "false"}
                     />
@@ -185,7 +168,7 @@ export function LoginForm() {
                 >
                   <Button
                     type="submit"
-                    className="w-full rounded-lg py-2 text-white transition-colors mt-4"
+                    className="w-full rounded-lg py-2 text-white hover:bg-blue-700 mt-4"
                     disabled={isPending}
                   >
                     {isPending ? (
@@ -206,7 +189,7 @@ export function LoginForm() {
                   </div>
                   <Link
                     to="/sign-up"
-                    className="mt-4 flex w-full items-center justify-center rounded-lg border border-gray-300 bg-white p-2 text-zinc-800 transition-colors hover:bg-zinc-100"
+                    className="mt-4 flex w-full items-center justify-center rounded-lg border border-gray-300 bg-white p-2 text-zinc-800 transition-colors hover:bg-zinc-200"
                   >
                     Cadastrar-se
                   </Link>
@@ -234,6 +217,23 @@ export function LoginForm() {
             </Card>
           </motion.div>
         </form>
+      </div>
+
+      <div className="hidden h-screen w-3/4 flex-col justify-between bg-gradient-to-tl from-black to-gray-800 p-8 md:flex relative">
+        <div className="w-full h-full bg-[url('@/public/assets/bg-stars.svg')] bg-cover bg-center" />
+
+        <CardDescription className="mt-auto overflow-hidden">
+          <blockquote className="text-xs font-light text-zinc-300">
+            "A tecnologia é apenas uma ferramenta. No que se refere a motivar e
+            inspirar pessoas, o professor é o mais importante"
+          </blockquote>
+          <span className="mt-4 block text-sm text-zinc-400 hover:underline">
+            Bill Gates
+          </span>
+        </CardDescription>
+
+        {/* Blur */}
+        <div className="absolute top-1/2 left-1/2 h-[288px] w-[526px] -translate-y-1/2 -translate-x-1/2 rounded-full bg-primary opacity-50 blur-full" />
       </div>
     </div>
   );
