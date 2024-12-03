@@ -1,5 +1,3 @@
-import { ChevronDown } from "lucide-react";
-
 export function Header() {
   return (
     <header className="container-fluid w-100 d-flex justify-content-end align-items-center py-2 px-5">
@@ -18,7 +16,7 @@ export function Header() {
         </div>
         <div className="d-flex justify-content-center align-items-center">
           <button className="px-0 py-0 bg-transparent shadow-none border-0">
-            <ChevronDown className="text-white w-75" />
+            <span className="mdi mdi-chevron-down text-white fs-5"></span>
           </button>
         </div>
 
