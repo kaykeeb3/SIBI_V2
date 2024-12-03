@@ -15,3 +15,72 @@
 * {
   font-family: "Ubuntu", serif;
 }
+
+header {
+  background-color: var(--primary);
+}
+
+header,
+span {
+  font-weight: 400;
+  font-size: .7rem;
+}
+
+strong {
+  font-weight: 600;
+  font-size: .8rem;
+}
+
+aside {
+  background-color: var(--dark);
+
+}
+
+aside ul li {
+  list-style: none;
+  width: 100%;
+}
+
+aside ul li a {
+  width: 100%;
+  color: #FFF;
+  opacity: 0.6;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  padding: 4px 4px;
+  margin: 10px 0;
+  transition: 0.5s;
+  border-radius: 5px;
+}
+
+aside ul li a.active {
+  opacity: 1;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+aside ul li a.active .mdi {
+  color: var(--primary);
+}
+
+aside ul li a:visited,
+aside ul li a:focus {
+  color: #FFF;
+}
+
+aside ul li a:hover {
+  opacity: 1;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+
+aside ul li a span.mdi {
+  font-size: 25px;
+  margin: 0 10px;
+}
+
+
+aside ul li a span {
+  font-size: 14px;
+  margin: 0 15px;
+}
