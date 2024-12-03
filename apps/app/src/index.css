@@ -1,0 +1,17 @@
+:root {
+  --primary: #8F00FF;
+  --dark: #21232F;
+  --danger: #d62828;
+  --success: #06d6a0;
+  --white: #F6F8FA;
+}
+
+#root {
+  height: 100%;
+  width: 100%;
+  position: fixed;
+}
+
+* {
+  font-family: "Ubuntu", serif;
+}
