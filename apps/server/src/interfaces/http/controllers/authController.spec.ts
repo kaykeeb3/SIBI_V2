@@ -70,6 +70,7 @@ describe("Auth Controller", () => {
       role: "USER",
       profilePicture:
         "https://img.freepik.com/fotos-gratis/pessoa-de-origem-indiana-se-divertindo_23-2150285283.jpg?size=626&ext=jpg&ga=GA1.1.2008272138.1728259200&semt=ais_hybridg",
+      institution: "Suporte",
     };
     (authUseCase.getUserDetails as jest.Mock).mockResolvedValue(
       mockUserDetails

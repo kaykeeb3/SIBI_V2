@@ -57,6 +57,7 @@ export class AuthController {
         name: user.name,
         role: user.role,
         profilePicture: user.profilePicture,
+        institution: user.institution,
       });
     } catch (error: any) {
       res.status(404).json({ error: "User not found" });
