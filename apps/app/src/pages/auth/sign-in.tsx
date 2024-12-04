@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import logo from "/assets/logo-dark.svg";
 
 export function SignIn() {
@@ -37,8 +38,8 @@ export function SignIn() {
             </a>
           </div>
         </form>
-        <footer className="mt-4 text-muted">
-          <small>Copyright © <small className="text-decoration-underline">biblioteca.virual</small> 2024.</small>
+        <footer className="mt-5 text-muted">
+          <small>copyright &copy; <Link to="/" className="text-decoration-underline">biblioteca.virtual</Link> 2024.</small>
         </footer>
       </div>
     </div>

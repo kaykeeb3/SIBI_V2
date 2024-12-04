@@ -120,9 +120,8 @@ button.btn:hover {
 }
 
 a.text-decoration-underline {
-  font-size: 0.8rem;
+  font-size: .8rem;
   color: var(--primary);
-  opacity: 0.8;
   transition: opacity 0.3s ease;
 }
 
@@ -134,7 +133,7 @@ a.text-decoration-underline:hover {
 footer,
 small {
   color: #707274;
-  font-size: 0.8rem;
+  font-size: .8rem;
 }
 
 footer small .text-decoration-underline {
