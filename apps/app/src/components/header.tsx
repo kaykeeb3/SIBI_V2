@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
-import { getProfile } from "../services/auth/auth-service"; // Importe sua função de obter perfil
+import { getProfile } from "../services/auth/auth-service";
 
-// Definição do tipo Profile
 interface Profile {
   id: string;
   name: string;
