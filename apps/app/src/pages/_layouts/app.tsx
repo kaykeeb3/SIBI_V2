@@ -5,12 +5,15 @@ import { Sidebar } from "../../components/sidebar";
 export function AppLayout() {
   const location = useLocation();
 
+  const excludedRoutes = ["/sign-in", "/sign-up"];
+  const shouldHideLayout = excludedRoutes.includes(location.pathname);
+
   return (
     <>
-      <Header />
+      {!shouldHideLayout && <Header />}
       <div className="container-fluid h-100">
         <div className="row h-100">
-          <Sidebar location={location} />
+          {!shouldHideLayout && <Sidebar location={location} />}
           <Outlet />
         </div>
       </div>

@@ -1,3 +1,5 @@
+@import "react-toastify/dist/ReactToastify.css";
+
 :root {
   --primary: #9d4edd;
   --dark: #21232F;
@@ -19,14 +21,14 @@ header {
 }
 
 header,
-span {
-  font-weight: 400;
+small {
+  font-weight: 600;
   font-size: .7rem;
 }
 
-strong {
-  font-weight: 600;
-  font-size: .8rem;
+span {
+  font-weight: 400;
+  font-size: .7rem;
 }
 
 aside {
