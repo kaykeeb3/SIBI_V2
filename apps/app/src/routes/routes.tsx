@@ -3,26 +3,33 @@ import { SignIn } from "../pages/auth/sign-in";
 import { AppLayout } from "../pages/_layouts/app";
 import { Book } from "../pages/app/book/book";
 import { NotFound } from "../pages/not-found";
+import { ProtectedRoute } from "../pages/protected-route";
+import { Dashboard } from "../pages/dashboard/dashboard";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <AppLayout />,
+    errorElement: <NotFound />,
     children: [
       {
-        path: "/books",
-        element: <Book />,
+        path: "/sign-in",
+        element: <SignIn />,
       },
-
+      {
+        element: <ProtectedRoute />,
+        children: [
+          {
+            index: true,
+            element: <Dashboard />,
+          },
+          {
+            path: "/books",
+            element: <Book />,
+          },
+        ],
+      },
     ],
-  },
-  {
-    path: "/sign-in",
-    element: <SignIn />,
-  },
-  {
-    path: "*",
-    element: <NotFound />,
   },
 ]);
 
