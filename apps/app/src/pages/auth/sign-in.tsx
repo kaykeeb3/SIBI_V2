@@ -4,21 +4,24 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { login } from "../../services/auth/auth-service";
 import logo from "/assets/logo-dark.svg";
+import { Button, Input } from "rsuite";
 
 export function SignIn() {
   const navigate = useNavigate();
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const loginMutation = useMutation({
     mutationFn: login,
     onSuccess: () => {
       toast.success("Login realizado com sucesso!");
+      connectSocket();
       navigate("/");
+      setIsLoading(false);
     },
     onError: (error: unknown) => {
       if (error instanceof Error) {
-        // Adicionando um tratamento para a mensagem de erro
         if (error.message.includes("Request failed with status code 400")) {
           toast.error("Credenciais inválidas. Verifique seu e-mail e senha.");
         } else {
@@ -27,8 +30,15 @@ export function SignIn() {
       } else {
         toast.error("Erro desconhecido.");
       }
+      setIsLoading(false);
     },
   });
+
+  const connectSocket = () => {
+    // Lógica de conexão com o Socket.IO ou outra API de websocket
+    console.log("Conectando ao socket...");
+    // socket.connect() ou qualquer outro código para iniciar a conexão
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -38,51 +48,72 @@ export function SignIn() {
       return;
     }
 
+    setIsLoading(true);
     loginMutation.mutate({ email, password });
   };
 
   return (
     <div className="container-fluid h-75 d-flex justify-content-center align-items-center">
       <div className="text-center w-100" style={{ maxWidth: "400px" }}>
-        <img src={logo} alt="Logo" className="img-fluid mb-4" />
-        <form onSubmit={handleSubmit}>
+        <img src={logo} alt="Logo" className="img-fluid mb-5 mt-5" />
+        <form onSubmit={handleSubmit} className="p-2">
           <div className="mb-3 text-start">
             <label htmlFor="email" className="form-label">
-              Email<span className="text-danger">*</span>
+              Email
             </label>
-            <input
+            <Input
               type="email"
               className="form-control"
               id="email"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(value) => setEmail(value)}
               required
+              style={{
+                borderColor: "#a4b1be33",
+              }}
+              onFocus={(e) => (e.target as HTMLInputElement).style.borderColor = "#9d4edd"}
+              onBlur={(e) => (e.target as HTMLInputElement).style.borderColor = "#a4b1be33"}
+              onMouseEnter={(e) => (e.target as HTMLInputElement).style.borderColor = "#9d4edd"}
+              onMouseLeave={(e) => (e.target as HTMLInputElement).style.borderColor = "#a4b1be33"}
             />
           </div>
           <div className="mb-3 text-start">
             <label htmlFor="password" className="form-label">
-              Senha<span className="text-danger">*</span>
+              Senha
             </label>
-            <input
+            <Input
               type="password"
               className="form-control"
               id="password"
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
+              onChange={(value) => setPassword(value)}
+              style={{
+                borderColor: "#a4b1be33",
+              }}
+              onFocus={(e) => (e.target as HTMLInputElement).style.borderColor = "#9d4edd"}
+              onBlur={(e) => (e.target as HTMLInputElement).style.borderColor = "#a4b1be33"}
+              onMouseEnter={(e) => (e.target as HTMLInputElement).style.borderColor = "#9d4edd"}
+              onMouseLeave={(e) => (e.target as HTMLInputElement).style.borderColor = "#a4b1be33"}
             />
           </div>
-          <button
+          <Button
             type="submit"
-            className="btn w-100 mb-3"
-            disabled={loginMutation.isPending}
+            className="w-100 mb-3"
+            appearance="primary"
+            loading={isLoading}
+            disabled={isLoading}
+            style={{
+              backgroundColor: "#9d4edd",
+            }}
           >
-            {loginMutation.isPending ? "Entrando..." : "Login"}
-          </button>
+            {isLoading ? "Entrando..." : "Login"}
+          </Button>
           <div className="text-start">
-            <a href="#" className="text-decoration-underline">
-              Esqueceu a senha?
-            </a>
+            <small className="fs-6">
+              <a href="#" className="custom-link">
+                Esqueceu a senha?
+              </a>
+            </small>
           </div>
         </form>
         <footer className="mt-5 text-muted">
