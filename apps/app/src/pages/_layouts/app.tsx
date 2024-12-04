@@ -1,14 +1,19 @@
-import { useLocation } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import { Header } from "../../components/header";
 import { Sidebar } from "../../components/sidebar";
 
-export function App() {
+export function AppLayout() {
   const location = useLocation();
 
   return (
-    <div className="text-black h-100">
+    <>
       <Header />
-      <Sidebar location={location} />
-    </div>
+      <div className="container-fluid h-100">
+        <div className="row h-100">
+          <Sidebar location={location} />
+          <Outlet />
+        </div>
+      </div>
+    </>
   );
 }

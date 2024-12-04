@@ -1,18 +1,28 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { SignIn } from "../pages/auth/sign-in";
-import { App } from "../pages/_layouts/app";
+import { AppLayout } from "../pages/_layouts/app";
+import { Book } from "../pages/app/book/book";
+import { NotFound } from "../pages/not-found";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <App />,
-    //errorElement: <NotFound />,
+    element: <AppLayout />,
     children: [
       {
-        path: "/sign-in",
-        element: <SignIn />,
+        path: "/books",
+        element: <Book />,
       },
+
     ],
+  },
+  {
+    path: "/sign-in",
+    element: <SignIn />,
+  },
+  {
+    path: "*",
+    element: <NotFound />,
   },
 ]);
 
