@@ -5,6 +5,7 @@ import { Book } from "../pages/app/book/book";
 import { NotFound } from "../pages/not-found";
 import { ProtectedRoute } from "../pages/protected-route";
 import { Dashboard } from "../pages/dashboard/dashboard";
+import { ResetPassword } from "../pages/auth/reset-password";
 
 const router = createBrowserRouter([
   {
@@ -15,6 +16,10 @@ const router = createBrowserRouter([
       {
         path: "/sign-in",
         element: <SignIn />,
+      },
+      {
+        path: "/reset-password",
+        element: <ResetPassword />,
       },
       {
         element: <ProtectedRoute />,

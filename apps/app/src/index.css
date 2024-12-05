@@ -130,5 +130,10 @@ label.form-label {
 
 
 footer small a {
-  color: var(--primary);
+  color: #707274;
+  font-size: .8rem;
+}
+
+footer small a:hover {
+  color: #707274;
 }

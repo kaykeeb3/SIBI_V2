@@ -5,7 +5,7 @@ import { Sidebar } from "../../components/sidebar";
 export function AppLayout() {
   const location = useLocation();
 
-  const excludedRoutes = ["/sign-in", "/sign-up"];
+  const excludedRoutes = ["/sign-in", "/sign-up", "/reset-password"];
   const shouldHideLayout = excludedRoutes.includes(location.pathname);
 
   return (

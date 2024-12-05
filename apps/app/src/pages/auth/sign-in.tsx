@@ -1,9 +1,9 @@
 import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { login } from "../../services/auth/auth-service";
-import logo from "/assets/logo-dark.svg";
+import logo from "../../../public/assets/logo-dark.svg";
 import { Button, Input } from "rsuite";
 
 export function SignIn() {
@@ -35,9 +35,7 @@ export function SignIn() {
   });
 
   const connectSocket = () => {
-    // Lógica de conexão com o Socket.IO ou outra API de websocket
     console.log("Conectando ao socket...");
-    // socket.connect() ou qualquer outro código para iniciar a conexão
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -110,18 +108,18 @@ export function SignIn() {
           </Button>
           <div className="text-start">
             <small className="fs-6">
-              <a href="#" className="custom-link">
+              <Link to="/reset-password" className="custom-link">
                 Esqueceu a senha?
-              </a>
+              </Link>
             </small>
           </div>
         </form>
         <footer className="mt-5 text-muted">
           <small>
             copyright &copy;{" "}
-            <a href="/" className="text-decoration-underline">
-              biblioteca.virtual
-            </a>{" "}
+            <Link to="/" className="text-decoration-underline">
+              biblioteca.digital
+            </Link>{" "}
             2024.
           </small>
         </footer>
