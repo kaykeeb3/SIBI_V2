@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { getProfile, updateProfile } from "../services/auth/auth-service";
-import { Drawer, Button, Form, Input } from "rsuite";
+import { Drawer, Button, Form, Input, Avatar } from "rsuite";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 import socketService, { Notification } from "../services/socket/socket-service";
@@ -71,9 +71,17 @@ export function Header() {
 
   const getInstitutionName = (institution: string | undefined) => {
     if (!institution) return "Instituição desconhecida";
+
     const words = institution.split(" ");
-    return words.slice(0, 3).join(" ");
+
+    if (words[0] === "EEEP" || words[0] === "Escola") {
+      return words.slice(1, 3).join(" ");
+    }
+
+    return words.slice(0, 2).join(" ");
   };
+
+
 
   const handleInputChange = (value: string, name: string) => {
     setFormData((prevData) => ({
@@ -109,30 +117,23 @@ export function Header() {
 
   return (
     <>
-      <header className="container-fluid d-flex justify-content-end py-2 px-5">
-        <div className="d-flex align-items-center gap-3">
+      <header className="container-fluid d-flex justify-content-end">
+        <div className="d-flex align-items-center">
           {profile ? (
             <>
-              <img
-                src={profile.profilePicture || "/default-avatar.jpg"}
-                alt={profile.name || "Foto de Perfil"}
-                className="rounded-circle img-fluid"
-                style={{
-                  width: "40px",
-                  height: "40px",
-                  objectFit: "cover",
-                  borderRadius: "50%",
-                }}
-              />
-
-              <div className="text-right m-0">
-                <small className="m-0 p-0 text-white">
-                  Olá, {getFirstName(profile.name)}
-                </small>
+              <div className="px-2">
                 <span className="d-block m-0 p-0 text-white">
-                  {getInstitutionName(profile.institution)}
+                  Olá, {getFirstName(profile.name)}
                 </span>
+                <small className="m-0 p-0">
+                  {getInstitutionName(profile.institution)}
+                </small>
               </div>
+
+              <Avatar
+                src={profile.profilePicture || undefined}
+                circle
+              />
 
               {notifications.length > 0 && (
                 <Button className="px-2 py-0 bg-danger text-white shadow-none border-0">
@@ -150,17 +151,16 @@ export function Header() {
             className="px-0 py-0 bg-transparent shadow-none border-0"
             onClick={() => setOpenDrawer(true)}
           >
-            <span className="mdi mdi-chevron-down text-white fs-5"></span>
-          </Button>
-
-          <Button
-            onClick={handleLogout}
-            className="bg-transparent border-0 text-white"
-            style={{ fontSize: "14px", padding: "5px" }}
-          >
-            <i className="mdi mdi-logout"></i> Sair
+            <span className="mdi mdi-chevron-down text-white status-line"></span>
           </Button>
         </div>
+
+        <Button
+          onClick={handleLogout}
+          className="bg-transparent border-0 text-white"
+        >
+          <i className="mdi mdi-logout"></i> Sair
+        </Button>
       </header>
 
       <Drawer open={openDrawer} onClose={() => setOpenDrawer(false)}>
