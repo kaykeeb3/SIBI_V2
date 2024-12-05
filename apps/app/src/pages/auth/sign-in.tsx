@@ -69,9 +69,9 @@ export function SignIn() {
               style={{
                 borderColor: "#a4b1be33",
               }}
-              onFocus={(e) => (e.target as HTMLInputElement).style.borderColor = "#9d4edd"}
+              onFocus={(e) => (e.target as HTMLInputElement).style.borderColor = "#8234e9"}
               onBlur={(e) => (e.target as HTMLInputElement).style.borderColor = "#a4b1be33"}
-              onMouseEnter={(e) => (e.target as HTMLInputElement).style.borderColor = "#9d4edd"}
+              onMouseEnter={(e) => (e.target as HTMLInputElement).style.borderColor = "#8234e9"}
               onMouseLeave={(e) => (e.target as HTMLInputElement).style.borderColor = "#a4b1be33"}
             />
           </div>
@@ -88,9 +88,9 @@ export function SignIn() {
               style={{
                 borderColor: "#a4b1be33",
               }}
-              onFocus={(e) => (e.target as HTMLInputElement).style.borderColor = "#9d4edd"}
+              onFocus={(e) => (e.target as HTMLInputElement).style.borderColor = "#8234e9"}
               onBlur={(e) => (e.target as HTMLInputElement).style.borderColor = "#a4b1be33"}
-              onMouseEnter={(e) => (e.target as HTMLInputElement).style.borderColor = "#9d4edd"}
+              onMouseEnter={(e) => (e.target as HTMLInputElement).style.borderColor = "#8234e9"}
               onMouseLeave={(e) => (e.target as HTMLInputElement).style.borderColor = "#a4b1be33"}
             />
           </div>
@@ -101,7 +101,7 @@ export function SignIn() {
             loading={isLoading}
             disabled={isLoading}
             style={{
-              backgroundColor: "#9d4edd",
+              backgroundColor: "#8234e9",
             }}
           >
             {isLoading ? "Entrando..." : "Login"}

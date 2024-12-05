@@ -15,11 +15,9 @@ interface SidebarItem {
 const sidebarItems: SidebarItem[] = [
   { to: "/", icon: "mdi mdi-finance", label: "Dashboard" },
   { to: "/books", icon: "mdi mdi-bookshelf", label: "Livros" },
-  { to: "/loans", icon: "mdi mdi-file-account", label: "Empréstimos" },
+  { to: "/loans", icon: "mdi mdi-file-account-outline", label: "Empréstimos" },
   { to: "/equipments", icon: "mdi mdi-desktop-classic", label: "Equipamentos" },
   { to: "/appointments", icon: "mdi mdi-card-account-details-outline", label: "Agendamentos" },
-  { to: "/notifications", icon: "mdi mdi-bell-ring-outline", label: "Notificações" },
-  { to: "/settings", icon: "mdi mdi-cog", label: "Configurações" },
 ];
 
 export function Sidebar({ location }: SidebarProps) {
@@ -28,7 +26,7 @@ export function Sidebar({ location }: SidebarProps) {
       <img src={logo} alt="Logo" className="img-fluid px-3 py-4" />
 
 
-      <ul className="px-3 m-0">
+      <ul className="p-0 m-0">
         {sidebarItems.map(({ to, icon, label }) => (
           <li key={to}>
             <Link to={to} className={location.pathname === to ? "active" : ""}>
