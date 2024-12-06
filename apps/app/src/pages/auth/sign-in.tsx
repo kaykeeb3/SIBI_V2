@@ -5,12 +5,20 @@ import { toast } from "react-toastify";
 import { login } from "../../services/auth/auth-service";
 import logo from "../../assets/logo-dark.svg";
 import { Button, Input } from "rsuite";
+import { z } from "zod";
+
+// Definindo o schema de validação com Zod
+const loginSchema = z.object({
+  email: z.string().email("Email inválido").nonempty("Email é obrigatório"),
+  password: z.string().min(6, "Senha deve ter pelo menos 6 caracteres").nonempty("Senha é obrigatória"),
+});
 
 export function SignIn() {
   const navigate = useNavigate();
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [errors, setErrors] = useState<{ email?: string; password?: string }>({});
 
   const loginMutation = useMutation({
     mutationFn: login,
@@ -41,8 +49,20 @@ export function SignIn() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!email || !password) {
-      toast.error("Por favor, preencha todos os campos.");
+    // Validação dos campos
+    const result = loginSchema.safeParse({ email, password });
+
+    if (!result.success) {
+      // Exibindo os erros
+      const errorMessages: { email?: string; password?: string } = {};
+      result.error.errors.forEach((error) => {
+        if (error.path[0] === "email") {
+          errorMessages.email = error.message;
+        } else if (error.path[0] === "password") {
+          errorMessages.password = error.message;
+        }
+      });
+      setErrors(errorMessages);
       return;
     }
 
@@ -65,7 +85,6 @@ export function SignIn() {
               id="email"
               value={email}
               onChange={(value) => setEmail(value)}
-              required
               style={{
                 borderColor: "#a4b1be33",
               }}
@@ -74,6 +93,7 @@ export function SignIn() {
               onMouseEnter={(e) => (e.target as HTMLInputElement).style.borderColor = "#8234e9"}
               onMouseLeave={(e) => (e.target as HTMLInputElement).style.borderColor = "#a4b1be33"}
             />
+            {errors.email && <span className="text-danger small mt-1">{errors.email}</span>}
           </div>
           <div className="mb-3 text-start">
             <label htmlFor="password" className="form-label">
@@ -93,6 +113,7 @@ export function SignIn() {
               onMouseEnter={(e) => (e.target as HTMLInputElement).style.borderColor = "#8234e9"}
               onMouseLeave={(e) => (e.target as HTMLInputElement).style.borderColor = "#a4b1be33"}
             />
+            {errors.password && <span className="text-danger small mt-1">{errors.password}</span>}
           </div>
           <Button
             type="submit"

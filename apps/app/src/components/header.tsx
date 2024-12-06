@@ -4,6 +4,7 @@ import { Modal, Button, Form, Input, Avatar } from "rsuite";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 import socketService, { Notification } from "../services/socket/socket-service";
+import { z } from "zod";
 
 interface Profile {
   id: string;
@@ -22,12 +23,20 @@ const initialFormData = {
   institution: "",
 };
 
+// Schema de validação com Zod
+const profileSchema = z.object({
+  name: z.string().min(1, "Nome é obrigatório").max(100, "Nome muito longo"),
+  institution: z.string().min(1, "Instituição é obrigatória").max(100, "Instituição muito longa"),
+  profilePicture: z.string().url("A URL da foto de perfil é inválida").min(1, "A URL da foto de perfil é obrigatória"),
+});
+
 export function Header() {
   const [profile, setProfile] = useState<Profile | null>(null);
   const [openModal, setOpenModal] = useState(false);
   const [formData, setFormData] = useState(initialFormData);
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [formErrors, setFormErrors] = useState<{ [key: string]: string }>({});
 
   const getFirstName = useCallback(
     (name: string | undefined) => name?.split(" ")[0] || "Usuário",
@@ -67,7 +76,6 @@ export function Header() {
     toast.info(`Você tem ${newNotifications.length} novas notificações!`);
   }, []);
 
-
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
@@ -78,7 +86,6 @@ export function Header() {
 
     return () => socketService.disconnect();
   }, [fetchProfile, handleNotifications]);
-
 
   const mutation = useMutation({
     mutationFn: (data: typeof initialFormData) =>
@@ -92,12 +99,28 @@ export function Header() {
   });
 
   const handleInputChange = useCallback(
-    (value: string, name: string) =>
-      setFormData((prevData) => ({ ...prevData, [name]: value })),
+    (value: string, name: string) => {
+      setFormData((prevData) => ({ ...prevData, [name]: value }));
+      setFormErrors((prevErrors) => ({ ...prevErrors, [name]: "" }));
+    },
     []
   );
 
-  const handleSave = () => mutation.mutate(formData);
+  const handleSave = () => {
+    try {
+      // Valida os dados do formulário com Zod
+      profileSchema.parse(formData);
+      mutation.mutate(formData);
+    } catch (err) {
+      if (err instanceof z.ZodError) {
+        const errors = err.errors.reduce((acc, curr) => {
+          acc[curr.path[0]] = curr.message;
+          return acc;
+        }, {} as { [key: string]: string });
+        setFormErrors(errors);
+      }
+    }
+  };
 
   const handleLogout = useCallback(() => {
     localStorage.removeItem("token");
@@ -176,6 +199,7 @@ export function Header() {
                 onChange={(value) => handleInputChange(value, "name")}
                 placeholder="Digite o nome"
               />
+              {formErrors.name && <span className="text-danger small mt-1">{formErrors.name}</span>}
             </Form.Group>
             <Form.Group>
               <Form.ControlLabel>
@@ -187,6 +211,7 @@ export function Header() {
                 onChange={(value) => handleInputChange(value, "institution")}
                 placeholder="Digite o nome da instituição"
               />
+              {formErrors.institution && <span className="text-danger small mt-1">{formErrors.institution}</span>}
             </Form.Group>
             <Form.Group>
               <Form.ControlLabel>
@@ -198,6 +223,7 @@ export function Header() {
                 onChange={(value) => handleInputChange(value, "profilePicture")}
                 placeholder="Digite a URL da foto"
               />
+              {formErrors.profilePicture && <span className="text-danger small mt-1">{formErrors.profilePicture}</span>}
             </Form.Group>
           </Form>
         </Modal.Body>
