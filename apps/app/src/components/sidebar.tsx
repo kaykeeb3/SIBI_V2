@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import logo from "../../public/assets/logo-light.svg";
+import logo from "../assets/logo-light.svg";
 import { Location } from "react-router-dom";
 
 interface SidebarProps {

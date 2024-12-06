@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { login } from "../../services/auth/auth-service";
-import logo from "../../../public/assets/logo-dark.svg";
+import logo from "../../assets/logo-dark.svg";
 import { Button, Input } from "rsuite";
 
 export function SignIn() {

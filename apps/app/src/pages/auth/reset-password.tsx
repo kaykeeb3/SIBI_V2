@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Button, Input } from "rsuite";
-import logo from "../../../public/assets/logo-dark.svg";
+import logo from "../../assets/logo-dark.svg";
 import { Link } from "react-router-dom";
 
 export function ResetPassword() {
