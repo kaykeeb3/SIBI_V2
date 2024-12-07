@@ -1,6 +1,12 @@
 import { Link } from "react-router-dom";
 import logo from "../assets/logo-light.svg";
-import { Location } from "react-router-dom";
+import {
+  ChartPie,
+  Library,
+  Blend,
+  Monitor,
+  IdCard,
+} from "lucide-react";
 
 interface SidebarProps {
   location: Location;
@@ -8,16 +14,16 @@ interface SidebarProps {
 
 interface SidebarItem {
   to: string;
-  icon: string;
+  icon: React.ReactNode;
   label: string;
 }
 
 const sidebarItems: SidebarItem[] = [
-  { to: "/", icon: "mdi mdi-finance", label: "Dashboard" },
-  { to: "/books", icon: "mdi mdi-bookshelf", label: "Livros" },
-  { to: "/loans", icon: "mdi mdi-file-account-outline", label: "Empréstimos" },
-  { to: "/equipments", icon: "mdi mdi-desktop-classic", label: "Equipamentos" },
-  { to: "/appointments", icon: "mdi mdi-card-account-details-outline", label: "Agendamentos" },
+  { to: "/", icon: <ChartPie />, label: "Dashboard" },
+  { to: "/books", icon: <Library />, label: "Livros" },
+  { to: "/loans", icon: <Blend />, label: "Empréstimos" },
+  { to: "/equipments", icon: <Monitor />, label: "Equipamentos" },
+  { to: "/appointments", icon: <IdCard />, label: "Agendamentos" },
 ];
 
 export function Sidebar({ location }: SidebarProps) {
@@ -25,12 +31,11 @@ export function Sidebar({ location }: SidebarProps) {
     <aside className="col-2 h-100">
       <img src={logo} alt="Logo" className="img-fluid px-3 py-4" />
 
-
       <ul className="p-0 m-0">
         {sidebarItems.map(({ to, icon, label }) => (
           <li key={to}>
             <Link to={to} className={location.pathname === to ? "active" : ""}>
-              <span className={icon}></span>
+              <span className="icon me-2">{icon}</span>
               <span>{label}</span>
             </Link>
           </li>

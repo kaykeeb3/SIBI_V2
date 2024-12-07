@@ -3,6 +3,7 @@ import { getProfile, updateProfile } from "../services/auth/auth-service";
 import { Modal, Button, Form, Input, Avatar } from "rsuite";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "react-toastify";
+import { ChevronDown, LogOut } from 'lucide-react';
 import socketService, { Notification } from "../services/socket/socket-service";
 import { z } from "zod";
 
@@ -162,14 +163,14 @@ export function Header() {
           onClick={() => setOpenModal(true)}
           className="px-0 py-0 bg-transparent shadow-none border-0"
         >
-          <span className="mdi mdi-chevron-down text-white status-line"></span>
+          <ChevronDown className="text-white status-line w-75" />
         </Button>
 
         <Button
           onClick={handleLogout}
-          className="bg-transparent border-0 text-white"
+          className="bg-transparent border-0 text-white gap-2"
         >
-          <i className="mdi mdi-logout"></i> Sair
+          <LogOut className="w-25 text-white status-line" /> Sair
         </Button>
       </header>
 
