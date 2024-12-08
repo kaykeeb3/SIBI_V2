@@ -1,12 +1,11 @@
 import { Link } from "react-router-dom";
 import logo from "../assets/logo-light.svg";
-import {
-  ChartPie,
-  Library,
-  Blend,
-  Monitor,
-  IdCard,
-} from "lucide-react";
+
+import DonutChartIcon from '@rsuite/icons/DonutChart';
+import PageIcon from '@rsuite/icons/Page';
+import UserInfoIcon from '@rsuite/icons/UserInfo';
+import DeviceIcon from '@rsuite/icons/Device';
+import UserBadgeIcon from '@rsuite/icons/UserBadge';
 
 interface SidebarProps {
   location: Location;
@@ -19,11 +18,11 @@ interface SidebarItem {
 }
 
 const sidebarItems: SidebarItem[] = [
-  { to: "/", icon: <ChartPie />, label: "Dashboard" },
-  { to: "/books", icon: <Library />, label: "Livros" },
-  { to: "/loans", icon: <Blend />, label: "Empréstimos" },
-  { to: "/equipments", icon: <Monitor />, label: "Equipamentos" },
-  { to: "/appointments", icon: <IdCard />, label: "Agendamentos" },
+  { to: "/", icon: <DonutChartIcon width={20} />, label: "Dashboard" },
+  { to: "/books", icon: <PageIcon width={20} />, label: "Livros" },
+  { to: "/loans", icon: <UserInfoIcon width={20} />, label: "Empréstimos" },
+  { to: "/equipments", icon: <DeviceIcon width={20} />, label: "Equipamentos" },
+  { to: "/appointments", icon: <UserBadgeIcon width={20} />, label: "Agendamentos" },
 ];
 
 export function Sidebar({ location }: SidebarProps) {
