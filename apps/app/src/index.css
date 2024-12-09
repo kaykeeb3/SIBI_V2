@@ -32,7 +32,7 @@ header>div {
   text-align: right;
 }
 
-header span.icon {
+header span.mdi {
   font-size: 20px;
   margin-right: 10px;
 }
@@ -64,7 +64,7 @@ aside ul li a.active {
   text-decoration: none;
 }
 
-aside ul li a.active .icon {
+aside ul li a.active .mdi {
   color: var(--primary);
 }
 
@@ -80,7 +80,7 @@ aside ul li a:hover {
 }
 
 
-aside ul li a span.icon {
+aside ul li a span.mdi {
   font-size: 25px;
   margin: 0 10px;
 }
