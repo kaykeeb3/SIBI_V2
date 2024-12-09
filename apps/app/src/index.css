@@ -41,6 +41,11 @@ aside {
   background-color: var(--dark);
 }
 
+aside ul {
+  margin: 0;
+  padding: 0;
+}
+
 aside ul li {
   list-style: none;
   width: 100%;
@@ -48,20 +53,20 @@ aside ul li {
 
 aside ul li a {
   width: 100%;
-  color: #FFF;
+  list-style: none;
+  color: #fff;
   opacity: 0.6;
   display: flex;
   align-items: center;
   padding: 5px 0;
-  margin: 10px 0;
+  margin: 2.5px 0;
   transition: 0.5s;
   border-radius: 5px;
 }
 
 aside ul li a.active {
   opacity: 1;
-  background-color: rgba(0, 0, 0, 0.7);
-  text-decoration: none;
+  background-color: rgba(0, 0, 0, 0.6);
 }
 
 aside ul li a.active .mdi {
@@ -70,25 +75,26 @@ aside ul li a.active .mdi {
 
 aside ul li a:visited,
 aside ul li a:focus {
-  color: #FFF;
+  color: #fff;
+  text-decoration: none !important;
 }
 
 aside ul li a:hover {
-  opacity: 1;
   background-color: rgba(0, 0, 0, 0.6);
+  cursor: pointer;
+  transition: 0.5s;
   text-decoration: none;
+  color: #fff !important;
+  opacity: 1;
 }
 
-
-aside ul li a span.mdi {
+aside ul li span.mdi {
   font-size: 25px;
-  margin: 0 10px;
+  margin: 0 15px;
 }
 
-
-aside ul li a span {
+aside ul li text {
   font-size: 14px;
-  margin: 0 15px;
 }
 
 input.form-control {

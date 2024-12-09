@@ -28,7 +28,7 @@ export function Sidebar({ location }: SidebarProps) {
         {sidebarItems.map(({ to, icon, label }) => (
           <li key={to}>
             <Link to={to} className={location.pathname === to ? "active" : ""}>
-              <span className="icon me-2">{icon}</span>
+              <span>{icon}</span>
               <span>{label}</span>
             </Link>
           </li>
