@@ -3,8 +3,7 @@ import { getProfile, updateProfile } from "../services/auth/auth-service";
 import { Modal, Button, Form, Input, Avatar } from "rsuite";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "react-toastify";
-import ArrowDownLineIcon from '@rsuite/icons/ArrowDownLine';
-import ExitIcon from '@rsuite/icons/Exit'
+
 import socketService, { Notification } from "../services/socket/socket-service";
 import { z } from "zod";
 
@@ -164,19 +163,14 @@ export function Header() {
           onClick={() => setOpenModal(true)}
           className="px-0 py-0 bg-transparent shadow-none border-0"
         >
-          <ArrowDownLineIcon
-            className="text-white status-line"
-          />
+          <i className="text-white status-line mdi mdi-chevron-down fs-6"></i>
         </Button>
 
         <Button
           onClick={handleLogout}
           className="bg-transparent border-0 text-white gap-2"
         >
-          <ExitIcon
-            className="text-white status-line w-25"
-          />
-          Sair
+          <i className="text-white mdi mdi-logout fst-normal text-center"> sair</i>
         </Button>
       </header>
 

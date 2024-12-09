@@ -127,13 +127,13 @@ export function SignIn() {
           >
             {isLoading ? "Entrando..." : "Login"}
           </Button>
-          <div className="text-start">
+          {/*<div className="text-start">
             <small className="fs-6">
               <Link to="/reset-password" className="custom-link">
                 Esqueceu a senha?
               </Link>
             </small>
-          </div>
+          </div>*/}
         </form>
         <footer className="mt-5 text-muted">
           <small>

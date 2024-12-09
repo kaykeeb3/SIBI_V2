@@ -1,12 +1,6 @@
 import { Link } from "react-router-dom";
 import logo from "../assets/logo-light.svg";
 
-import DonutChartIcon from '@rsuite/icons/DonutChart';
-import PageIcon from '@rsuite/icons/Page';
-import UserInfoIcon from '@rsuite/icons/UserInfo';
-import DeviceIcon from '@rsuite/icons/Device';
-import UserBadgeIcon from '@rsuite/icons/UserBadge';
-
 interface SidebarProps {
   location: Location;
 }
@@ -18,11 +12,11 @@ interface SidebarItem {
 }
 
 const sidebarItems: SidebarItem[] = [
-  { to: "/", icon: <DonutChartIcon width={20} />, label: "Dashboard" },
-  { to: "/books", icon: <PageIcon width={20} />, label: "Livros" },
-  { to: "/loans", icon: <UserInfoIcon width={20} />, label: "Empréstimos" },
-  { to: "/equipments", icon: <DeviceIcon width={20} />, label: "Equipamentos" },
-  { to: "/appointments", icon: <UserBadgeIcon width={20} />, label: "Agendamentos" },
+  { to: "/", icon: <span className="mdi mdi-chart-donut"></span>, label: "Dashboard" },
+  { to: "/books", icon: <span className="mdi mdi-bookshelf"></span>, label: "Livros" },
+  { to: "/loans", icon: <span className="mdi mdi-account-multiple"></span>, label: "Empréstimos" },
+  { to: "/equipments", icon: <span className="mdi mdi-monitor"></span>, label: "Equipamentos" },
+  { to: "/appointments", icon: <span className="mdi mdi-calendar-check"></span>, label: "Agendamentos" },
 ];
 
 export function Sidebar({ location }: SidebarProps) {

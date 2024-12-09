@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import {
   Blend,
   BotMessageSquare,
-  ChartLine,
+  CalendarCheck,
   Ellipsis,
   Home,
   IdCard,
@@ -21,9 +21,10 @@ const navItems = [
   { to: "/loans", icon: Blend, label: "Empréstimos" },
   { to: "/equipments", icon: Tv, label: "Equipamentos" },
   { to: "/schedules", icon: IdCard, label: "Agendamentos" },
+
+  { to: "/calendar", icon: CalendarCheck, label: "Agenda" },
   { to: "/users", icon: Users, label: "Usuários" },
   { to: "/messages", icon: BotMessageSquare, label: "Chatbot" },
-  { to: "/chart", icon: ChartLine, label: "Estáticas" },
   { to: "/about", icon: Ellipsis, label: "Saiba mais" },
 ];
 
@@ -57,17 +58,15 @@ export function NavBar() {
               >
                 <Link to={to}>
                   <div
-                    className={`transition-all p-3 rounded sm:p-2 ${
-                      isActive(to) ? "bg-primary/20" : ""
-                    } group-hover:scale-110 group-hover:bg-primary/20 transform duration-300 ease-in-out`}
+                    className={`transition-all p-3 rounded sm:p-2 ${isActive(to) ? "bg-primary/20" : ""
+                      } group-hover:scale-110 group-hover:bg-primary/20 transform duration-300 ease-in-out`}
                   >
                     <Icon
                       width={18}
-                      className={`transition-all duration-200 ${
-                        isActive(to)
+                      className={`transition-all duration-200 ${isActive(to)
                           ? "text-primary/50"
                           : "text-zinc-400 group-hover:text-primary/40"
-                      }`}
+                        }`}
                     />
                   </div>
                 </Link>
@@ -86,27 +85,25 @@ export function NavBar() {
 
       <motion.div
         className="relative group text-white flex items-center justify-center mb-5"
-        initial={{ opacity: 0, scale: 0.8 }} // Animação inicial
-        animate={{ opacity: 1, scale: 1 }} // Animação de carregamento
-        exit={{ opacity: 0, scale: 0.8 }} // Animação de saída
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={{ opacity: 1, scale: 1 }}
+        exit={{ opacity: 0, scale: 0.8 }}
         transition={{
           duration: 0.3,
-          delay: navItems.length * 0.1, // Delay após o último item
+          delay: navItems.length * 0.1,
         }}
       >
         <Link to="/settings">
           <div
-            className={`transition-all p-3 rounded sm:p-2 group-hover:scale-110 ${
-              isActive("/settings") ? "bg-primary/20" : ""
-            } group-hover:bg-primary/20 transform duration-300 ease-in-out`}
+            className={`transition-all p-3 rounded sm:p-2 group-hover:scale-110 ${isActive("/settings") ? "bg-primary/20" : ""
+              } group-hover:bg-primary/20 transform duration-300 ease-in-out`}
           >
             <Settings
               width={18}
-              className={`transition-all duration-200 ${
-                isActive("/settings")
+              className={`transition-all duration-200 ${isActive("/settings")
                   ? "text-primary/50"
                   : "text-zinc-400 group-hover:text-primary/40"
-              }`}
+                }`}
             />
           </div>
         </Link>
