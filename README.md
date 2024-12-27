@@ -1,99 +1,66 @@
-# SIBI - Sistema de Gerenciamento de Biblioteca
+# SIBI - Library Management System
 
-O **SIBI** é um sistema administrativo desenvolvido para o gerenciamento completo de uma biblioteca de forma virtual. O objetivo é proporcionar facilidade, segurança e praticidade no dia a dia da gestão bibliotecária.
+**SIBI** is an administrative system developed for the complete management of a virtual library. The goal is to provide ease, security, and practicality in the daily operations of library management.
 
-## Funcionalidades
+## Features
 
-O SIBI oferece uma ampla gama de funcionalidades para simplificar e otimizar a gestão da biblioteca:
+SIBI offers a wide range of functionalities to simplify and optimize library management:
 
-- [ ] **Autenticação Completa**: Cadastro de usuários, controle de acesso e gerenciamento de permissões.
-- [ ] **Gerenciamento Completo da Biblioteca**: Cadastro de livros, controle de empréstimos e gerenciamento de usuários.
-- [ ] **Cadastro de Livros**: Registro de novos livros com informações detalhadas, como título, autor, gênero, quantidade em estoque e descrição, com validações de dados para garantir a integridade.
-- [ ] **Cadastro de Equipamentos**: Adição de equipamentos com detalhes específicos (modelo, número de série, quantidade) e validações para evitar duplicidades.
-- [ ] **Agendamentos de Equipamentos**: Sistema de agendamento que controla a disponibilidade, validando a quantidade para não exceder o número disponível e permitindo novos agendamentos apenas após a devolução do equipamento.
-- [ ] **Empréstimos de Livros**: Gerenciamento de empréstimos, com controle de estoque e atualização automática ao realizar empréstimos e devoluções.
-- [ ] **Controle de Empréstimos e Agendamentos**: Monitoramento de todas as transações ativas, com histórico de retiradas e devoluções, e notificações de pendências.
-- [ ] **Gestão de Usuários**: Cadastro e autenticação de usuários, com níveis de permissão e histórico de atividades para rastreamento de transações.
-- [ ] **Segurança Avançada**: Políticas de acesso para proteger dados sensíveis.
-- [ ] **Interface Intuitiva e Responsiva**: Design que facilita o acesso às informações e a execução de tarefas.
-- [ ] **Análise de Métricas**: Registro de métricas de desempenho para análise e otimização do sistema.
+- [x] **Complete Authentication**: User registration, access control, and permission management.
+- [x] **Complete Library Management**: Book registration, loan control, and user management.
+- [x] **Book Registration**: Register new books with detailed information such as title, author, genre, stock quantity, and description, with data validations to ensure integrity.
+- [x] **Equipment Registration**: Add equipment with specific details (model, serial number, quantity) and validations to avoid duplicates.
+- [x] **Equipment Booking**: A booking system that controls availability, validates quantity to prevent exceeding available stock, and allows new bookings only after the equipment is returned.
+- [x] **Book Loans**: Loan management, with stock control and automatic updates when loans are made and returned.
+- [x] **Loan and Booking Control**: Monitoring of all active transactions, with a history of checkouts and returns, and overdue notifications.
+- [x] **User Management**: User registration and authentication, with permission levels and activity history for tracking transactions.
+- [x] **Advanced Security**: Access policies to protect sensitive data.
+- [x] **Metrics Analysis**: Recording performance metrics for system analysis and optimization.
 
-## Como Executar o Projeto
+## How to Run the Project
 
-Para executar o projeto localmente, siga os seguintes passos:
+To run the project locally, follow these steps:
 
 ### Backend
 
-1. **Clonar o Repositório**:
-   Utilize o comando:
+1. **Clone the Repository**:
+   Use the following command:
 
    ```bash
-   git clone https://github.com/kaykeeb3/sibi-2024.git
+   git clone https://github.com/kaykeeb3/sibi-api-2024.git
    ```
 
-2. **Navegar até o Servidor**:
+2. **Navigate to the Server**:
 
    ```bash
    cd apps/server
    ```
 
-3. **Copiar o arquivo com os dados de conexão e demais variáveis de ambiente**:
+3. **Copy the configuration file with connection data and environment variables**:
 
    ```bash
    cp .env.example .env
    ```
 
-4. **Subir o serviço do PostgreSQL via Docker** (caso não tenha o PostgreSQL instalado em seu computador):
+4. **Run PostgreSQL service via Docker** (if you don't have PostgreSQL installed on your computer):
 
    ```bash
    docker-compose up -d
    ```
 
-5. **Rodar as migrations do Prisma**:
+5. **Run Prisma Migrations**:
 
    ```bash
    npx prisma migrate dev
    ```
 
-6. **Subir o servidor HTTP**:
+6. **Start the HTTP server**:
 
    ```bash
    npm run dev
    ```
-
-### Frontend
-
-Para executar a interface web do SIBI, utilize um navegador. Certifique-se de que o backend esteja rodando antes de acessar a aplicação.
-
-1. **Navegar até o diretório do Frontend**:
-
-   ```bash
-   cd apps/web
-   ```
-
-2. **Instalar as dependências**:
-
-   ```bash
-   npm install
-   ```
-
-3. **Iniciar o servidor de desenvolvimento**:
-
-   ```bash
-   npm run dev
-   ```
-
-4. **Acessar a aplicação**:
-   Abra seu navegador e vá para `http://localhost:3000`.
 
 ## Tech Stack 💜
-
-### Web
-
-- React.js
-- TypeScript
-- Tailwind CSS
-- Shadcn UI
 
 ### Server
 
@@ -102,32 +69,20 @@ Para executar a interface web do SIBI, utilize um navegador. Certifique-se de qu
 - PostgreSQL
 - TypeScript
 
-## Funcionalidades do SIBI 🚀
+## Contributions 🆘
 
-Aqui estão as funcionalidades implementadas no SIBI:
+We are excited to have you interested in contributing to our project. To facilitate interaction, we would like to highlight a few important points:
 
-1. **Cadastro de Livros**: Permite o registro completo de livros com informações como título, autor, gênero, descrição e quantidade disponível.
-2. **Controle de Empréstimos**: Gerenciamento de empréstimos e devoluções de livros, com registro de usuário, data de início e data de devolução.
-3. **Gerenciamento de Usuários**: Cadastro e controle de usuários da biblioteca, incluindo seus dados pessoais e histórico de empréstimos.
-4. **Validação de Dados**: Implementação de validações robustas para garantir a integridade e a precisão dos dados inseridos no sistema.
-5. **Monitoramento de Disponibilidade**: Verificação em tempo real da disponibilidade de livros para empréstimo.
-6. **Notificações de Atraso**: Sistema de notificações para alertar sobre devoluções em atraso.
-7. **Relatórios de Atividades**: Geração de relatórios detalhados sobre a utilização da biblioteca e as atividades dos usuários.
+### Discussions
 
-## Contribuições 🆘
-
-Estamos muito felizes em ter você interessado em contribuir com nosso projeto. Para facilitar a interação, gostaríamos de lembrar alguns pontos importantes:
-
-### Discussões
-
-Utilize a aba de discussões para compartilhar ideias e sugestões para o projeto.
+Use the discussions tab to share ideas and suggestions for the project.
 
 ### Issues
 
-Se encontrar problemas ou quiser sugerir novas tarefas, utilize a aba de issues.
+If you encounter issues or want to suggest new tasks, use the issues tab.
 
 ### Pull Requests
 
-Se desejar contribuir com código, faça um fork do repositório e envie um pull request após suas alterações.
+If you wish to contribute with code, fork the repository and submit a pull request after making your changes.
 
-**Dica**💡: Não tenha medo de fazer um Pull Request; utilize essa oportunidade para receber feedbacks construtivos.
+**Tip** 💡: Don't be afraid to make a Pull Request; use this opportunity to receive constructive feedback.
