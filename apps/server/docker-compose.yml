@@ -1,13 +1,21 @@
 version: '3'
 
 services:
- sibi-database:
+  sibi-database:
     image: bitnami/postgresql
-    container_name: my-postgresql
+    container_name: sibi-database
     restart: always
     ports:
-      - 5432:5432
+      - "5432:5432"
     environment:
       - POSTGRESQL_USERNAME=postgres
       - POSTGRESQL_PASSWORD=docker
       - POSTGRESQL_DATABASE=sibi
+
+  sibi-app:
+    image: your-app-image # Substitua pelo nome da imagem do seu app
+    container_name: sibi-app
+    depends_on:
+      - sibi-database
+    environment:
+      - DATABASE_URL=postgresql://postgres:docker@sibi-database:5432/sibi?schema=public
